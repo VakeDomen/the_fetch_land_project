@@ -1,9 +1,23 @@
-use std::{fs::File, path::Path, io::Write};
+use std::{fs::File, path::Path, io::Write, collections::HashMap};
 
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use models::card::Card;
+use once_cell::sync::Lazy;
+use std::sync::Mutex;
 
 use crate::models::scryfall::{BulkData, BulkResponse};
 mod models;
+
+
+const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
+const ALL_CARDS_FILE_PATH: &str = "./all_cards.json";
+
+static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
+    match serde_any::from_file(ALL_CARDS_HASH_MAP_FILE_PATH) {
+        Ok(hm) => Mutex::new(hm),
+        Err(_) => Mutex::new(HashMap::new())
+    }
+});
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -48,7 +62,7 @@ async fn get_cards() -> impl Responder {
 
 }
 
-async fn download_card_data(bulk_response: &BulkResponse) -> Option<File> {
+async fn download_card_data(bulk_response: &BulkResponse) {
     let mut card_uri = None;
     for bulk_data in bulk_response.data.iter() {
         if bulk_data.data_type.eq("all_cards") {
@@ -57,18 +71,18 @@ async fn download_card_data(bulk_response: &BulkResponse) -> Option<File> {
     }
     let target = match card_uri {
         Some(u) => u,
-        None => return None
+        None => return,
     };
     println!("Dowanloading cards");
     let response = match reqwest::get(target).await {
         Ok(resp) => resp,
         Err(e) => {
             println!("{:#?}", e.to_string());
-            return None;
+            return;
         }
     };
     println!("Creating card file");
-    let path = Path::new("./all_cards.json");
+    let path = Path::new(ALL_CARDS_FILE_PATH);
 
     let mut file = match File::create(&path) {
         Err(why) => panic!("couldn't create {}", why),
@@ -78,20 +92,37 @@ async fn download_card_data(bulk_response: &BulkResponse) -> Option<File> {
         Ok(c) => c,
         Err(e) => {
             println!("{:#?}", e.to_string());
-            return None;
+            return;
         }
     };
+    println!("Pasring cards");
+    save_cards_to_cache(&content);
     println!("Writing cards to file");
-    match file.write_all(content.as_bytes()) {
-        Ok(res) => {
-            println!("Done!");
-            Some(file)
+    save_cache();
+}
+
+fn save_cards_to_cache(content: &String) -> () {
+    let mut all_cards = ALL_CARDS.lock().unwrap();
+    let cards: Vec<Card> = match serde_json::from_str(content.as_str()) {
+        Ok(cards) => cards,
+        Err(e) => {
+            println!("{}", e.to_string());
+            return;
         },
-        Err(e) =>  {
-            println!("{:#?}", e.to_string());
-            return None;
-        }
+    };
+    println!("Parsed cards from string!");
+    all_cards.clear();
+    for card in cards.into_iter() {
+        all_cards.insert(card.id.clone(), card);
     }
+}
+
+fn save_cache() {
+    let all_cards = ALL_CARDS.lock().unwrap();
+    match serde_any::to_file(ALL_CARDS_HASH_MAP_FILE_PATH, &*all_cards) {
+        Ok(_) => {},
+        Err(e) => {println!("Error saving task queue: {:?}", e);}
+    };
 }
 
 async fn get_bulk_data() -> Option<BulkResponse> {
