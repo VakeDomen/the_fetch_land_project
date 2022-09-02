@@ -5,12 +5,12 @@ use models::card::Card;
 use once_cell::sync::Lazy;
 use std::sync::Mutex;
 
-use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree};
+use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree, card::CardPublic};
 mod models;
 
 
-const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
-// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
+// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
+const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
 const ALL_CARDS_FILE_PATH: &str = "./all_cards.json";
 
 static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
@@ -24,7 +24,7 @@ static NAME_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
     let all_cards = ALL_CARDS.lock().unwrap();
     let mut trie = TrieTree::new();
     for card in all_cards.values().into_iter() {
-        let succ = trie.insert(card.name.clone().to_lowercase(), card.id.clone());
+        trie.insert(card.name.clone().to_lowercase(), card.id.clone());
     }
     Mutex::new(trie)
 });
@@ -61,13 +61,21 @@ async fn main() -> std::io::Result<()> {
 #[get("/c/{name}")]
 async fn get_card(name: web::Path<String>) -> impl Responder {
     let all_cards = ALL_CARDS.lock().unwrap();
-    HttpResponse::Ok().json(all_cards.get(&name.to_string()))
+    let card = all_cards.get(&name.to_string());
+    match card {
+        Some(c) => HttpResponse::Ok().json(CardPublic::from(c)),
+        None => HttpResponse::NotFound().finish()
+    }
 }
 
 #[get("/n/{name}")]
 async fn get_card_by_name(name: web::Path<String>) -> impl Responder {
     let trie = NAME_TRIE.lock().unwrap();
-    HttpResponse::Ok().json(trie.collect(name.to_string().to_lowercase()))
+    let card_ids = trie.collect(name.to_string().to_lowercase());
+    let all_cards = ALL_CARDS.lock().unwrap();
+    let cards: Vec<&Card> = card_ids.into_iter().map(|id| all_cards.get(&id).unwrap()).collect();
+    let pub_cards: Vec<CardPublic> = cards.iter().map(|c| CardPublic::from(c)).collect();
+    HttpResponse::Ok().json(pub_cards)
 }
 
 async fn download_card_data(bulk_response: &BulkResponse) {
