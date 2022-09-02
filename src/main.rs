@@ -9,8 +9,8 @@ use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree, card::Ca
 mod models;
 
 
-// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
-const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
+const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
+// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
 const ALL_CARDS_FILE_PATH: &str = "./all_cards.json";
 
 static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
@@ -45,6 +45,7 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    download_card_data(&get_bulk_data().await.unwrap()).await;
     HttpServer::new(|| {
         App::new()
             .service(hello)
@@ -98,33 +99,50 @@ async fn download_card_data(bulk_response: &BulkResponse) {
         }
     };
     println!("Creating card file");
-    let path = Path::new(ALL_CARDS_FILE_PATH);
-    let content = match response.text().await {
-        Ok(c) => c,
-        Err(e) => {
-            println!("{:#?}", e.to_string());
-            return;
-        }
-    };
+    let content = fetch_cards_data_text(response).await;
     println!("Pasring cards");
-    save_cards_to_cache(&content);
-    println!("Writing cards to file");
-    save_cache();
+    match content {
+        Some(c) => {
+            save_cards_to_cache(&c);
+            println!("Writing cards to file");
+            save_cache();
+        },
+        None => {
+            println!("Not refreshing cards");
+        }
+    }
+    
+}
+
+async fn fetch_cards_data_text(response: reqwest::Response) -> Option<String> {
+    let all_cards = ALL_CARDS.lock().unwrap();
+    if all_cards.is_empty() {
+        return match response.text().await {
+            Ok(c) => Some(c),
+            Err(e) => {
+                println!("{:#?}", e.to_string());
+                return None
+            }
+        };
+    }
+    None
 }
 
 fn save_cards_to_cache(content: &String) -> () {
     let mut all_cards = ALL_CARDS.lock().unwrap();
-    let cards: Vec<Card> = match serde_json::from_str(content.as_str()) {
-        Ok(cards) => cards,
-        Err(e) => {
-            println!("{}", e.to_string());
-            return;
-        },
-    };
-    println!("Parsed cards from string!");
-    all_cards.clear();
-    for card in cards.into_iter() {
-        all_cards.insert(card.id.clone(), card);
+    if all_cards.is_empty() {
+        let cards: Vec<Card> = match serde_json::from_str(content.as_str()) {
+            Ok(cards) => cards,
+            Err(e) => {
+                println!("{}", e.to_string());
+                return;
+            },
+        };
+        println!("Parsed cards from string!");
+        all_cards.clear();
+        for card in cards.into_iter() {
+            all_cards.insert(card.id.clone(), card);
+        }
     }
 }
 

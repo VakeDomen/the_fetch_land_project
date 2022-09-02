@@ -15,3 +15,4 @@ Cargo.lock
 /target
 all_cards.json
 all_cards_hash_map.json
+small_hm.json
