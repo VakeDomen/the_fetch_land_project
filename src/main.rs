@@ -5,11 +5,12 @@ use models::card::Card;
 use once_cell::sync::Lazy;
 use std::sync::Mutex;
 
-use crate::models::scryfall::{BulkData, BulkResponse};
+use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree};
 mod models;
 
 
-const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
+const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
+// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
 const ALL_CARDS_FILE_PATH: &str = "./all_cards.json";
 
 static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
@@ -17,6 +18,15 @@ static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
         Ok(hm) => Mutex::new(hm),
         Err(_) => Mutex::new(HashMap::new())
     }
+});
+
+static NAME_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
+    let all_cards = ALL_CARDS.lock().unwrap();
+    let mut trie = TrieTree::new();
+    for card in all_cards.values().into_iter() {
+        let succ = trie.insert(card.name.clone().to_lowercase(), card.id.clone());
+    }
+    Mutex::new(trie)
 });
 
 #[get("/")]
@@ -39,7 +49,8 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(hello)
             .service(echo)
-            .service(get_cards)
+            .service(get_card)
+            .service(get_card_by_name)
             .route("/hey", web::get().to(manual_hello))
     })
     .bind(("127.0.0.1", 8080))?
@@ -47,19 +58,16 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
-#[get("/c")]
-async fn get_cards() -> impl Responder {
-    let bulk = match get_bulk_data().await {
-        Some(data) => data,
-        None => return HttpResponse::InternalServerError().finish(),
-    };
-    let string = match serde_json::to_string(&bulk) {
-        Ok(s) => s,
-        Err(e) => return HttpResponse::InternalServerError().finish(),
-    };
-    let data_zip = download_card_data(&bulk).await;
-    HttpResponse::Ok().json(bulk)
+#[get("/c/{name}")]
+async fn get_card(name: web::Path<String>) -> impl Responder {
+    let all_cards = ALL_CARDS.lock().unwrap();
+    HttpResponse::Ok().json(all_cards.get(&name.to_string()))
+}
 
+#[get("/n/{name}")]
+async fn get_card_by_name(name: web::Path<String>) -> impl Responder {
+    let trie = NAME_TRIE.lock().unwrap();
+    HttpResponse::Ok().json(trie.collect(name.to_string().to_lowercase()))
 }
 
 async fn download_card_data(bulk_response: &BulkResponse) {
@@ -83,11 +91,6 @@ async fn download_card_data(bulk_response: &BulkResponse) {
     };
     println!("Creating card file");
     let path = Path::new(ALL_CARDS_FILE_PATH);
-
-    let mut file = match File::create(&path) {
-        Err(why) => panic!("couldn't create {}", why),
-        Ok(file) => file,
-    };
     let content = match response.text().await {
         Ok(c) => c,
         Err(e) => {
