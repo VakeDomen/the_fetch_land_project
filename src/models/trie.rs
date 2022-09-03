@@ -1,5 +1,3 @@
-use reqwest::header;
-
 #[derive(Debug)]
 pub struct TrieTree {
     head: Option<Box<TrieNode>>

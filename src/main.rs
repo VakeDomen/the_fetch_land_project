@@ -1,4 +1,4 @@
-use std::{fs::File, path::Path, io::Write, collections::HashMap, env};
+use std::{collections::HashMap, env};
 use api::token::{login, auth};
 use dotenv::dotenv;
 use actix_web::{get, post, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
@@ -8,7 +8,7 @@ use once_cell::sync::Lazy;
 use std::sync::Mutex;
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
-use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree, card::CardPublic};
+use crate::models::{scryfall::BulkResponse, trie::TrieTree, card::CardPublic};
 
 mod models;
 mod api;

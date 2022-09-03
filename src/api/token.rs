@@ -1,21 +1,18 @@
 use std::env;
-
-use actix_session::Session;
-use actix_web::web::Json;
 use actix_web::{HttpResponse, get, web};
 use actix_web::http::header;
 use oauth2::{
     AuthorizationCode,
     CsrfToken, 
     Scope, 
-    PkceCodeChallenge, PkceCodeVerifier, TokenResponse,
+    PkceCodeChallenge, 
+    PkceCodeVerifier,
 };
 use oauth2::reqwest::async_http_client;
 use crate::models::{auth::AuthRequest, state::AppState};
 
 #[get("/auth")]
 pub async fn auth(
-    session: Session,
     data: web::Data<AppState>,
     params: web::Query<AuthRequest>,
 ) -> HttpResponse {
@@ -56,7 +53,7 @@ pub async fn auth(
 }
 
 #[get("/login")]
-pub async fn login(session: Session, data: web::Data<AppState>) -> HttpResponse {
+pub async fn login(data: web::Data<AppState>) -> HttpResponse {
     // Google supports Proof Key for Code Exchange (PKCE - https://oauth.net/2/pkce/).
     // Create a PKCE code verifier and SHA-256 encode it as a code challenge.
     // let (pkce_code_challenge, pkce_code_verifier) = PkceCodeChallenge::new_random_sha256();

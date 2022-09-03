@@ -7,7 +7,6 @@ edition = "2021"
 
 [dependencies]
 actix-web = { version = "4", features = ["openssl"]}
-actix-session = "0.7.1"
 openssl = "0.10"
 oauth2 = "4.2"
 jsonwebtoken = "8.1.1"
