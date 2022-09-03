@@ -1,12 +1,17 @@
-use std::{fs::File, path::Path, io::Write, collections::HashMap};
+use std::{fs::File, path::Path, io::Write, collections::HashMap, env};
+use api::token::{login, auth};
 use dotenv::dotenv;
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-use models::card::Card;
+use actix_web::{get, post, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
+use models::{card::Card, state::AppState};
+use oauth2::{ClientId, ClientSecret, AuthUrl, TokenUrl, basic::BasicClient, RedirectUrl};
 use once_cell::sync::Lazy;
 use std::sync::Mutex;
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree, card::CardPublic};
+
 mod models;
+mod api;
 
 #[macro_use] extern crate diesel;
 
@@ -46,17 +51,55 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    std::env::set_var("RUST_LOG", "debug");
+    std::env::set_var("RUST_BACKTRACE", "1");
+    env_logger::init();
     dotenv().ok();
+    // setup ssl
+    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+    builder
+        .set_private_key_file("key.pem", SslFiletype::PEM)
+        .unwrap();
+    builder.set_certificate_chain_file("cert.pem").unwrap();
+
     download_card_data(&get_bulk_data().await.unwrap()).await;
     HttpServer::new(|| {
+        let google_client_id = ClientId::new(
+            env::var("OAUTH_CLIENT_ID")
+                .expect("Missing the OAUTH_CLIENT_ID environment variable."),
+        );
+        let google_client_secret = ClientSecret::new(
+            env::var("OAUTH_CLIENT_SECRET")
+                .expect("Missing the OAUTH_CLIENT_SECRET environment variable."),
+        );
+        let auth_url = AuthUrl::new("https://accounts.google.com/o/oauth2/v2/auth".to_string())
+            .expect("Invalid authorization endpoint URL");
+        let token_url = TokenUrl::new("https://www.googleapis.com/oauth2/v3/token".to_string())
+            .expect("Invalid token endpoint URL");
+
+        // Set up the config for the Google OAuth2 process.
+        let client = BasicClient::new(
+            google_client_id,
+            Some(google_client_secret),
+            auth_url,
+            Some(token_url),
+        )
+        .set_redirect_uri(
+            RedirectUrl::new("https://localhost:8080/auth".to_string())
+                .expect("Invalid redirect URL"),
+        );
+
         App::new()
+            .app_data(Data::new(AppState { oauth: client }))
             .service(hello)
             .service(echo)
+            .service(auth)
             .service(get_card)
+            .service(login)
             .service(get_card_by_name)
             .route("/hey", web::get().to(manual_hello))
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind_openssl("0.0.0.0:8080", builder)?
     .run()
     .await
 }
