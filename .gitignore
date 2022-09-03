@@ -16,3 +16,5 @@ Cargo.lock
 all_cards.json
 all_cards_hash_map.json
 small_hm.json
+.env
+sqlite.db

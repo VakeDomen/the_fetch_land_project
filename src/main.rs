@@ -1,5 +1,5 @@
 use std::{fs::File, path::Path, io::Write, collections::HashMap};
-
+use dotenv::dotenv;
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 use models::card::Card;
 use once_cell::sync::Lazy;
@@ -8,6 +8,7 @@ use std::sync::Mutex;
 use crate::models::{scryfall::{BulkData, BulkResponse}, trie::TrieTree, card::CardPublic};
 mod models;
 
+#[macro_use] extern crate diesel;
 
 const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
 // const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
@@ -45,6 +46,7 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    dotenv().ok();
     download_card_data(&get_bulk_data().await.unwrap()).await;
     HttpServer::new(|| {
         App::new()
