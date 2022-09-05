@@ -2,10 +2,19 @@ pub mod sale_operaations {
     use diesel::result::Error;
     use diesel::{prelude::*};
 
+    use crate::api::user_sale_new::SalePostData;
     use crate::database::models::SqliteSale;
     use crate::database::schema::sales::dsl::*;
 
     use super::sqlite_operations::establish_connection;
+
+    pub fn insert_sale(sqlite_sale: SqliteSale) ->  Result<SqliteSale, Error> {
+        let conn = establish_connection();
+        let _ = insert_into(sales)
+            .values(&sqlite_sale)
+            .execute(&conn)?;
+        Ok(sqlite_sale)
+    }
 
     pub fn get_sales_by_user(uid: String) -> Result<Vec<SqliteSale>, Error> {
         let conn = establish_connection();

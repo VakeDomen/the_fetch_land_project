@@ -6,3 +6,4 @@ pub mod user_delete;
 pub mod card_name;
 pub mod card_id;
 pub mod user_sales;
+pub mod user_sale_new;
