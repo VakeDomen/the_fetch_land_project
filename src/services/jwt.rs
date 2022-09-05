@@ -3,8 +3,6 @@ use std::env;
 use serde::{Deserialize, Serialize};
 use jsonwebtoken::{decode, DecodingKey, Validation, Algorithm, TokenData, encode, Header, EncodingKey, errors::Error};
 
-use crate::models::auth::AuthUserData;
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
    pub sub: String,
