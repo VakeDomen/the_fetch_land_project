@@ -1,5 +1,5 @@
 use std::{collections::HashMap, env};
-use api::{token::{login, auth}, test::{ decode_route}};
+use api::{auth::auth, login::login};
 use dotenv::dotenv;
 use actix_web::{get, post, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
 use models::{card::Card, state::AppState};
@@ -36,20 +36,6 @@ static NAME_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
     }
     Mutex::new(trie)
 });
-
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
-}
-
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
-
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
-}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -93,15 +79,10 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
             .app_data(Data::new(AppState { oauth: client }))
-            .service(hello)
-            .service(echo)
             .service(auth)
             .service(get_card)
             .service(login)
             .service(get_card_by_name)
-            // .service(encode_route)
-            .service(decode_route)
-            .route("/hey", web::get().to(manual_hello))
     })
     .bind_openssl("0.0.0.0:8080", builder)?
     .run()
