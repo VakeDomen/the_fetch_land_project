@@ -32,9 +32,12 @@ pub mod sale_operaations {
         Ok(resp)
     }
 
-    pub fn delete_sale(sid: String) -> Result<(), Error> {
+    pub fn delete_sale(uid: String, sid: String) -> Result<(), Error> {
         let conn = establish_connection();
-        diesel::delete(sales.filter(id.eq(sid)))
+        diesel::delete(sales
+                .filter(id.eq(sid))
+                .filter(user_id.eq(uid))
+            )
             .execute(&conn)?;
         Ok(())
     }
