@@ -19,7 +19,6 @@ pub fn encode_jwt(user_id: String) -> Result<String, Error> {
     )
 }
 
-
 pub fn decode_jwt(token: String) -> Option<String> {
     let secret = env::var("JWT_SECRET").expect("Missing the JWT_SECRET environment variable.");
     match decode::<Claims>(

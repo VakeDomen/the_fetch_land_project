@@ -8,7 +8,7 @@ struct TrieNode {
     pub letter: Option<char>,
     leaf: bool,
     values: Vec<String>,
-    children: Vec<Box<TrieNode>>,
+    children: Vec<TrieNode>,
 }
 
 impl TrieTree {
@@ -17,18 +17,17 @@ impl TrieTree {
     }
 
     pub fn insert(&mut self, word: String, value: String) -> bool {
-        if word.len() == 0 {
+        if word.is_empty() {
             return false;
         }
-        match self.head {
-            None => self.head = Some(Box::new(TrieNode {
+        if self.head.is_none() {
+            self.head = Some(Box::new(TrieNode {
                 letter: None,
                 leaf: false,
                 values: vec![],
                 children: vec![],
-            })),
-            _ => ()
-        };
+            }));
+        }
 
         match &mut self.head {
             Some(head) => head.insert(word, value),
@@ -46,7 +45,7 @@ impl TrieTree {
 
 impl TrieNode {
     pub fn collect(&self, mut word: String) -> Vec<String> {
-        if word.len() == 0 {
+        if word.is_empty() {
             let mut out = match self.leaf {
                 true => self.values.clone(),
                 false => vec![],
@@ -55,7 +54,7 @@ impl TrieNode {
                 let mut ch = child.collect(word.clone());
                 out.append(&mut ch);
             }
-            return out;
+            out
         } else {
             let first_char = word.remove(0);
             let mut next_child_index = None;
@@ -75,10 +74,10 @@ impl TrieNode {
 
     fn insert(&mut self, mut word: String, value: String) -> bool {
         // we are the last node
-        if word.len() == 0 {
+        if word.is_empty() {
             self.leaf = true;
             self.values.push(value);
-            return true;
+            true
         } else {
             let first_char = word.remove(0);
             let mut next_child_index = None;
@@ -90,14 +89,13 @@ impl TrieNode {
                 }
             }
             // if not create one
-            match next_child_index {
-                None => self.children.push(Box::new(TrieNode {
+            if next_child_index == None {
+                self.children.push(TrieNode {
                     letter: Some(first_char),
                     leaf: false,
                     values: vec![],
                     children: vec![],
-                })),
-                _ => ()
+                });
             }
             // recursive insert into next child
             let last_index = self.children.len() - 1;

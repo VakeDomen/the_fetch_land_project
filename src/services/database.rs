@@ -11,7 +11,7 @@ pub mod user_operations {
     pub fn get_user_by_google_id(gid: String) ->  Result<Option<SqliteUser>, Error> {
         let conn = establish_connection();
         let mut resp = users
-            .filter(google_id.eq(gid.to_string()))
+            .filter(google_id.eq(gid))
             .load::<SqliteUser>(&conn)?;
         Ok(resp.pop())
     }

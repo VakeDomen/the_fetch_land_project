@@ -9,7 +9,7 @@ use oauth2::{
 };
 use crate::models::state::AppState;
 
-#[get("/login")]
+#[get("/auth/login")]
 pub async fn login(data: web::Data<AppState>) -> HttpResponse {
     // Google supports Proof Key for Code Exchange (PKCE - https://oauth.net/2/pkce/).
     // Create a PKCE code verifier and SHA-256 encode it as a code challenge.
