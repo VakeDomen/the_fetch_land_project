@@ -1,7 +1,7 @@
 use std::env;
 
 use serde::{Deserialize, Serialize};
-use jsonwebtoken::{decode, DecodingKey, Validation, Algorithm, TokenData, encode, Header, EncodingKey, errors::Error};
+use jsonwebtoken::{decode, DecodingKey, Validation, Algorithm, encode, Header, EncodingKey, errors::Error};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
@@ -21,12 +21,15 @@ pub fn encode_jwt(user_id: String) -> Result<String, Error> {
 }
 
 
-pub fn decode_jwt(token: String) -> Result<TokenData<Claims>, Error> {
+pub fn decode_jwt(token: String) -> Option<String> {
     // Claims is a struct that implements Deserialize
     let secret = env::var("JWT_SECRET").expect("Missing the JWT_SECRET environment variable.");
-    decode::<Claims>(
+    match decode::<Claims>(
         &token, 
         &DecodingKey::from_secret(secret.as_bytes()), 
         &Validation::new(Algorithm::HS256)
-    )
+    ) {
+        Ok(data) => Some(data.claims.sub),
+        Err(_) => None
+    }
 }

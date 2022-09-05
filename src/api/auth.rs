@@ -9,7 +9,7 @@ use serde::Serialize;
 use crate::services::database::user_operations::{insert_user, get_user_by_google_id};
 use crate::models::auth::AuthUserData;
 use crate::models::{auth::AuthRequest, state::AppState};
-use crate::services::jwt::encode_jwt;
+use crate::services::auth_jwt::encode_jwt;
 
 #[derive(Serialize)]
 struct JWTTokenResponse {

@@ -1,5 +1,6 @@
 use std::{collections::HashMap, env};
-use api::{auth::auth, login::login};
+use actix_web_httpauth::extractors::bearer::Config;
+use api::{auth::auth, login::login, update_user::update_user};
 use dotenv::dotenv;
 use actix_web::{get, post, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
 use models::{card::Card, state::AppState};
@@ -79,10 +80,12 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
             .app_data(Data::new(AppState { oauth: client }))
+            .app_data(Config::default())
             .service(auth)
             .service(get_card)
             .service(login)
             .service(get_card_by_name)
+            .service(update_user)
     })
     .bind_openssl("0.0.0.0:8080", builder)?
     .run()
