@@ -10,7 +10,6 @@ pub struct Claims {
 }
 
 pub fn encode_jwt(user_id: String) -> Result<String, Error> {
-    // Claims is a struct that implements Deserialize
     let claims = Claims{ sub: user_id, exp: 10000000000 };
     let secret = env::var("JWT_SECRET").expect("Missing the JWT_SECRET environment variable.");
     encode(
@@ -22,7 +21,6 @@ pub fn encode_jwt(user_id: String) -> Result<String, Error> {
 
 
 pub fn decode_jwt(token: String) -> Option<String> {
-    // Claims is a struct that implements Deserialize
     let secret = env::var("JWT_SECRET").expect("Missing the JWT_SECRET environment variable.");
     match decode::<Claims>(
         &token, 

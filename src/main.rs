@@ -1,8 +1,8 @@
 use std::{collections::HashMap, env};
 use actix_web_httpauth::extractors::bearer::Config;
-use api::{auth::auth, login::login, update_user::update_user};
+use api::{auth_hook::auth, auth_login::login, update_user::update_user};
 use dotenv::dotenv;
-use actix_web::{get, post, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
 use models::{card::Card, state::AppState};
 use oauth2::{ClientId, ClientSecret, AuthUrl, TokenUrl, basic::BasicClient, RedirectUrl};
 use once_cell::sync::Lazy;
@@ -20,7 +20,6 @@ mod services;
 
 const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
 // const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
-const ALL_CARDS_FILE_PATH: &str = "./all_cards.json";
 
 static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
     match serde_any::from_file(ALL_CARDS_HASH_MAP_FILE_PATH) {
@@ -74,7 +73,7 @@ async fn main() -> std::io::Result<()> {
             Some(token_url),
         )
         .set_redirect_uri(
-            RedirectUrl::new("https://localhost:8080/auth".to_string())
+            RedirectUrl::new("https://localhost:8080/auth/hook".to_string())
                 .expect("Invalid redirect URL"),
         );
 

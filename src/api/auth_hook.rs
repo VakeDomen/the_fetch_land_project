@@ -16,7 +16,7 @@ struct JWTTokenResponse {
     token: String,
 }
 
-#[get("/auth")]
+#[get("/auth/hook")]
 pub async fn auth(
     data: web::Data<AppState>,
     params: web::Query<AuthRequest>,

@@ -1,4 +1,4 @@
-use actix_web::{patch, HttpResponse, get, web};
+use actix_web::{patch, HttpResponse, web};
 use actix_web_httpauth::extractors::bearer::BearerAuth;
 use serde::{Deserialize, Serialize};
 
