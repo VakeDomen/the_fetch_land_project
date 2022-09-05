@@ -2,10 +2,27 @@ pub mod sale_operaations {
     use diesel::result::Error;
     use diesel::{prelude::*};
 
+    use crate::database::models::SqliteSale;
     use crate::database::schema::sales::dsl::*;
 
     use super::sqlite_operations::establish_connection;
 
+    pub fn get_sales_by_user(uid: String) -> Result<Vec<SqliteSale>, Error> {
+        let conn = establish_connection();
+        let resp = sales
+            .filter(user_id.eq(uid))
+            .load::<SqliteSale>(&conn)?;
+        Ok(resp)
+    }
+
+    pub fn get_sales_by_card(cid: String) -> Result<Vec<SqliteSale>, Error> {
+        let conn = establish_connection();
+        let resp = sales
+            .filter(sale_object_id.eq(cid))
+            .filter(sale_type.eq("CARD"))
+            .load::<SqliteSale>(&conn)?;
+        Ok(resp)
+    }
 
     pub fn delete_sale(sid: String) -> Result<(), Error> {
         let conn = establish_connection();

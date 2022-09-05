@@ -1,6 +1,6 @@
 use std::env;
 use actix_web_httpauth::extractors::bearer::Config;
-use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete};
+use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales};
 use dotenv::dotenv;
 use actix_web::{web::Data, App, HttpServer};
 use models::state::AppState;
@@ -82,6 +82,7 @@ async fn main() -> std::io::Result<()> {
             .service(user_update)
             .service(user_get)
             .service(user_delete)
+            .service(user_sales)
     })
     .bind_openssl("0.0.0.0:8080", builder)?
     .run()
