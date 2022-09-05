@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
 pub struct AuthRequest {
@@ -17,4 +17,13 @@ pub struct AuthData {
     pub family_name:	String,
     pub picture:	String,
     pub locale:	String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AuthUserData {
+    pub id: String,
+    pub email: String,
+    pub verified_email: bool,
+    pub picture: String,
+    pub locale: String,
 }

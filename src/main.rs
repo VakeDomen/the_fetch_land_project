@@ -1,5 +1,5 @@
 use std::{collections::HashMap, env};
-use api::token::{login, auth};
+use api::{token::{login, auth}, test::{ decode_route}};
 use dotenv::dotenv;
 use actix_web::{get, post, web::{self, Data}, App, HttpResponse, HttpServer, Responder};
 use models::{card::Card, state::AppState};
@@ -12,6 +12,8 @@ use crate::models::{scryfall::BulkResponse, trie::TrieTree, card::CardPublic};
 
 mod models;
 mod api;
+mod database;
+mod services;
 
 #[macro_use] extern crate diesel;
 
@@ -97,6 +99,8 @@ async fn main() -> std::io::Result<()> {
             .service(get_card)
             .service(login)
             .service(get_card_by_name)
+            // .service(encode_route)
+            .service(decode_route)
             .route("/hey", web::get().to(manual_hello))
     })
     .bind_openssl("0.0.0.0:8080", builder)?

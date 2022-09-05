@@ -2,8 +2,11 @@
 create table users
 (
     id          varchar not null primary key,
-    username    varchar not null,
-    password    varchar not null
+    google_id   varchar not null,
+    img         varchar not null,
+    email       varchar not null,
+    name        varchar null,
+    phone       varchar null
 );
 
 create table sales
@@ -14,6 +17,6 @@ create table sales
     sale_object_id  varchar not null,
     location_coords varchar not null,
     created         varchar not null,
-    price           int not null,
-    description     varchar not null
+    description     varchar not null,
+    price           int not null
 );

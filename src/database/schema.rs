@@ -6,16 +6,19 @@ table! {
         sale_object_id -> Text,
         location_coords -> Text,
         created -> Text,
-        price -> Integer,
         description -> Text,
+        price -> Integer,
     }
 }
 
 table! {
     users (id) {
         id -> Text,
-        username -> Text,
-        password -> Text,
+        google_id -> Text,
+        img -> Text,
+        email -> Text,
+        name -> Text,
+        phone -> Text,
     }
 }
 
