@@ -1,8 +1,7 @@
 pub mod sale_operaations {
     use diesel::result::Error;
-    use diesel::{prelude::*};
+    use diesel::{prelude::*, insert_into};
 
-    use crate::api::user_sale_new::SalePostData;
     use crate::database::models::SqliteSale;
     use crate::database::schema::sales::dsl::*;
 

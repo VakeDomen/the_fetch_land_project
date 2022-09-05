@@ -4,8 +4,10 @@ use uuid::Uuid;
 use crate::{models::auth::AuthUserData, api::user_sale_new::SalePostData};
 
 use super::schema::users;
+use super::schema::sales;
 
-#[derive(Queryable, Debug, Insertable)]
+#[derive(Queryable, Debug, Identifiable, AsChangeset, Insertable)]
+#[table_name = "sales"]
 pub struct SqliteSale {
     pub id: String,
     pub sale_type: String,
