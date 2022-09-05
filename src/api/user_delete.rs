@@ -16,9 +16,7 @@ pub async fn user_delete(auth: BearerAuth) -> HttpResponse {
     }
 
     match delete_user(user_id) {
-        Ok(_) => (),
+        Ok(_) => HttpResponse::Ok().finish(),
         Err(e) => return HttpResponse::InternalServerError().json(e.to_string())
     }
-
-    HttpResponse::Ok().finish()
 }

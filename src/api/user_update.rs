@@ -22,13 +22,11 @@ pub async fn user_update(auth: BearerAuth, body: web::Json<UserPatchData>) -> Ht
         Err(e) => return HttpResponse::InternalServerError().body(e.to_string()),
     };
 
-    let user = match get_user_by_id(user_id) {
-        Err(e) => return HttpResponse::InternalServerError().body(e.to_string()),
+    match get_user_by_id(user_id) {
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
         Ok(user_option) => match user_option {
-            Some(user) => user,
-            None => return HttpResponse::InternalServerError().finish(),
+            Some(user) => HttpResponse::Ok().json(User::from(user)),
+            None => HttpResponse::InternalServerError().finish(),
         },
-    };
-
-    HttpResponse::Ok().json(User::from(user))
+    }
 }
