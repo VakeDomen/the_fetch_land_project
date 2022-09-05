@@ -1,7 +1,7 @@
 pub mod user_operations {
     use diesel::{prelude::*, insert_into};
     use diesel::result::Error;
-    use crate::api::update_user::UserPatchData;
+    use crate::api::user_update::UserPatchData;
     use crate::database::models::SqliteUser;
     use crate::database::schema::users::dsl::*;
     use crate::models::auth::AuthUserData;

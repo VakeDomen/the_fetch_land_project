@@ -11,7 +11,7 @@ pub struct UserPatchData {
 }
 
 #[patch("/user/update")]
-pub async fn update_user(auth: BearerAuth, body: web::Json<UserPatchData>) -> HttpResponse {
+pub async fn user_update(auth: BearerAuth, body: web::Json<UserPatchData>) -> HttpResponse {
     let user_id = match decode_jwt(auth.token().to_string()) {
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
