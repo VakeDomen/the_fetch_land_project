@@ -10,7 +10,7 @@ pub struct Claims {
 }
 
 pub fn encode_jwt(user_id: String) -> Result<String, Error> {
-    let claims = Claims{ sub: user_id, exp: 10000000000 };
+    let claims = Claims{ sub: user_id, exp: (60 * 60 * 10000000) };
     let secret = env::var("JWT_SECRET").expect("Missing the JWT_SECRET environment variable.");
     encode(
         &Header::default(), 
@@ -27,6 +27,9 @@ pub fn decode_jwt(token: String) -> Option<String> {
         &Validation::new(Algorithm::HS256)
     ) {
         Ok(data) => Some(data.claims.sub),
-        Err(_) => None
+        Err(e) =>  {
+            println!("Error decoding JTW token: {:#?}", e.to_string());
+            None
+        }
     }
 }

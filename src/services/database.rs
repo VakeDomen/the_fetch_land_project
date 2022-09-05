@@ -1,3 +1,27 @@
+pub mod sale_operaations {
+    use diesel::result::Error;
+    use diesel::{prelude::*};
+
+    use crate::database::schema::sales::dsl::*;
+
+    use super::sqlite_operations::establish_connection;
+
+
+    pub fn delete_sale(sid: String) -> Result<(), Error> {
+        let conn = establish_connection();
+        diesel::delete(sales.filter(id.eq(sid)))
+            .execute(&conn)?;
+        Ok(())
+    }
+
+    pub fn delete_all_user_sales(uid: String) -> Result<(), Error> {
+        let conn = establish_connection();
+        diesel::delete(sales.filter(user_id.eq(uid)))
+            .execute(&conn)?;
+        Ok(())
+    }
+}
+
 pub mod user_operations {
     use diesel::{prelude::*, insert_into};
     use diesel::result::Error;
@@ -38,6 +62,13 @@ pub mod user_operations {
         let conn = establish_connection();
         diesel::update(users.filter(id.eq(uid)))
             .set((name.eq(data.name), phone.eq(data.phone)))
+            .execute(&conn)?;
+        Ok(())
+    }
+
+    pub fn delete_user(uid: String) -> Result<(), Error> {
+        let conn = establish_connection();
+        diesel::delete(users.filter(id.eq(uid)))
             .execute(&conn)?;
         Ok(())
     }
