@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { FrontComponent } from './pages/front/front.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: "sale/{id}",
     component: SaleComponent,
+  },
+  {
+    path: "search",
+    component: AdvancedSearchComponent,
   },
   {
     path: "**",

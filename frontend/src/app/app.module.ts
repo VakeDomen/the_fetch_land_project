@@ -8,6 +8,8 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SaleComponent } from './pages/sale/sale.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { SaleComponent } from './pages/sale/sale.component';
     ContactComponent,
     ProfileComponent,
     RegisterComponent,
-    SaleComponent
+    SaleComponent,
+    NavbarComponent,
+    AdvancedSearchComponent
   ],
   imports: [
     BrowserModule,
