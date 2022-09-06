@@ -49,26 +49,11 @@
                 </span>
                 Profil
             </a>
-            <!-- <a *ngIf="isLoggedIn() && isAdmin()" class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='stats'}"
-                (click)="activeTab='stats'; tab.emit('stats') ; toggleNavbar();" [routerLink]="['/stats']"
-                routerLinkActive="router-link-active" >
-                <span class="file-icon">
-                    <i class="fas fa-chart-line"></i>
-                </span>
-                Stats
-            </a> -->
-            <!-- <a *ngIf="isLoggedIn()" class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='report'}"
-                (click)="activeTab='report'; tab.emit('report') ; toggleNavbar();" [routerLink]="['/report']"
-                routerLinkActive="router-link-active">
-                <span class="file-icon">
-                    <i class="fas fa-bug"></i>
-                </span>
-                
-            </a> -->
+
             <div class="navbar-item">
-                <div class="buttons">
-                    
-                    <!-- <app-local-auth [isPage]="false" (modalClosedEvent)="toggleNavbar()"></app-local-auth> -->
+                <div class="buttons ">
+                    <button *ngIf="!isLoggedIn()" class="loginBtn loginBtn--google" (click)="googleLogin()">Login</button>
+                    <button *ngIf="isLoggedIn()" class="button is-primary" (click)="logout()">Logout</button>
                 </div>
             </div>
         </div>

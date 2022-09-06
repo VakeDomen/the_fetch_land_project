@@ -6,6 +6,7 @@ import { FrontComponent } from './pages/front/front.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SaleComponent } from './pages/sale/sale.component';
+import { TokenComponent } from './pages/token/token.component';
 
 const routes: Routes = [
   {
@@ -21,12 +22,16 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: "sale/{id}",
+    path: "sale/:id",
     component: SaleComponent,
   },
   {
     path: "search",
     component: AdvancedSearchComponent,
+  },
+  {
+    path: "token/:token",
+    component: TokenComponent,
   },
   {
     path: "**",

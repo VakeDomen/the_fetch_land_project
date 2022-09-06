@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { SaleComponent } from './pages/sale/sale.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
+import { TokenComponent } from './pages/token/token.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search
     RegisterComponent,
     SaleComponent,
     NavbarComponent,
-    AdvancedSearchComponent
+    AdvancedSearchComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

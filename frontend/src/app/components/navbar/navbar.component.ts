@@ -35,11 +35,15 @@ export class NavbarComponent implements OnInit {
     this.navMenu ? this.navMenu.nativeElement.classList.remove('is-active') : '';
   }
 
-  isAdmin(): boolean {
-    return false;
-  }
-
   isLoggedIn(): boolean {
     return this.auth.isLoggedIn();
+  }
+
+  googleLogin(): void {
+    document.location = this.auth.getGoogleLoginUrl()
+  }
+
+  logout(): void {
+    this.auth.logout();
   }
 }
