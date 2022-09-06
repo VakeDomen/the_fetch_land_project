@@ -11,6 +11,7 @@ pub struct SalePostData {
     pub location_coords: String,
     pub description: String,
     pub price: i32,
+    pub amount: i32,
 }
 
 #[post("/user/sale/")]

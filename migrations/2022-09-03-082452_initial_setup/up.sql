@@ -18,5 +18,6 @@ create table sales
     location_coords varchar not null,
     created         varchar not null,
     description     varchar not null,
-    price           int not null
+    price           int not null,
+    amount          int not null
 );

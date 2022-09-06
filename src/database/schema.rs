@@ -8,6 +8,7 @@ table! {
         created -> Text,
         description -> Text,
         price -> Integer,
+        amount -> Integer,
     }
 }
 

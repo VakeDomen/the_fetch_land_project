@@ -17,6 +17,7 @@ pub struct SqliteSale {
     pub created: String,
     pub description: String,
     pub price: i32,
+    pub amount: i32,
 }
 
 impl SqliteSale {
@@ -29,7 +30,8 @@ impl SqliteSale {
             location_coords: post_data.location_coords, 
             created: Utc::now().naive_utc().to_string(), 
             description: post_data.description, 
-            price: post_data.price 
+            price: post_data.price,
+            amount: post_data.amount,
         }
     }
 }
