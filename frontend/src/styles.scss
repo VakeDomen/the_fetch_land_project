@@ -15,19 +15,19 @@ $navbar-item-active-color: $fl_black;
 $navbar-burger-color: $fl_black;
 $navbar-item-color: $fl_orange;
 $navbar-tab-active-color: $fl_black;
-$navbar-tab-hover-border-bottom-color: $fl_black;
+$navbar-dropdown-item-hover-color: $fl_black;
+$navbar-dropdown-item-active-color: $fl_black;
+$navbar-tab-hover-border-bottom-color: $fl_orange;
+$navbar-tab-active-border-bottom-color: $fl_orange;
 
 $navbar-item-hover-background-color: $fl_orange; 
 $navbar-item-active-background-color: $fl_dark_orange;
 $navbar-tab-hover-background-color: $fl_orange; 
 $navbar-tab-active-background-color: $fl_dark_orange;
 $navbar-dropdown-background-color: $fl_black;
-
-$navbar-tab-active-border-bottom-color: $fl_orange;
-$navbar-dropdown-item-hover-color: $fl_black;
 $navbar-dropdown-item-hover-background-color: $fl_black;
-$navbar-dropdown-item-active-color: $fl_black;
 $navbar-dropdown-item-active-background-color: $fl_black;
+
 
 @import "../node_modules/bulma/bulma.sass";
 
@@ -40,3 +40,7 @@ $navbar-dropdown-item-active-background-color: $fl_black;
 @import '~node_modules/bulma/sass/components/navbar';
 @import '~node_modules/bulma/sass/layout/hero';
 @import '~node_modules/bulma/sass/layout/section';
+
+body {
+    height: 100vh;
+}

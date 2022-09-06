@@ -3,13 +3,14 @@
         <a class="navbar-logo" (click)="activeTab='home'; tab.emit('home') ; closeNavbar()" [routerLink]="['/']">
             <div>
                 <p class="navbar-item-center-icon">
-                    <img src="assets/logo/fetchland_logo_thin.png" alt="logo" class="is-hidden-mobile mt-2 ml-3" width="250">
-                    <img src="assets/logo/fetchland_logo_img.png" alt="logo" class="is-hidden-tablet mt-3 ml-3" width="48">
+                    <!-- <img src="assets/logo/fetchland_logo_thin.png" alt="logo" class="is-hidden-mobile mt-2 ml-3" width="250">
+                    <img src="assets/logo/fetchland_logo_img.png" alt="logo" class="is-hidden-tablet mt-3 ml-3" width="48"> -->
+                    <img src="assets/logo/fetchland_logo_thin.png" alt="logo" class="mt-2 ml-3" width="250">
                 </p>
             </div>
         </a>
 
-        <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger is-primary" aria-label="menu"
+        <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger has-text-primary" aria-label="menu"
             aria-expanded="false" data-target="navMenu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -17,7 +18,7 @@
         </a>
     </div>
 
-    <div #navMenu id="navMenu" class="navbar-menu">
+    <div #navMenu id="navMenu" class="navbar-menu has-background-grey-dark">
         <div class="navbar-start" >
             
         </div>
@@ -26,8 +27,8 @@
             <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='search'}"
                 (click)="activeTab='search'; tab.emit('search') ; toggleNavbar();" [routerLink]="['/search']"
                 routerLinkActive="router-link-active">
-                <span class="file-icon">
-                    <i class="fas fa-trophy"></i>
+                <span class="file-icon mr-2 mt-1">
+                    <i class="fad fa-search"></i>
                 </span>
                 Napredno iskanje
             </a>
@@ -35,16 +36,16 @@
             <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='contact'}"
                 (click)="activeTab='contact'; tab.emit('contact') ; toggleNavbar();" [routerLink]="['/contact']"
                 routerLinkActive="router-link-active">
-                <span class="file-icon">
-                    <i class="fas fa-users-cog"></i>
+                <span class="file-icon mr-2 mt-1">
+                    <i class="fas fa-address-card"></i>
                 </span>
                 Kontakt
             </a>
             <a *ngIf="isLoggedIn()" class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='profile'}"
                 (click)="activeTab='profile'; tab.emit('profile') ; toggleNavbar();" [routerLink]="['/profile']"
                 routerLinkActive="router-link-active" >
-                <span class="file-icon">
-                    <i class="fas fa-gamepad"></i>
+                <span class="file-icon mr-2 mt-1">
+                    <i class="fas fa-user-cog"></i>
                 </span>
                 Profil
             </a>
