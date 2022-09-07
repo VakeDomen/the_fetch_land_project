@@ -6,7 +6,9 @@ import { FrontComponent } from './pages/front/front.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SaleComponent } from './pages/sale/sale.component';
+import { SalesComponent } from './pages/sales/sales.component';
 import { TokenComponent } from './pages/token/token.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,14 +18,21 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "register",
     component: RegisterComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "sale/:id",
     component: SaleComponent,
+  },
+  {
+    path: "sales",
+    component: SalesComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "search",

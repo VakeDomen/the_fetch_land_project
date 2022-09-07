@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   
-  activeTab: 'home' | 'search' | 'contact' | 'profile' = 'home';
+  activeTab: 'home' | 'search' | 'contact' | 'profile' | 'sales' = 'home';
   @Output() tab = new EventEmitter<string>();
 
   @ViewChild('navBurger', {static: true}) navBurger?: ElementRef;

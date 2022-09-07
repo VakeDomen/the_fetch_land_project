@@ -11,6 +11,7 @@ import { SaleComponent } from './pages/sale/sale.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
 import { TokenComponent } from './pages/token/token.component';
+import { SalesComponent } from './pages/sales/sales.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TokenComponent } from './pages/token/token.component';
     SaleComponent,
     NavbarComponent,
     AdvancedSearchComponent,
-    TokenComponent
+    TokenComponent,
+    SalesComponent
   ],
   imports: [
     BrowserModule,
