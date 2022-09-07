@@ -9,14 +9,18 @@ import { User } from '../models/user.model';
 })
 export class DataService {
 
-  private apiUrl = environment.api_url + '/user/';
+  private apiUrlUser = environment.api_url + '/user/';
 
   constructor(
     private http: HttpClient,
   ) { }
   
   getUser(): Observable<User> {
-    return this.http.get<User>(this.apiUrl);
+    return this.http.get<User>(this.apiUrlUser);
+  }
+
+  submitContactInfo(username: string, phone: string): Observable<User> {
+    return this.http.patch<User>(this.apiUrlUser, { name: username, phone: phone });
   }
 
 }

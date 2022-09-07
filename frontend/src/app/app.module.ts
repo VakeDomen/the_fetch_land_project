@@ -14,6 +14,7 @@ import { TokenComponent } from './pages/token/token.component';
 import { SalesComponent } from './pages/sales/sales.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [
     {
