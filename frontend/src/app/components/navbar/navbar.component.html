@@ -39,7 +39,7 @@
                 <span class="file-icon mr-2 mt-1">
                     <i class="fas fa-coins"></i>
                 </span>
-                Prodaja
+                Moje ponudbe
             </a>
             <a *ngIf="isLoggedIn()" class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='profile'}"
                 (click)="activeTab='profile'; tab.emit('profile') ; toggleNavbar();" [routerLink]="['/profile']"

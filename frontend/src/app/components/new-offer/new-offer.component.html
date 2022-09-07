@@ -4,7 +4,16 @@
         <div class="field column is-12">
             <label class="label">Ime karte</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" [(ngModel)]="sale.sale_object_id">
+                <p-autoComplete 
+                    #itemSelect 
+                    inputStyleClass='input' 
+                    [(ngModel)]="itemString" 
+                    [suggestions]="results" 
+                    (completeMethod)="search($event)" 
+                    (onSelect)="itemSelectChange($event)"
+                    [inputStyle]="{'width':'100%'}"
+                ></p-autoComplete> 
+                <!-- <input class="input" type="text" [(ngModel)]="sale.sale_object_id"> -->
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                 </span>
@@ -59,15 +68,7 @@
         <div class="level-item">
             <div>
                 <label for="itemSelect">Select item/animal</label><br>
-                <p-autoComplete 
-                    #itemSelect 
-                    inputStyleClass='input' 
-                    panelStyleClass="box" 
-                    [(ngModel)]="itemString" 
-                    [suggestions]="results" 
-                    (completeMethod)="search($event)" 
-                    (onSelect)="itemSelectChange($event)"
-                ></p-autoComplete>        
+                       
             </div>
         </div>
 

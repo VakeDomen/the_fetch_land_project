@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -6,7 +7,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
   
   getToken() {
     sessionStorage.getItem("token");
@@ -14,6 +17,7 @@ export class AuthService {
 
   logout() {
     sessionStorage.removeItem("token");
+    this.router.navigate([""]);
   }
   
   login(token: string) {

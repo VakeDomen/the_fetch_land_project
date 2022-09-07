@@ -45,5 +45,6 @@ export class NavbarComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
+    this.closeNavbar();
   }
 }
