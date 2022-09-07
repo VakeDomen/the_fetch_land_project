@@ -10,7 +10,7 @@ pub struct UserPatchData {
     pub phone: String,
 }
 
-#[patch("/user/update")]
+#[patch("/user/")]
 pub async fn user_update(auth: BearerAuth, body: web::Json<UserPatchData>) -> HttpResponse {
     let user_id = match decode_jwt(auth.token().to_string()) {
         Some(uid) => uid,
