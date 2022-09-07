@@ -13,6 +13,7 @@ pub struct Sale {
     pub created: String,
     pub description: String,
     pub price: i32,
+    pub amount: i32,
 }
 
 impl Sale {
@@ -25,7 +26,8 @@ impl Sale {
             location_coords: sqlite_sale.location_coords, 
             created: sqlite_sale.created, 
             description: sqlite_sale.description, 
-            price: sqlite_sale.price 
+            price: sqlite_sale.price, 
+            amount: sqlite_sale.amount
         }
     }
 }
