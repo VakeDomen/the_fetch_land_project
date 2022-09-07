@@ -8,6 +8,10 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   constructor() { }
   
+  getToken() {
+    sessionStorage.getItem("token");
+  }
+
   logout() {
     sessionStorage.removeItem("token");
   }

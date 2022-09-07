@@ -12,6 +12,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
 import { TokenComponent } from './pages/token/token.component';
 import { SalesComponent } from './pages/sales/sales.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,9 +30,16 @@ import { SalesComponent } from './pages/sales/sales.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi   : true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
