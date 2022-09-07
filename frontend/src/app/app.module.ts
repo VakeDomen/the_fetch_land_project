@@ -17,6 +17,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { FormsModule } from '@angular/forms';
 import { ContactInfoFormComponent } from './components/contact-info-form/contact-info-form.component';
 import { NewOfferComponent } from './components/new-offer/new-offer.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { NewOfferComponent } from './components/new-offer/new-offer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AutoCompleteModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
   ],
