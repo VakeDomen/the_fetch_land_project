@@ -4,11 +4,12 @@
 
 $fl_orange: #ef8700;
 $fl_dark_orange: #ef7600;
-$fl_light: #efd500;
-$fl_black: #4a4a4a;
+$fl_light: #fdc780;
+$fl_black: hsl(0deg, 0%, 14%);;
 
 $primary: $fl_orange;
 
+// ------------ NAVBAR ------------
 $navbar-item-color: $fl_black;
 $navbar-item-hover-color: $fl_black;
 $navbar-item-active-color: $fl_black;
@@ -28,6 +29,23 @@ $navbar-dropdown-background-color: $fl_black;
 $navbar-dropdown-item-hover-background-color: $fl_black;
 $navbar-dropdown-item-active-background-color: $fl_black;
 
+// ------------ BOX ------------
+$box-color: $fl_light;
+$box-background-color: $fl_black;
+
+// ------------ TITLES ------------
+$title-color: $fl_light;
+$subtitle-color: $fl_light;
+
+// ------------ BUTTON ------------
+$button-text-color: $fl_black;
+
+// ------------ INPUT ------------
+$input-color: $fl_orange;
+$input-background-color: $fl_black;
+$input-border-color: $fl_orange;
+$input-icon-color: $fl_orange;
+
 
 @import "../node_modules/bulma/bulma.sass";
 
@@ -43,4 +61,8 @@ $navbar-dropdown-item-active-background-color: $fl_black;
 
 body {
     height: 100vh;
+}
+
+.label {
+    color: $fl_light;
 }
