@@ -1,8 +1,9 @@
 use std::env;
+use actix_cors::Cors;
 use actix_web_httpauth::extractors::bearer::Config;
 use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales};
 use dotenv::dotenv;
-use actix_web::{web::Data, App, HttpServer};
+use actix_web::{web::Data, App, HttpServer, http};
 use models::state::AppState;
 use oauth2::{ClientId, ClientSecret, AuthUrl, TokenUrl, basic::BasicClient, RedirectUrl};
 use services::card_cache::setup_card_cache;
@@ -38,6 +39,13 @@ async fn main() -> std::io::Result<()> {
 
     // setup Http server
     HttpServer::new(|| {
+        // setup CORS
+        let cors = Cors::default()
+              .allowed_origin("http://localhost:4200")
+              .allowed_methods(vec!["GET", "POST", "PATCH", "DELETE"])
+              .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+              .allowed_header(http::header::CONTENT_TYPE)
+              .max_age(3600);
 
         // setup google auth client
         let google_client_id = ClientId::new(
@@ -73,6 +81,7 @@ async fn main() -> std::io::Result<()> {
 
         // setup routes
         App::new()
+            .wrap(cors)
             .app_data(Data::new(AppState { oauth: client }))
             .app_data(Config::default())
             .service(auth)
