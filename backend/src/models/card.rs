@@ -7,6 +7,9 @@ pub struct CardPublic {
    pub printed_name: Option<String>,
    pub lang: String,
    pub released_at: String,
+   pub highres_image: bool,
+   pub image_status: String,
+   pub image_uris: Option<CardImageUris>,
    pub mana_cost: Option<String>,
    pub cmc: Option<f32>,
    pub oracle_text: Option<String>,
@@ -209,6 +212,16 @@ impl CardPublic {
             eur_foil: card.prices.eur_foil.clone(), 
             tix: card.prices.tix.clone() 
          },
+        highres_image: card.highres_image.clone(),
+        image_status: card.image_status.clone(),
+        image_uris: if let Some(uris) = &card.image_uris { Some(CardImageUris {
+            small: uris.small.clone(),
+            normal: uris.normal.clone(),
+            large: uris.large.clone(),
+            png: uris.png.clone(),
+            art_crop: uris.art_crop.clone(),
+            border_crop: uris.border_crop.clone(),
+        })} else { None },
       }
    }
 }
