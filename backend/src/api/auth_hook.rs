@@ -1,4 +1,5 @@
 use std::env;
+use actix_web::http::header;
 use actix_web::{HttpResponse, get, web};
 use oauth2::{
     AuthorizationCode,
@@ -73,7 +74,9 @@ pub async fn auth(
     };
     
     match encode_jwt(user.id) {
-        Ok(token) => HttpResponse::Ok().json(JWTTokenResponse { token }),
+        // Ok(token) => HttpResponse::Ok().json(JWTTokenResponse { token }),
+        Ok(token) => HttpResponse::Found()
+            .append_header((header::LOCATION, format!("http://localhost:4200/token/{}", token))).finish(),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
     }
 }
