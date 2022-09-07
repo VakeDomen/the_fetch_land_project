@@ -1,6 +1,6 @@
-<div class="container box mt-3">
+<div class="container box mt-3 mb-3">
     <div class="level block">
-        <div class="level-left">
+        <div class="level-left has-text-centered">
             <h1 class="title is-1">Profil</h1>
         </div>
         <div class="level-right has-text-centered">
@@ -21,13 +21,14 @@
         </div>
     </div>
 
-
-    <app-contact-info-form 
-        [usernameInput]="user.name"
-        [phoneInput]="user.phone"
-        (username)="changeUsername($event)" 
-        (phone)="changePhone($event)"
-    ></app-contact-info-form>
+    <div class="block mb-5">
+        <app-contact-info-form 
+            [usernameInput]="user.name"
+            [phoneInput]="user.phone"
+            (username)="changeUsername($event)" 
+            (phone)="changePhone($event)"
+        ></app-contact-info-form>
+    </div>
 
 
 </div>
