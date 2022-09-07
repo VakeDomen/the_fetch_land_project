@@ -26,7 +26,7 @@ export class SalesComponent implements OnInit {
     this.sales = sales;
   }
 
-  public removeSale(event: any): void {
+  public removeSale(event: any, offerIndex: number): void {
     console.log(event);
     
   }

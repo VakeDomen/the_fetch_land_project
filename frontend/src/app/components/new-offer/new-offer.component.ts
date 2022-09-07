@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NewSale } from 'src/app/models/new-sale.model';
 import { Sale } from 'src/app/models/sale.model';
 
 @Component({
@@ -10,16 +11,13 @@ export class NewOfferComponent implements OnInit {
 
   @Output() saleCreated = new EventEmitter<Sale>();
   
-  public sale: Sale;
+  public sale: NewSale;
 
   constructor() { 
     this.sale = {
-      id: "",
       sale_type: "",
-      user_id: "",
       sale_object_id: "",
       location_coords: "",
-      created: "",
       description: "",
       price: 0,
       amount: 0,
@@ -30,7 +28,7 @@ export class NewOfferComponent implements OnInit {
   }
 
 
-  private emitSale() {
-    this.saleCreated.emit(this.sale);
+  private emitSale(sale: Sale) {
+    this.saleCreated.emit(sale);
   }
 }

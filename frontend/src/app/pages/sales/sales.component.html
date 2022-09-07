@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="box">
         <div class="level">
             <div class="level-item has-text-centered">
@@ -21,7 +21,7 @@
     <div class="box mt-3" *ngIf="salesInTheMaking.length">
         <ng-container *ngFor="let sale of salesInTheMaking; let i = index">
             <div class="block">
-                <app-new-offer (saleCreated)="removeSale($event)"></app-new-offer>
+                <app-new-offer (saleCreated)="removeSale($event, i)"></app-new-offer>
                 <div class="is-divider" *ngIf="i != salesInTheMaking.length - 1"></div>
             </div>
         </ng-container>

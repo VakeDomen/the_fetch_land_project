@@ -1,1 +1,63 @@
-<p>new-offer works!</p>
+<div class="block columns">
+    <!-- sale form -->
+    <div class="column is-6 columns is-multiline">
+        <div class="field column is-12">
+            <label class="label">Ime karte</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" [(ngModel)]="sale.sale_object_id">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right has-text-success">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field column is-12">
+            <label class="label">Približna lokacija</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" [(ngModel)]="sale.location_coords">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right has-text-success">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field column is-12">
+            <label class="label">Opis / dodatni podatki</label>
+            <div class="control has-icons-left has-icons-right">
+                <textarea class="textarea is-primary" [(ngModel)]="sale.description"></textarea>
+            </div>
+        </div>
+        <div class="field column is-half">
+            <label class="label">Št. kart</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="number" [(ngModel)]="sale.amount">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right has-text-success" *ngIf="sale.amount">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field column is-half">
+            <label class="label">Cena €/karto</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="number" [(ngModel)]="sale.price">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right has-text-success" *ngIf="sale.price">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- card display -->
+    <div class="column-id-6"></div>
+</div>

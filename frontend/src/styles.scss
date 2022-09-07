@@ -78,9 +78,7 @@ $divider-background-color: $fl_light;
 @import "../node_modules/bulma-extensions/bulma-tagsinput/src/sass/index";
 @import "../node_modules/bulma-extensions/bulma-timeline/src/sass/index";
 
-body {
-    height: 100vh;
-}
+html { background-color: black; }
 
 .label {
     color: $fl_light;
