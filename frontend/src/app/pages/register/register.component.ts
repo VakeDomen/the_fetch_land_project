@@ -39,4 +39,13 @@ export class RegisterComponent implements OnInit {
       })
     }
   }
+
+  public changeUsername(event: any) {
+    console.log(event);
+    this.usernameInput = event;
+  }
+  public changePhone(event: any) {
+    console.log(event);
+    this.phoneInput = event;
+  }
 }

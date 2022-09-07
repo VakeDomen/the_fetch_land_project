@@ -15,6 +15,7 @@ import { SalesComponent } from './pages/sales/sales.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { FormsModule } from '@angular/forms';
+import { ContactInfoFormComponent } from './components/contact-info-form/contact-info-form.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     AdvancedSearchComponent,
     TokenComponent,
-    SalesComponent
+    SalesComponent,
+    ContactInfoFormComponent
   ],
   imports: [
     BrowserModule,

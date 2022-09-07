@@ -1,1 +1,33 @@
-<p>profile works!</p>
+<div class="container box mt-3">
+    <div class="level block">
+        <div class="level-left">
+            <h1 class="title is-1">Profil</h1>
+        </div>
+        <div class="level-right has-text-centered">
+            <button class="button is-primary" [disabled]="!changes" (click)="submitData()">Shrani spremembe</button>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="has-text-centered columns">
+            <div class="column is-6 is-offset-3">
+                <div class="">
+                    <div class="subtitle is-4">Email:</div>
+                    <br>
+                    <div class="title is-4">{{user.email}}</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <app-contact-info-form 
+        [usernameInput]="user.name"
+        [phoneInput]="user.phone"
+        (username)="changeUsername($event)" 
+        (phone)="changePhone($event)"
+    ></app-contact-info-form>
+
+
+</div>

@@ -8,41 +8,8 @@
         </div>
     </div>
 
-    <div class="columns">
-        <div class="column is-6 is-offset-3">
-            <div class="block mt-5">
-                Podatki bodo vidni le vpisanim uporabnikom na vašem 
-                oglasu (v kolikor objavite oglas). Pravtako lahko kontaktne podatke kadarkoli 
-                spremenite na strani vašega profila.
-            </div>
-            <br>
-            <div class="block field">
-                <div class="field">
-                    <label class="label">Uporabniško ime</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" [(ngModel)]="usernameInput">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-user"></i>
-                        </span>
-                        <span class="icon is-small is-right has-text-success" *ngIf="usernameInput">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">Tel. št.</label>
-                    <div class="control  has-icons-left has-icons-right">
-                        <input class="input" type="tel" [(ngModel)]="phoneInput">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-phone"></i>
-                        </span>
-                        <span class="icon is-small is-right has-text-success" *ngIf="phoneInput.length >= 9">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-contact-info-form 
+        (username)="changeUsername($event)" 
+        (phone)="changePhone($event)"
+    ></app-contact-info-form>
 </div>
