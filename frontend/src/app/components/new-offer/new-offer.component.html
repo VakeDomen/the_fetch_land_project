@@ -77,7 +77,8 @@
     <!-- card display -->
     <div class="column is-half columns is-multiline has-text-centered">
         <div class="field column is-12">
-
+            <img class="card-image m-auto" *ngIf="selectedCard" src="{{selectedCard.image_uris?.png}}" alt="">
+            <img class="card-image m-auto" *ngIf="!selectedCard" src="assets/card/card_back.png" alt="">
         </div>
         <div class="field column is-half">
             <button class="button is-primary">Potrdi</button>

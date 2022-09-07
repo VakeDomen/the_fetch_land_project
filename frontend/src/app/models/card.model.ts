@@ -20,9 +20,21 @@ export interface Card {
     collector_number: string,
     rarity: string,
     prices: CardPrices,
+    highres_image: boolean,
+    image_status: string,
+    image_uris: CardImageUris | null,
  }
 
- export interface CardLegalities {
+ export interface CardImageUris {
+    small: string,
+    normal: string,
+    large: string,
+    png: string,
+    art_crop: string,
+    border_crop: string,
+ }
+
+export interface CardLegalities {
     standard: string,
     future: string,
     historic: string,
@@ -42,13 +54,13 @@ export interface Card {
     duel: string,
     oldschool: string,
     premodern: string,
- }
- 
- export interface CardPrices {
+}
+
+export interface CardPrices {
     usd: string[] | null,
     usd_foil: string[] | null,
     usd_etched: string[] | null,
     eur: string[] | null,
     eur_foil: string[] | null,
     tix: string[] | null,
- }
+}
