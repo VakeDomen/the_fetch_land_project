@@ -10,6 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 export class SalesComponent implements OnInit {
 
   public sales: Sale[] = [];
+  public salesInTheMaking: Sale[] = [];
 
   constructor(
     private data: DataService,
@@ -23,6 +24,24 @@ export class SalesComponent implements OnInit {
     console.log(sales);
     
     this.sales = sales;
+  }
+
+  public removeSale(event: any): void {
+    console.log(event);
+    
+  }
+
+  public addOffer(): void {
+    this.salesInTheMaking.push({
+      id: '',
+      sale_type: '',
+      user_id: '',
+      sale_object_id: '',
+      location_coords: '',
+      created: '',
+      description: '',
+      price: 0,
+    } as Sale)
   }
 
 }

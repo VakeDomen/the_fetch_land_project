@@ -10,12 +10,21 @@
             <div class="level-item has-text-centered">
                 <div>
                     <h1 class="subtitle is-3">Nova ponudba</h1>
-                    <span class="hover icon m-auto title has-text-primary">
+                    <span class="hover icon m-auto title has-text-primary" (click)="addOffer()">
                         <i class="fas fa-plus-square icon" width="100px"></i>
                     </span>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="box mt-3" *ngIf="salesInTheMaking.length">
+        <ng-container *ngFor="let sale of salesInTheMaking; let i = index">
+            <div class="block">
+                <app-new-offer (saleCreated)="removeSale($event)"></app-new-offer>
+                <div class="is-divider" *ngIf="i != salesInTheMaking.length - 1"></div>
+            </div>
+        </ng-container>
     </div>
 
     <div class="box mt-3">
@@ -27,6 +36,18 @@
             </div>
             <div class="level-right"></div>
         </div>
+        <div class="is-divider"></div>
+
+        <div class="level" *ngIf="sales.length == 0">
+            <div class="level-item">
+                <p>
+
+                    Ni odprtih ponudb! 
+                    <span class="has-text-primary is-underlined hover" (click)="addOffer()"> Dodaj ponudbo</span>
+                </p>
+            </div>
+        </div>
+
         <div class="is-divider"></div>
     </div>
 </div>
