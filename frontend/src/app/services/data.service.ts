@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Sale } from '../models/sale.model';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -21,6 +22,10 @@ export class DataService {
 
   submitContactInfo(username: string, phone: string): Observable<User> {
     return this.http.patch<User>(this.apiUrlUser, { name: username, phone: phone });
+  }
+
+  getUserSales(): Observable<Sale[]> {
+    return this.http.get<Sale[]>(this.apiUrlUser + "sales/");
   }
 
 }

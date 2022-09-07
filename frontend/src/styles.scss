@@ -46,18 +46,37 @@ $input-background-color: $fl_black;
 $input-border-color: $fl_orange;
 $input-icon-color: $fl_orange;
 
+// ------------ INPUT ------------
+$divider-color: $fl_black;
+$divider-background-color: $fl_light;
+
 
 @import "../node_modules/bulma/bulma.sass";
 
 @import '~node_modules/bulma/sass/utilities/_all';
 @import '~node_modules/bulma/sass/base/_all';
-@import '~node_modules/bulma/sass/elements/button';
-@import '~node_modules/bulma/sass/elements/container';
-@import '~node_modules/bulma/sass/elements/title';
+@import '~node_modules/bulma/sass/elements/_all';
 @import '~node_modules/bulma/sass/form/_all';
 @import '~node_modules/bulma/sass/components/navbar';
 @import '~node_modules/bulma/sass/layout/hero';
 @import '~node_modules/bulma/sass/layout/section';
+
+// Import Extensions
+@import "../node_modules/bulma-extensions/bulma-accordion/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-badge/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-calendar/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-carousel/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-checkradio/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-divider/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-iconpicker/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-pageloader/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-pricingtable/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-quickview/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-ribbon/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-steps/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-switch/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-tagsinput/src/sass/index";
+@import "../node_modules/bulma-extensions/bulma-timeline/src/sass/index";
 
 body {
     height: 100vh;
