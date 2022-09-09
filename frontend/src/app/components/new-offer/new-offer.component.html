@@ -1,13 +1,22 @@
-<div class="block columns">
-    <!-- sale form -->
-    <div class="column is-half columns is-multiline">
-
-        <div class="field column is-12">
+<div class="container">
+    <div class="columns">
+        <div class="field column is-10">
+            <label class="label">Ime karte</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" [(ngModel)]="prefixQuery" (ngModelChange)="search($event)">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right has-text-success" *ngIf="cards.length">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field column is-2 has-text-centered">
             <label class="label">Jezik karte</label>
             <div class="select">
                 <select class="form-control" id="pCategory" name="pCategory" [(ngModel)]="cardLang"
                     (ngModelChange)="refreshCards()">
-
                     <option [ngValue]="'en'">English</option>
                     <option [ngValue]="'es'">Spanish</option>
                     <option [ngValue]="'fr'">French</option>
@@ -28,91 +37,99 @@
                 </select>
             </div>
         </div>
-        
-        <div class="field column is-12">
-            <label class="label">Ime karte</label>
-            <div class="control has-icons-left has-icons-right">
-               <input 
-                    class="input" 
-                    type="text" 
-                    [(ngModel)]="prefixQuery"
-                    (ngModelChange)="search($event)"    
-                >
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right has-text-success">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="field column is-12">
-            <label class="label">Približna lokacija</label>
-            <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" [(ngModel)]="sale.location_coords">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right has-text-success">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-        </div>
-        <div class="field column is-12">
-            <label class="label">Opis / dodatni podatki</label>
-            <div class="control has-icons-left has-icons-right">
-                <textarea class="textarea is-primary" [(ngModel)]="sale.description"></textarea>
-            </div>
-        </div>
-        <div class="field column is-half">
-            <label class="label">Št. kart</label>
-            <div class="control has-icons-left has-icons-right">
-                <input class="input" type="number" [(ngModel)]="sale.amount">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right has-text-success" *ngIf="sale.amount">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-        </div>
-        <div class="field column is-half">
-            <label class="label">Cena €/karto</label>
-            <div class="control has-icons-left has-icons-right">
-                <input class="input" type="number" [(ngModel)]="sale.price">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right has-text-success" *ngIf="sale.price">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="level-item">
-            <div>
-                <label for="itemSelect">Select item/animal</label><br>
-
-            </div>
-        </div>
-
-
     </div>
 
-    <!-- card display -->
-    <div class="column is-half columns is-multiline has-text-centered">
-        <div class="field column is-12">
-            <img class="card-image m-auto" *ngIf="selectedCard" src="{{selectedCard.image_uris?.png}}" alt="">
-            <img class="card-image m-auto" *ngIf="!selectedCard" src="assets/card/card_back.png" alt="">
-        </div>
-        <div class="field column is-half">
-            <button class="button is-primary">Potrdi</button>
-        </div>
-        <div class="field column is-half">
-            <button class="button is-danger is-outlined">Zavrzi</button>
-        </div>
-    </div>
+
+
+
+
+    <app-card-table [cards]="cards" (cardSelected)="selectCard($event)"></app-card-table>
 </div>
 
-<app-card-table [cards]="cards"></app-card-table>
+
+<div class="modal" [ngClass]="{'is-active': modalOpen}">
+    <div class="modal-background" (click)="modalOpen = false"></div>
+    <div class="modal-card">
+        <!-- <section class="modal-card-body"> -->
+        <div class="level" *ngIf="modalOpen">
+            <div class="block columns">
+                <div class="column is-half columns is-multiline">
+                    <div class="field column is-12">
+                        <label class="label">Približna lokacija</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" [(ngModel)]="sale.location_coords">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="icon is-small is-right has-text-success">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field column is-12">
+                        <label class="label">Opis / dodatni podatki</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <textarea class="textarea is-primary" [(ngModel)]="sale.description"></textarea>
+                        </div>
+                    </div>
+                    <div class="field column is-half">
+                        <label class="label">Št. kart</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" type="number" [(ngModel)]="sale.amount">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="icon is-small is-right has-text-success" *ngIf="sale.amount">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field column is-half">
+                        <label class="label">Cena €/karto</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" type="number" [(ngModel)]="sale.price">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="icon is-small is-right has-text-success" *ngIf="sale.price">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="level-item">
+                        <div>
+                            <label for="itemSelect">Select item/animal</label><br>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="column is-half columns is-multiline has-text-centered">
+                    <div class="field column is-12">
+                        <!-- <img class="card-image m-auto" *ngIf="selectedCard" src="{{selectedCard.image_uris?.png}}" alt=""> -->
+                        <div class="has-text-centered">
+                            <img *ngIf="selectedCard && selectedCard.image_uris" class="ml-auto img-card"
+                                src="{{selectedCard.image_uris.small}}" alt="">
+                            <ng-container *ngIf="selectedCard && !selectedCard.image_uris && selectedCard.card_faces">
+                                <img class="img-card" *ngFor="let face of selectedCard.card_faces"
+                                    src="{{face.image_uris?.small}}" alt="">
+                            </ng-container>
+                            <img class="card-image m-auto" *ngIf="!selectedCard" src="assets/card/card_back.png" alt="">
+                        </div>
+
+                    </div>
+                    <div class="field column is-half">
+                        <button class="button is-primary">Potrdi</button>
+                    </div>
+                    <div class="field column is-half">
+                        <button class="button is-danger is-outlined">Zavrzi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </section> -->
+    </div>
+</div>

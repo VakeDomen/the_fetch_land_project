@@ -1,33 +1,4 @@
 <div class="container mt-5 mb-5">
-    <!-- <div class="box">
-        <div class="level">
-            <div class="level-item has-text-centered">
-                <div>
-                    <h1 class="subtitle is-3">Odprte ponudbe</h1>
-                    <h1 class="title is-3">{{ sales.length }}</h1>
-                </div>
-            </div>
-            <div class="level-item has-text-centered">
-                <div>
-                    <h1 class="subtitle is-3">Nova ponudba</h1>
-                    <span class="has-text-black button is-primary " (click)="addOffer()"> Dodaj ponudbo</span><br>
-                    <span class="hover icon m-auto title has-text-primary" (click)="addOffer()">
-                        <i class="fas fa-plus-square icon" width="100px"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <div class="box mt-3" *ngIf="salesInTheMaking.length">
-        <ng-container *ngFor="let sale of salesInTheMaking; let i = index">
-            <div class="block">
-                <app-new-offer (saleCreated)="removeSale($event, i)"></app-new-offer>
-                <div class="is-divider" *ngIf="i != salesInTheMaking.length - 1"></div>
-            </div>
-        </ng-container>
-    </div>
-
     <div class="box mt-3">
         <div class="level">
             <div class="level-left has-text-centered">
@@ -51,5 +22,14 @@
         </div>
 
         <div class="is-divider"></div>
+    </div>
+
+    <div class="box mt-3" *ngIf="salesInTheMaking.length">
+        <ng-container *ngFor="let sale of salesInTheMaking; let i = index">
+            <div class="block">
+                <app-new-offer (saleCreated)="removeSale($event, i)"></app-new-offer>
+                <div class="is-divider" *ngIf="i != salesInTheMaking.length - 1"></div>
+            </div>
+        </ng-container>
     </div>
 </div>

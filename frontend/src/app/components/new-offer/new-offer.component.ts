@@ -17,25 +17,14 @@ export class NewOfferComponent implements OnInit {
   public sale: NewSale;
   public cardLang: string = "en";
   public prefixQuery: string = "";
+  public modalOpen: boolean = false;
 
   // autocomplete card search
   private tree: TrieTree = new TrieTree();
   selectedCard: Card | undefined;
   itemString: string = "";
   public cards: Card[] = [];
-  
-  private setBlacklist: string[] = [
-    "token",
-    "box"
-  ];
-  private setWhitelist: string[] = [
-    "core",
-    "expension",
-    "commander",
-    "masters",
-    "funny",
-    "box"
-  ]
+
 
   constructor(
     private data: DataService,
@@ -93,5 +82,10 @@ export class NewOfferComponent implements OnInit {
       this.refreshCards()
     }
     this.cards = this.tree.collect(this.prefixQuery);
+  }
+
+  public selectCard(card: Card) {
+    this.selectedCard = card;
+    this.modalOpen = true;
   }
 }

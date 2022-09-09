@@ -1,7 +1,7 @@
-<table class="table is-fullwidth is-striped has-text-centered">
+<table class="table is-fullwidth is-striped has-text-centered" *ngIf="cards.length">
     <thead>
         <tr>
-            <th><p class="has-text-centered">Karta</p></th>
+            <th><p class="has-text-centered">Karta ({{ cards.length }})</p></th>
             <th><p class="has-text-centered">Ime</p></th>
             <th><p class="has-text-centered">Set</p></th>
             <th><p class="has-text-centered">Jezik</p></th>
@@ -12,9 +12,9 @@
         <tr *ngFor="let card of cards">
             <th>
                 <div class="has-text-centered">
-                    <img class="ml-auto" *ngIf="card.image_uris" src="{{card.image_uris.small}}" alt="">
+                    <img class="ml-auto img-card" *ngIf="card.image_uris" src="{{card.image_uris.small}}" alt="">
                     <ng-container *ngIf="!card.image_uris && card.card_faces">
-                        <img *ngFor="let face of card.card_faces" src="{{face.image_uris?.small}}" alt="">
+                        <img class="img-card" *ngFor="let face of card.card_faces" src="{{face.image_uris?.small}}" alt="">
                     </ng-container>
                 </div>
             </th>
@@ -27,8 +27,8 @@
                     {{ card.set_name }}
                 </div>
             </td>
-            <td class="is-vcentered">{{ card.lang }}</td>
-            <td class="is-vcentered"><button class="button is-primary has-text-black">Prodaj</button></td>
+            <td class="is-vcentered">{{ mapLanguage(card.lang) }}</td>
+            <td class="is-vcentered"><button class="button is-primary has-text-black" (click)="selectCard(card)">Ponudi</button></td>
         </tr>
     </tbody>
 </table>
