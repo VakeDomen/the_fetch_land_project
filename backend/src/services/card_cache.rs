@@ -6,8 +6,8 @@ use crate::models::{card::Card, trie::TrieTree};
 
 use super::scryfall::{get_bulk_data, download_card_data};
 
-const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
-// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
+// const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./small_hm.json";
+const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
 
 pub static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
     match serde_any::from_file(ALL_CARDS_HASH_MAP_FILE_PATH) {

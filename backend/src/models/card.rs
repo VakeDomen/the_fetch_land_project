@@ -7,8 +7,8 @@ pub struct CardPublic {
    pub printed_name: Option<String>,
    pub lang: String,
    pub released_at: String,
-   pub highres_image: bool,
-   pub image_status: String,
+   pub highres_image: Option<bool>,
+   pub image_status: Option<String>,
    pub image_uris: Option<CardImageUris>,
    pub mana_cost: Option<String>,
    pub cmc: Option<f32>,
@@ -26,6 +26,7 @@ pub struct CardPublic {
    pub collector_number: String,
    pub rarity: String,
    pub prices: CardPrices,
+   pub card_faces: Option<Vec<CardFace>>
 }
 
 
@@ -42,8 +43,8 @@ pub struct Card {
    pub uri: String,
    pub scryfall_uri: String,
    pub layout: Option<String>,
-   pub highres_image: bool,
-   pub image_status: String,
+   pub highres_image: Option<bool>,
+   pub image_status: Option<String>,
    pub image_uris: Option<CardImageUris>,
    pub mana_cost: Option<String>,
    pub cmc: Option<f32>,
@@ -92,18 +93,28 @@ pub struct Card {
    pub promo_types: Option<Vec<String>>,
    pub edhrec_rank: Option<i64>,
    pub prices: CardPrices,
-   pub related_uris: CardRelatedUris
+   pub related_uris: CardRelatedUris,
+   pub card_faces: Option<Vec<CardFace>>,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CardFace {
+   pub image_uris: Option<CardImageUris>,
+   pub layout: Option<String>,
+   pub name: Option<String>,
+   pub object: Option<String>,
+   pub oracle_id: Option<String>,
+   pub printed_name: Option<String>,
+}
 
  #[derive(Debug, Serialize, Deserialize)]
  pub struct CardImageUris {
-    pub small: String,
-    pub normal: String,
-    pub large: String,
-    pub png: String,
-    pub art_crop: String,
-    pub border_crop: String,
+    pub small: Option<String>,
+    pub normal: Option<String>,
+    pub large: Option<String>,
+    pub png: Option<String>,
+    pub art_crop: Option<String>,
+    pub border_crop: Option<String>,
  }
 
 
@@ -222,6 +233,24 @@ impl CardPublic {
             art_crop: uris.art_crop.clone(),
             border_crop: uris.border_crop.clone(),
         })} else { None },
+        card_faces:
+        if let Some(faces) = &card.card_faces { 
+         Some(faces.iter().map(|face| CardFace {
+            image_uris: if let Some(uris) = &face.image_uris { Some(CardImageUris {
+               small: uris.small.clone(),
+               normal: uris.normal.clone(),
+               large: uris.large.clone(),
+               png: uris.png.clone(),
+               art_crop: uris.art_crop.clone(),
+               border_crop: uris.border_crop.clone(),
+           })} else { None },
+            layout: face.layout.clone(),
+            name: face.name.clone(),
+            object: face.object.clone(),
+            oracle_id: face.oracle_id.clone(),
+            printed_name: face.printed_name.clone(),
+        }).collect() )
+      } else { None }
       }
    }
 }
