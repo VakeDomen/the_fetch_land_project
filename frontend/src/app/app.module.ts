@@ -18,7 +18,9 @@ import { FormsModule } from '@angular/forms';
 import { ContactInfoFormComponent } from './components/contact-info-form/contact-info-form.component';
 import { NewOfferComponent } from './components/new-offer/new-offer.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CardTableComponent } from './components/card-table/card-table.component';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TokenComponent,
     SalesComponent,
     ContactInfoFormComponent,
-    NewOfferComponent
+    NewOfferComponent,
+    CardTableComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    DropdownModule,
   ],
   providers: [
     {

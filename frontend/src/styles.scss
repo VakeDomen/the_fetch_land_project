@@ -7,6 +7,7 @@ $fl_dark_orange: #ef7600;
 $fl_light: #fdc780;
 // $fl_light: #ef8700;
 $fl_black: hsl(0deg, 0%, 14%);;
+$fl_black_secondary: hsl(0deg, 0%, 20%);
 
 $primary: $fl_orange;
 
@@ -47,9 +48,16 @@ $input-background-color: $fl_black;
 $input-border-color: $fl_orange;
 $input-icon-color: $fl_orange;
 
-// ------------ INPUT ------------
+// ------------ DIVIDER ------------
 $divider-color: $fl_black;
 $divider-background-color: $fl_light;
+
+// ------------ TABKE ------------
+$table-color: $fl_light;
+$table-background-color: $fl_black;
+$table-cell-border: $fl_light;
+$table-head-cell-color: $fl_orange;
+$table-striped-row-even-background-color: $fl_black_secondary;
 
 
 @import "../node_modules/bulma/bulma.sass";

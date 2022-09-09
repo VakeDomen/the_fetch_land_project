@@ -23,6 +23,7 @@ export interface Card {
     highres_image: boolean,
     image_status: string,
     image_uris: CardImageUris | null,
+    card_faces: CardFaces[] | null,
  }
 
  export interface CardImageUris {
@@ -64,3 +65,28 @@ export interface CardPrices {
     eur_foil: string[] | null,
     tix: string[] | null,
 }
+
+export interface CardFaces {
+    artist: string | null,
+    cmc: number | null,
+    color_indicator: string | null,
+    colors: string | null,
+    flavor_text: string | null,
+    illustration_id: string | null,
+    image_uris: CardImageUris | null,
+    layout: string | null,
+    loyalty: string | null,
+    mana_cost: string | null,
+    name: string,
+    object: string,
+    oracle_id: string | null,
+    oracle_text: string | null,
+    power: string | null,
+    printed_name: string | null,
+    printed_text: string | null,
+    printed_type_line: string | null,
+    toughness: string | null,
+    type_line: string | null,
+    watermark: string | null,
+ }
+ 

@@ -1,19 +1,43 @@
 <div class="block columns">
     <!-- sale form -->
     <div class="column is-half columns is-multiline">
+
+        <div class="field column is-12">
+            <label class="label">Jezik karte</label>
+            <div class="select">
+                <select class="form-control" id="pCategory" name="pCategory" [(ngModel)]="cardLang"
+                    (ngModelChange)="refreshCards()">
+
+                    <option [ngValue]="'en'">English</option>
+                    <option [ngValue]="'es'">Spanish</option>
+                    <option [ngValue]="'fr'">French</option>
+                    <option [ngValue]="'de'">German</option>
+                    <option [ngValue]="'it'">Italian </option>
+                    <option [ngValue]="'pt'">Portuguese</option>
+                    <option [ngValue]="'ja'">Japanese</option>
+                    <option [ngValue]="'ko'">Korean</option>
+                    <option [ngValue]="'ru'">Russian</option>
+                    <option [ngValue]="'zhs'">Simplified Chinese</option>
+                    <option [ngValue]="'zht'">Traditional Chinese</option>
+                    <option [ngValue]="'he'">Hebrew</option>
+                    <option [ngValue]="'la'">Latin</option>
+                    <option [ngValue]="'grc'">Ancient Greek</option>
+                    <option [ngValue]="'ar'">Arabic</option>
+                    <option [ngValue]="'sa'">Sanskrit</option>
+                    <option [ngValue]="'ph'">Phyrexian</option>
+                </select>
+            </div>
+        </div>
+        
         <div class="field column is-12">
             <label class="label">Ime karte</label>
             <div class="control has-icons-left has-icons-right">
-                <p-autoComplete 
-                    #itemSelect 
-                    inputStyleClass='input' 
-                    [(ngModel)]="itemString" 
-                    [suggestions]="results" 
-                    (completeMethod)="search($event)" 
-                    (onSelect)="itemSelectChange($event)"
-                    [inputStyle]="{'width':'100%'}"
-                ></p-autoComplete> 
-                <!-- <input class="input" type="text" [(ngModel)]="sale.sale_object_id"> -->
+               <input 
+                    class="input" 
+                    type="text" 
+                    [(ngModel)]="prefixQuery"
+                    (ngModelChange)="search($event)"    
+                >
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                 </span>
@@ -22,6 +46,7 @@
                 </span>
             </div>
         </div>
+
         <div class="field column is-12">
             <label class="label">Približna lokacija</label>
             <div class="control has-icons-left has-icons-right">
@@ -68,7 +93,7 @@
         <div class="level-item">
             <div>
                 <label for="itemSelect">Select item/animal</label><br>
-                       
+
             </div>
         </div>
 
@@ -89,3 +114,5 @@
         </div>
     </div>
 </div>
+
+<app-card-table [cards]="cards"></app-card-table>

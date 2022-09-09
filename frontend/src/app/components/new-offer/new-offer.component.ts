@@ -15,13 +15,27 @@ export class NewOfferComponent implements OnInit {
   @Output() saleCreated = new EventEmitter<Sale>();
   
   public sale: NewSale;
+  public cardLang: string = "en";
+  public prefixQuery: string = "";
 
   // autocomplete card search
   private tree: TrieTree = new TrieTree();
-  public results: string[] = [];
   selectedCard: Card | undefined;
   itemString: string = "";
-  itemNum: number = 1;
+  public cards: Card[] = [];
+  
+  private setBlacklist: string[] = [
+    "token",
+    "box"
+  ];
+  private setWhitelist: string[] = [
+    "core",
+    "expension",
+    "commander",
+    "masters",
+    "funny",
+    "box"
+  ]
 
   constructor(
     private data: DataService,
@@ -37,12 +51,14 @@ export class NewOfferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   fillTrie(cards: Card[]): void {
+    this.cards = cards;
     this.tree = new TrieTree();
     for (const card of cards) {
-      this.tree.insertWord(card.name, card);
+      this.tree.insertWord(`${card.name} (${card.set_name})`, card);
     }
     console.log(this.tree);
     
@@ -52,25 +68,30 @@ export class NewOfferComponent implements OnInit {
     this.saleCreated.emit(sale);
   }
 
+  public refreshCards() {
+    console.log("refreshing")
+    this.data.getCardsByPrefix(this.prefixQuery, this.cardLang).subscribe((cards: Card[]) => this.fillTrie(cards))
+  }
+
 
   // autoselect stuff
 
   public itemSelectChange(value: any) {
-    const item = this.tree.collect(value);
-    if (item.length == 1) {
-      this.selectedCard = item.pop();
+    const items = this.tree.collect(value).filter((card: Card) => card.name == value );
+    this.cards = items;
+    
+    if (items.length) {
+      this.selectedCard = items[items.length - 1];
       this.sale.sale_object_id = this.selectedCard?.id ?? '';
       console.log("CARD SELECTED!", this.selectedCard);
     }
   }
 
-  public search(event: any) {
-    console.log(event);
-    if (event.query.length && event.query.length == 3) {
-      this.data.getCardsByPrefix(event.query).subscribe((cards: Card[]) => this.fillTrie(cards))
+  public search(value: string) {
+    this.prefixQuery = value;
+    if (this.prefixQuery.length == 2) {
+      this.refreshCards()
     }
-    this.results = this.tree.collect(event.query).map((item: Card) => item.name);
-    console.log(this.results);
-    
+    this.cards = this.tree.collect(this.prefixQuery);
   }
 }

@@ -1,0 +1,34 @@
+<table class="table is-fullwidth is-striped has-text-centered">
+    <thead>
+        <tr>
+            <th><p class="has-text-centered">Karta</p></th>
+            <th><p class="has-text-centered">Ime</p></th>
+            <th><p class="has-text-centered">Set</p></th>
+            <th><p class="has-text-centered">Jezik</p></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let card of cards">
+            <th>
+                <div class="has-text-centered">
+                    <img class="ml-auto" *ngIf="card.image_uris" src="{{card.image_uris.small}}" alt="">
+                    <ng-container *ngIf="!card.image_uris && card.card_faces">
+                        <img *ngFor="let face of card.card_faces" src="{{face.image_uris?.small}}" alt="">
+                    </ng-container>
+                </div>
+            </th>
+            <td class="is-vcentered">{{ card.name }}</td>
+            <td class="is-vcentered">
+                <div class="set-table-icon-wrapper">
+                    <img class="set-table-icon" src="{{ this.getSetIcon(card.set_id) }}" alt="set icon"/>
+                </div>
+                <div>
+                    {{ card.set_name }}
+                </div>
+            </td>
+            <td class="is-vcentered">{{ card.lang }}</td>
+            <td class="is-vcentered"><button class="button is-primary has-text-black">Prodaj</button></td>
+        </tr>
+    </tbody>
+</table>
