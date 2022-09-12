@@ -16,9 +16,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { FormsModule } from '@angular/forms';
 import { ContactInfoFormComponent } from './components/contact-info-form/contact-info-form.component';
-import { NewOfferComponent } from './components/new-offer/new-offer.component';
+import { CardSelectComponent } from './components/card-select/card-select.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardTableComponent } from './components/card-table/card-table.component';
+import { MyOfferListComponent } from './components/my-offer-list/my-offer-list.component';
+import { NewSaleDetailsComponent } from './components/new-sale-details/new-sale-details.component';
 
 
 @NgModule({
@@ -34,8 +36,10 @@ import { CardTableComponent } from './components/card-table/card-table.component
     TokenComponent,
     SalesComponent,
     ContactInfoFormComponent,
-    NewOfferComponent,
-    CardTableComponent
+    CardSelectComponent,
+    CardTableComponent,
+    MyOfferListComponent,
+    NewSaleDetailsComponent
   ],
   imports: [
     BrowserModule,

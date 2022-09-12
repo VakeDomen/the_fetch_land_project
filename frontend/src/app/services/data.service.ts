@@ -42,4 +42,8 @@ export class DataService {
     return this.cache.getCached<ScryfallResponse<Set>>("https://api.scryfall.com/sets/");
   }
 
+  postSale(sale: Sale): Observable<Sale> {
+    return this.http.post<Sale>(`${this.apiUrlUser}sale/`, sale);
+  }
+
 }

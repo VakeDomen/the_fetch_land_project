@@ -6,15 +6,15 @@ import { TrieTree } from 'src/app/models/trie.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
-  selector: 'app-new-offer',
-  templateUrl: './new-offer.component.html',
-  styleUrls: ['./new-offer.component.sass']
+  selector: 'app-card-select',
+  templateUrl: './card-select.component.html',
+  styleUrls: ['./card-select.component.sass']
 })
-export class NewOfferComponent implements OnInit {
+export class CardSelectComponent implements OnInit {
 
-  @Output() saleCreated = new EventEmitter<Sale>();
+  @Output() cardSelected = new EventEmitter<Card>();
+  @Output() back = new EventEmitter();
   
-  public sale: NewSale;
   public cardLang: string = "en";
   public prefixQuery: string = "";
   public modalOpen: boolean = false;
@@ -28,16 +28,7 @@ export class NewOfferComponent implements OnInit {
 
   constructor(
     private data: DataService,
-  ) { 
-    this.sale = {
-      sale_type: "",
-      sale_object_id: "",
-      location_coords: "",
-      description: "",
-      price: 0,
-      amount: 0,
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     
@@ -53,27 +44,13 @@ export class NewOfferComponent implements OnInit {
     
   }
 
-  private emitSale(sale: Sale) {
-    this.saleCreated.emit(sale);
+  public emitSelectedCard(card: Card) {
+    this.cardSelected.emit(card);
   }
 
   public refreshCards() {
     console.log("refreshing")
     this.data.getCardsByPrefix(this.prefixQuery, this.cardLang).subscribe((cards: Card[]) => this.fillTrie(cards))
-  }
-
-
-  // autoselect stuff
-
-  public itemSelectChange(value: any) {
-    const items = this.tree.collect(value).filter((card: Card) => card.name == value );
-    this.cards = items;
-    
-    if (items.length) {
-      this.selectedCard = items[items.length - 1];
-      this.sale.sale_object_id = this.selectedCard?.id ?? '';
-      console.log("CARD SELECTED!", this.selectedCard);
-    }
   }
 
   public search(value: string) {
@@ -84,8 +61,7 @@ export class NewOfferComponent implements OnInit {
     this.cards = this.tree.collect(this.prefixQuery);
   }
 
-  public selectCard(card: Card) {
-    this.selectedCard = card;
-    this.modalOpen = true;
+  public backTrigger() {
+    this.back.emit();
   }
 }

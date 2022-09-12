@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="columns">
+        <div class="column is-3">
+            <button class="button is-primary is-outlined" (click)="backTrigger()">Nazaj</button>
+        </div>
+
+        <div class="column is-6 has-text-centered">
+            <h1 class="subtitle is-3">Izberi karto (1/2)</h1>
+        </div>
+
+        <div class="column is-3">
+            <!-- <button class="button is-primary is-outlinded" (click)="backTrigger()">Nazaj</button> -->
+        </div>
+    </div>
+    <div class="columns">
+        
+        <div class="field column is-10">
+            <label class="label">Ime karte</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" [(ngModel)]="prefixQuery" (ngModelChange)="search($event)">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right has-text-success" *ngIf="cards.length">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field column is-2 has-text-centered">
+            <label class="label">Jezik karte</label>
+            <div class="select">
+                <select class="form-control" id="pCategory" name="pCategory" [(ngModel)]="cardLang"
+                    (ngModelChange)="refreshCards()">
+                    <option [ngValue]="'en'">English</option>
+                    <option [ngValue]="'es'">Spanish</option>
+                    <option [ngValue]="'fr'">French</option>
+                    <option [ngValue]="'de'">German</option>
+                    <option [ngValue]="'it'">Italian </option>
+                    <option [ngValue]="'pt'">Portuguese</option>
+                    <option [ngValue]="'ja'">Japanese</option>
+                    <option [ngValue]="'ko'">Korean</option>
+                    <option [ngValue]="'ru'">Russian</option>
+                    <option [ngValue]="'zhs'">Simplified Chinese</option>
+                    <option [ngValue]="'zht'">Traditional Chinese</option>
+                    <option [ngValue]="'he'">Hebrew</option>
+                    <option [ngValue]="'la'">Latin</option>
+                    <option [ngValue]="'grc'">Ancient Greek</option>
+                    <option [ngValue]="'ar'">Arabic</option>
+                    <option [ngValue]="'sa'">Sanskrit</option>
+                    <option [ngValue]="'ph'">Phyrexian</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <app-card-table [cards]="cards" (cardSelected)="emitSelectedCard($event)"></app-card-table>
+</div>

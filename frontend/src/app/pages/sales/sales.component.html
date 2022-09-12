@@ -1,35 +1,25 @@
 <div class="container mt-5 mb-5">
-    <div class="box mt-3">
-        <div class="level">
-            <div class="level-left has-text-centered">
-                <h1 class="subtitle is-3 ">
-                    Moje ponudbe ({{ sales.length }})
-                </h1>
-            </div>
-            <div class="level-right has-text-centered">
-                <button class="button is-primary has-text-black" (click)="addOffer()">Dodaj ponudbo</button>
-            </div>
-        </div>
-        <div class="is-divider"></div>
-
-        <div class="level" *ngIf="sales.length == 0">
-            <div class="level-item">
-                <p>
-                    Ni odprtih ponudb! 
-                    
-                </p>
-            </div>
-        </div>
-
-        <div class="is-divider"></div>
+    
+    <div class="box mt-3" *ngIf="pageState == 'list'">
+        <app-my-offer-list 
+            (addOffer)="pageState = 'search'"
+        ></app-my-offer-list>    
     </div>
 
-    <div class="box mt-3" *ngIf="salesInTheMaking.length">
-        <ng-container *ngFor="let sale of salesInTheMaking; let i = index">
-            <div class="block">
-                <app-new-offer (saleCreated)="removeSale($event, i)"></app-new-offer>
-                <div class="is-divider" *ngIf="i != salesInTheMaking.length - 1"></div>
-            </div>
-        </ng-container>
+    <div class="box mt-3" *ngIf="pageState == 'search'">
+        <app-card-select 
+            (back)="pageState = 'list'" 
+            (cardSelected)="nextToDetails($event)"
+        ></app-card-select>
     </div>
+
+    <div class="box mt-3" *ngIf="pageState == 'detalis'">
+        <app-new-sale-details 
+            [sale]="newSale" 
+            [card]="newSaleCard" 
+            (back)="pageState = 'search'" 
+            (newSale)="newSaleSubmitted($event)"
+        ></app-new-sale-details>
+    </div>
+
 </div>

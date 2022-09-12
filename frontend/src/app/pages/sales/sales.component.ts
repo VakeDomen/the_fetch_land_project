@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CardSelectComponent } from 'src/app/components/card-select/card-select.component';
+import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
 import { DataService } from 'src/app/services/data.service';
 
@@ -10,7 +12,10 @@ import { DataService } from 'src/app/services/data.service';
 export class SalesComponent implements OnInit {
 
   public sales: Sale[] = [];
-  public salesInTheMaking: Sale[] = [];
+  public newSale: Sale | undefined;
+  public newSaleCard: Card | undefined;
+
+  public pageState: 'list' | 'search' | 'detalis' = 'list'
 
   constructor(
     private data: DataService,
@@ -21,27 +26,24 @@ export class SalesComponent implements OnInit {
   }
 
   private saveSales(sales: Sale[]): void {
-    console.log(sales);
-    
     this.sales = sales;
   }
 
-  public removeSale(event: any, offerIndex: number): void {
-    console.log(event);
-    
-  }
-
-  public addOffer(): void {
-    this.salesInTheMaking.push({
-      id: '',
-      sale_type: '',
-      user_id: '',
-      sale_object_id: '',
-      location_coords: '',
-      created: '',
-      description: '',
+  public nextToDetails(card: Card): void {
+    this.newSaleCard = card
+    this.newSale = {
+      sale_type: "CARD",
+      sale_object_id: card.id,
+      location_coords: "",
+      description: "",
       price: 0,
-    } as Sale)
+      amount: 0,
+    } as Sale;
+    this.pageState = 'detalis';
   }
 
+  public newSaleSubmitted(sale: Sale) {
+    this.sales.push(sale);
+    this.pageState = 'list';
+  }
 }
