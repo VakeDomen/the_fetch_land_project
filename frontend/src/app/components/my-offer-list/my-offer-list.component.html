@@ -8,15 +8,18 @@
         <button class="button is-primary has-text-black" (click)="addOfferTrigger()">Dodaj ponudbo</button>
     </div>
 </div>
-<div class="is-divider"></div>
+<div class="is-divider" *ngIf="sales.length == 0"></div>
 
 <div class="level" *ngIf="sales.length == 0">
     <div class="level-item">
         <p>
-            Ni odprtih ponudb! 
-            
+            Ni odprtih ponudb!      
         </p>
     </div>
 </div>
 
-<div class="is-divider"></div>
+<div class="block" *ngIf="sales.length > 0">
+    <app-my-offers-table [sales]="sales"></app-my-offers-table>
+</div>
+
+<div class="is-divider" *ngIf="sales.length == 0"></div>

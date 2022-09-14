@@ -20,8 +20,7 @@ export class NewSaleDetailsComponent implements OnInit {
     private data: DataService,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public backTrigger() {
     this.back.emit();
@@ -58,6 +57,7 @@ export class NewSaleDetailsComponent implements OnInit {
     if (!this.sale || !this.isInputValid()) {
       return;
     }
+    this.sale.price = Math.round(this.sale.price * 100)
     this.data.postSale(this.sale).subscribe(resp => this.newSaleResp(resp))
   }
 

@@ -1,18 +1,16 @@
-import { Card } from "./card.model";
-
-export class TrieTree {
-    children: Node[];
+export class TrieTree<T> {
+    children: Node<T>[];
 
     constructor() {
         this.children = [];
     }
 
-    insertWord(word: string, obj: Card): void {
+    insertWord(word: string, obj: T): void {
         word = word.toUpperCase();
         if(word.length === 0) {
             return;
         }
-        let letterChild: Node | null = null;
+        let letterChild: Node<T> | null = null;
         for (const child of this.children) {
             if (child.char === word.charAt(0)) {
                 letterChild = child;
@@ -27,7 +25,7 @@ export class TrieTree {
         }
     }
 
-    collect(prefix: string): Card[] {
+    collect(prefix: string): T[] {
         prefix = prefix.toUpperCase();
         if(!prefix || prefix.length === 0 || this.children.length === 0) {
             return [];
@@ -43,13 +41,13 @@ export class TrieTree {
 }
 
 
-class Node {
+class Node<T> {
     char: string;
-    children: Node[];
+    children: Node<T>[];
     leaf: boolean;
-    obj: Card[] | undefined;
+    obj: T[] | undefined;
 
-    constructor(word: string, obj: Card) {
+    constructor(word: string, obj: T) {
         this.char = word.charAt(0);
         this.children = [];
         if(word.length === 1) {
@@ -64,8 +62,8 @@ class Node {
         }
     }
 
-    collect(prefix: string): Card[] {
-        const notes: Card[] = [];
+    collect(prefix: string): T[] {
+        const notes: T[] = [];
         if (prefix.length === 0) {
             //collect
             if (this.leaf && this.obj) {
@@ -92,7 +90,7 @@ class Node {
         }
     }
 
-    insert(word: string, obj: Card): void {
+    insert(word: string, obj: T): void {
         if (word.length === 1) {
             this.leaf = true;
             if (!this.obj) {

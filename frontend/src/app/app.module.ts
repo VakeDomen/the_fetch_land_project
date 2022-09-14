@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardTableComponent } from './components/card-table/card-table.component';
 import { MyOfferListComponent } from './components/my-offer-list/my-offer-list.component';
 import { NewSaleDetailsComponent } from './components/new-sale-details/new-sale-details.component';
+import { MyOffersTableComponent } from './components/my-offers-table/my-offers-table.component';
+import { SaleSearchTableComponent } from './components/sale-search-table/sale-search-table.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { NewSaleDetailsComponent } from './components/new-sale-details/new-sale-
     CardSelectComponent,
     CardTableComponent,
     MyOfferListComponent,
-    NewSaleDetailsComponent
+    NewSaleDetailsComponent,
+    MyOffersTableComponent,
+    SaleSearchTableComponent
   ],
   imports: [
     BrowserModule,

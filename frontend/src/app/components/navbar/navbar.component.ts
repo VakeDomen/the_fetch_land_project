@@ -15,8 +15,6 @@ export class NavbarComponent implements OnInit {
   @ViewChild('navBurger', {static: true}) navBurger?: ElementRef;
   @ViewChild('navMenu', {static: true}) navMenu?: ElementRef;
 
-
-
   constructor(
     private router: Router,
     private auth: AuthService,

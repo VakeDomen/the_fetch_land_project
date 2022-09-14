@@ -20,7 +20,7 @@ export class CardSelectComponent implements OnInit {
   public modalOpen: boolean = false;
 
   // autocomplete card search
-  private tree: TrieTree = new TrieTree();
+  private tree: TrieTree<Card> = new TrieTree();
   selectedCard: Card | undefined;
   itemString: string = "";
   public cards: Card[] = [];
@@ -40,8 +40,7 @@ export class CardSelectComponent implements OnInit {
     for (const card of cards) {
       this.tree.insertWord(`${card.name} (${card.set_name})`, card);
     }
-    console.log(this.tree);
-    
+    this.data.insertCardsToTrie(cards);
   }
 
   public emitSelectedCard(card: Card) {
@@ -49,7 +48,6 @@ export class CardSelectComponent implements OnInit {
   }
 
   public refreshCards() {
-    console.log("refreshing")
     this.data.getCardsByPrefix(this.prefixQuery, this.cardLang).subscribe((cards: Card[]) => this.fillTrie(cards))
   }
 

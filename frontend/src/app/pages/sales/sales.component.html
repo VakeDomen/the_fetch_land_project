@@ -1,18 +1,16 @@
 <div class="container mt-5 mb-5">
-    
     <div class="box mt-3" *ngIf="pageState == 'list'">
         <app-my-offer-list 
             (addOffer)="pageState = 'search'"
+            [sales]="sales"
         ></app-my-offer-list>    
     </div>
-
     <div class="box mt-3" *ngIf="pageState == 'search'">
         <app-card-select 
             (back)="pageState = 'list'" 
             (cardSelected)="nextToDetails($event)"
         ></app-card-select>
     </div>
-
     <div class="box mt-3" *ngIf="pageState == 'detalis'">
         <app-new-sale-details 
             [sale]="newSale" 
@@ -21,5 +19,4 @@
             (newSale)="newSaleSubmitted($event)"
         ></app-new-sale-details>
     </div>
-
 </div>

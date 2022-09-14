@@ -28,10 +28,7 @@ export class CardTableComponent implements OnChanges {
    }
 
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.cards);
-    
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   public getSetIcon(setId: string): string {
     for (const set of this.sets) {

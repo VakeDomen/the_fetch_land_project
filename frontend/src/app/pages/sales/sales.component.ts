@@ -26,6 +26,7 @@ export class SalesComponent implements OnInit {
   }
 
   private saveSales(sales: Sale[]): void {
+    sales = sales.map((s: Sale) => {s.price /= 100; return s});
     this.sales = sales;
   }
 
