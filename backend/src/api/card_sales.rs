@@ -2,7 +2,7 @@ use actix_web::{HttpResponse, get, web};
 
 use crate::{models::sale::Sale, services::database::sale_operaations::get_sales_by_card};
 
-#[get("/card/sales/{card_id}")]
+#[get("/card/sales/id/{card_id}")]
 pub async fn card_sales(card_id: web::Path<String>) -> HttpResponse {
     let sqlite_sales = match get_sales_by_card(card_id.into_inner()) {
         Ok(sales) => sales,

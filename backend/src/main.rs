@@ -1,7 +1,7 @@
 use std::env;
 use actix_cors::Cors;
 use actix_web_httpauth::extractors::bearer::Config;
-use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales};
+use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales, card_sales_name::get_card_sales_by_name};
 use dotenv::dotenv;
 use actix_web::{web::Data, App, HttpServer, http};
 use models::state::AppState;
@@ -89,6 +89,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_card)
             .service(get_card_by_name)
             .service(card_sales)
+            .service(get_card_sales_by_name)
             .service(user_update)
             .service(user_get)
             .service(user_delete)
