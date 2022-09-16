@@ -54,9 +54,12 @@ export class DataService {
     if (!cards) {
       return;
     }
+    
     for (const card of cards) {
       this.cardTrie.insertWord(card.id, card);
     }
+    console.log(this.cardTrie);
+    
   }
 
   getCardById(id: string): Observable<Card> {
@@ -71,6 +74,9 @@ export class DataService {
     return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/name/${lang ?? 'en'}/${prefix}`)
   }
 
+  getSalesByPartialPrefix(prefix: string, lang?: string): Observable<Sale[]> {
+    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/partials/${lang ?? 'en'}/${prefix}`)
+  }
   getUserCredentials(uid: string): Observable<UserCredentials> {
     return this.cache.getCached<UserCredentials>(`${this.apiUrlUser}credentials/${uid}`);
   }

@@ -56,22 +56,21 @@ export class TrieTree<T> {
     }
 }
 
-
 class Node<T> {
     char: string;
     children: Node<T>[];
     leaf: boolean;
-    obj: T[] | undefined;
+    data: T[] | undefined;
 
     constructor(word: string, obj: T) {
         this.char = word.charAt(0);
         this.children = [];
         if(word.length === 1) {
             this.leaf = true;
-            if (!this.obj) {
-                this.obj = [];
+            if (!this.data) {
+                this.data = [];
             }
-            this.obj.push(obj);
+            this.data.push(obj);
         } else {
             this.leaf = false;
             this.children.push(new Node(word.substr(1), obj));
@@ -82,8 +81,8 @@ class Node<T> {
         const notes: T[] = [];
         if (prefix.length === 0) {
             //collect
-            if (this.leaf && this.obj) {
-                notes.push(...this.obj);
+            if (this.leaf && this.data) {
+                notes.push(...this.data);
             }
             if (this.children.length === 0) {
                 return notes;
@@ -109,10 +108,12 @@ class Node<T> {
     insert(word: string, obj: T): void {
         if (word.length === 1) {
             this.leaf = true;
-            if (!this.obj) {
-                this.obj = [];
+            if (!this.data) {
+                this.data = [];
             }
-            this.obj.push(obj);
+            if (this.data.indexOf(obj) == -1) {
+                this.data.push(obj);
+            }
             return;
         }
         word = word.substr(1); 

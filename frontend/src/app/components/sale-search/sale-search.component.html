@@ -4,12 +4,9 @@
         <div class="field column is-10">
             <label class="label">Ime karte</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" [(ngModel)]="prefixQuery" (ngModelChange)="search($event)">
+                <input class="input" type="text" [(ngModel)]="prefixQuery" (ngModelChange)="search()">
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right has-text-success" *ngIf="cards.length">
-                    <i class="fas fa-check"></i>
                 </span>
             </div>
         </div>

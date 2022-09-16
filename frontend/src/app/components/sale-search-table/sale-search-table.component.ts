@@ -28,6 +28,8 @@ export class SaleSearchTableComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // unique card values og cardSales
+    console.log(this.cardSales);
+    
     this.cardsOnSale = [...new Set(this.cardSales.map(c => c.card))];
   }
 

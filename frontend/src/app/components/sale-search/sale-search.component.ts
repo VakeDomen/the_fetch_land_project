@@ -24,7 +24,6 @@ export class SaleSearchComponent implements OnInit {
   selectedCard: Card | undefined;
   itemString: string = "";
   public cardSales: CardSale[] = [];
-  public cards: Card[] = [];
 
 
   constructor(
@@ -34,8 +33,7 @@ export class SaleSearchComponent implements OnInit {
   ngOnInit(): void {
     const query = sessionStorage.getItem("saleSearchQeury");
     if (query) {
-      this.search(query)
-      this.refreshCards();
+      this.refreshCardsPartials();
     }
   }
   
@@ -45,6 +43,10 @@ export class SaleSearchComponent implements OnInit {
 
   public refreshCards() {
     this.data.getSalesByPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
+  }
+
+  public refreshCardsPartials() {
+    this.data.getSalesByPartialPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
   }
 
   private async fillTrieSetup(sales: Sale[]): Promise<void> {
@@ -57,8 +59,7 @@ export class SaleSearchComponent implements OnInit {
       }
     });
     const cards = await Promise.all(cardPromises);
-    this.cards = cards;
-    this.cards.map((c: Card) => this.data.insertCardsToTrie([c]));
+    this.data.insertCardsToTrie(cards);
     this.cardSales = sales.map((sale: Sale) => {
       const card = this.data.getCardByIdFromTrie(sale.sale_object_id).pop() as Card;
       const cs = sale as CardSale;
@@ -70,25 +71,17 @@ export class SaleSearchComponent implements OnInit {
 
   private fillTrie(cardSales: CardSale[]): void {
     this.cardSales = cardSales;
-    this.tree = new TrieTree();
     for (const cardSale of cardSales) {
-      this.tree.insertWord(cardSale.card.name, cardSale, true);
+      this.tree.insertWord(cardSale.card.name, cardSale, false);
     }
-    this.data.insertCardsToTrie(cardSales.map(cs => cs.card));
   }
 
-  public search(value: string) {
-    sessionStorage.setItem("saleSearchQeury", value);
-    this.prefixQuery = value;
-    let queryExecuted = false;
-    if (this.prefixQuery.length == 2) {
-      queryExecuted = true;
-      this.refreshCards()
-    }
-    this.cardSales = this.tree.collect(this.prefixQuery);
-    if (!this.cardSales.length && !queryExecuted) {
-      this.refreshCards()
-    }
+  public search() {
+    sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
+    if (this.prefixQuery.length > 1) this.refreshCardsPartials()
+    else this.cardSales = this.tree.collect(this.prefixQuery);
+    console.log("CS search", this.cardSales);
+    
   }
 
   public backTrigger() {

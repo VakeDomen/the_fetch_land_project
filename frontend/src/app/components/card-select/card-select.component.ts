@@ -38,7 +38,7 @@ export class CardSelectComponent implements OnInit {
     this.cards = cards;
     this.tree = new TrieTree();
     for (const card of cards) {
-      this.tree.insertWord(`${card.name} (${card.set_name})`, card, true);
+      this.tree.insertWord(`${card.name} (${card.set_name})`, card, false);
     }
     this.data.insertCardsToTrie(cards);
   }
