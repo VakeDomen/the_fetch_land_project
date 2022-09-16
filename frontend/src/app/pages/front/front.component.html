@@ -1,6 +1,16 @@
-<div class="container mt-5">
-    <div class="columns">
-        <div class="column is-11">
+<div class="container mt-5 banner">
+    <div class="level">
+        <div class="level-item has-text-centered">
+            <img 
+                class="img-banner is-hidden-mobile" 
+                src="assets/logo/fetchland_logo_name_black_big.png" 
+                alt=""
+            >
+            <div class="image-banner-small"></div>
+        </div>
+    </div>
+    <div class="columns p-3 search">
+        <div class="column is-10 is-offset-1">
 
             <div class="field">
                 <div class="control is-large is-primary">
@@ -8,15 +18,15 @@
                 </div>
             </div>
         </div>
-        <div class="column is-1 has-text-centered">
-            <button class="button is-primary has-text-black is-large is-rounded" (click)="search()">Išči</button>
-        </div>
     </div>
-
-    <div class="box">
+    <div class="has-text-centered">
+        <button class="button is-primary has-text-black is-hidden-tablet is-rounded is-large" (click)="search()">Išči</button>
+    </div>
+    <div class="box new-offers">
         <div class="level">
-            <div class="level-item">
-                <h1 class="title id-4">Najnovejše ponudbe</h1>
+            <div class="level-left"></div>
+            <div class="level-right">
+                <h1 class="subtitle id-4">Najnovejše ponudbe</h1>
             </div>
         </div>
         <app-new-sales-table></app-new-sales-table>

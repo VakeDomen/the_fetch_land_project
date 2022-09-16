@@ -80,8 +80,6 @@ export class SaleSearchComponent implements OnInit {
     sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
     if (this.prefixQuery.length > 1) this.refreshCardsPartials()
     else this.cardSales = this.tree.collect(this.prefixQuery);
-    console.log("CS search", this.cardSales);
-    
   }
 
   public backTrigger() {

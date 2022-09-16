@@ -88,6 +88,16 @@ $table-striped-row-even-background-color: $fl_black_secondary;
 
 html { background-color: black; }
 
+body {
+    background-image: url('assets/bg/bg1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    height: 100vh;
+    overflow-x: scroll;
+    box-shadow:inset 0 0 0 2000px rgba(0, 0, 0, 0.4);
+  }
+
 .label {
     color: $fl_light;
 }
