@@ -1,6 +1,6 @@
 use actix_web::{HttpResponse, get, web};
 
-use crate::{models::sale::Sale, services::database::sale_operaations::get_sales_by_card};
+use crate::{models::sale::Sale, services::database::sale_operations::get_sales_by_card};
 
 #[get("/card/sales/id/{card_id}")]
 pub async fn card_sales(card_id: web::Path<String>) -> HttpResponse {

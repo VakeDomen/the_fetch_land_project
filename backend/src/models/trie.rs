@@ -20,6 +20,21 @@ impl TrieTree {
         if word.is_empty() {
             return false;
         }
+
+        let chunks: Vec<&str> = word.split(" ").collect();
+        if chunks.len() > 1 {
+            for i in 1..chunks.len() {
+                let mut to_insert = "".to_string();
+                for j in i..chunks.len() {
+                    to_insert = format!("{} {}", to_insert, chunks[j]);
+                }
+                match &mut self.head {
+                    Some(head) => head.insert(to_insert.trim().to_string(), value.clone()),
+                    None => false,
+                };
+            }
+        }
+
         if self.head.is_none() {
             self.head = Some(Box::new(TrieNode {
                 letter: None,

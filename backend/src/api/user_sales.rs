@@ -1,7 +1,7 @@
 use actix_web::{HttpResponse, get};
 use actix_web_httpauth::extractors::bearer::BearerAuth;
 
-use crate::{services::{auth_jwt::decode_jwt, database::sale_operaations::get_sales_by_user}, models::sale::Sale};
+use crate::{services::{auth_jwt::decode_jwt, database::sale_operations::get_sales_by_user}, models::sale::Sale};
 
 #[get("/user/sales/")]
 pub async fn user_sales(auth: BearerAuth) -> HttpResponse {

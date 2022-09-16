@@ -1,7 +1,7 @@
 use actix_web::{HttpResponse, delete};
 use actix_web_httpauth::extractors::bearer::BearerAuth;
 
-use crate::{services::{auth_jwt::decode_jwt, database::{user_operations::delete_user, sale_operaations::delete_all_user_sales}}};
+use crate::{services::{auth_jwt::decode_jwt, database::{user_operations::delete_user, sale_operations::delete_all_user_sales}}};
 
 #[delete("/user/")]
 pub async fn user_delete(auth: BearerAuth) -> HttpResponse {

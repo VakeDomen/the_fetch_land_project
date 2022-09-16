@@ -1,4 +1,4 @@
-pub mod sale_operaations {
+pub mod sale_operations {
     use diesel::result::Error;
     use diesel::{prelude::*, insert_into};
 
@@ -13,6 +13,15 @@ pub mod sale_operaations {
             .values(&sqlite_sale)
             .execute(&conn)?;
         Ok(sqlite_sale)
+    }
+
+    pub fn get_latest_sales(num: i64) -> Result<Vec<SqliteSale>, Error> {
+        let conn = establish_connection();
+        let sqlite_sales = sales
+            .order(created.desc())
+            .limit(num)
+            .load::<SqliteSale>(&conn)?;
+        Ok(sqlite_sales)
     }
 
     pub fn get_sales_by_user(uid: String) -> Result<Vec<SqliteSale>, Error> {

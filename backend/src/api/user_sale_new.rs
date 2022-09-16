@@ -2,7 +2,7 @@ use actix_web::{HttpResponse, post, web};
 use actix_web_httpauth::extractors::bearer::BearerAuth;
 use serde::Deserialize;
 
-use crate::{services::{auth_jwt::decode_jwt, database::sale_operaations::insert_sale}, models::sale::Sale, database::models::SqliteSale};
+use crate::{services::{auth_jwt::decode_jwt, database::sale_operations::insert_sale}, models::sale::Sale, database::models::SqliteSale};
 
 #[derive(Deserialize)]
 pub struct SalePostData {
