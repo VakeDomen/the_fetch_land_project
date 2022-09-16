@@ -13,7 +13,7 @@ import { Set } from 'src/app/models/set.model';
 export class CardTableComponent implements OnChanges {
 
   @Input() cards: Card[] = [];
-  @Input() displayMode: 'new_sale' = 'new_sale'; 
+  @Input() displayMode: 'new_sale' = 'new_sale';
 
   @Output() cardSelected = new EventEmitter<Card>();
 
@@ -21,14 +21,14 @@ export class CardTableComponent implements OnChanges {
 
   constructor(
     private data: DataService,
-  ) { 
+  ) {
     this.data.getSets().subscribe((setsData: ScryfallResponse<Set>) => {
       this.sets = setsData.data;
     })
-   }
+  }
 
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void { }
 
   public getSetIcon(setId: string): string {
     for (const set of this.sets) {

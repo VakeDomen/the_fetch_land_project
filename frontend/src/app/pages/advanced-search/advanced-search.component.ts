@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CardSale } from 'src/app/models/card-sale.model';
 
 @Component({
   selector: 'app-advanced-search',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdvancedSearchComponent implements OnInit {
 
+  public pageState: 'search' | 'sales' = 'search';
+  public salesToCheck: CardSale[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public checkSales(cardSales: CardSale[]) {
+    this.salesToCheck = cardSales;
+    this.pageState = 'sales'
   }
 
 }

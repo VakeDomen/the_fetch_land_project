@@ -23,6 +23,8 @@ import { MyOfferListComponent } from './components/my-offer-list/my-offer-list.c
 import { NewSaleDetailsComponent } from './components/new-sale-details/new-sale-details.component';
 import { MyOffersTableComponent } from './components/my-offers-table/my-offers-table.component';
 import { SaleSearchTableComponent } from './components/sale-search-table/sale-search-table.component';
+import { SaleSearchComponent } from './components/sale-search/sale-search.component';
+import { SaleListComponent } from './components/sale-list/sale-list.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { SaleSearchTableComponent } from './components/sale-search-table/sale-se
     MyOfferListComponent,
     NewSaleDetailsComponent,
     MyOffersTableComponent,
-    SaleSearchTableComponent
+    SaleSearchTableComponent,
+    SaleSearchComponent,
+    SaleListComponent
   ],
   imports: [
     BrowserModule,

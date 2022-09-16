@@ -1,34 +1,46 @@
-<table class="table is-fullwidth is-striped has-text-centered" *ngIf="cards.length">
-    <thead>
-        <tr>
-            <th><p class="has-text-centered">Karta ({{ cards.length }})</p></th>
-            <th><p class="has-text-centered">Ime</p></th>
-            <th><p class="has-text-centered">Set</p></th>
-            <th><p class="has-text-centered">Jezik</p></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let card of cards">
-            <th>
-                <div class="has-text-centered">
-                    <img class="ml-auto img-card" *ngIf="card.image_uris" src="{{card.image_uris.small}}" alt="">
-                    <ng-container *ngIf="!card.image_uris && card.card_faces">
-                        <img class="img-card" *ngFor="let face of card.card_faces" src="{{face.image_uris?.small}}" alt="">
-                    </ng-container>
-                </div>
-            </th>
-            <td class="is-vcentered">{{ card.name }}</td>
-            <td class="is-vcentered">
-                <div class="set-table-icon-wrapper">
-                    <img class="set-table-icon" src="{{ this.getSetIcon(card.set_id) }}" alt="set icon"/>
-                </div>
-                <div>
-                    {{ card.set_name }}
-                </div>
-            </td>
-            <td class="is-vcentered">{{ mapLanguage(card.lang) }}</td>
-            <td class="is-vcentered"><button class="button is-primary has-text-black" (click)="selectCard(card)">Ponudi</button></td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-container">
+    <table class="table is-fullwidth is-striped has-text-centered" *ngIf="cards.length">
+        <thead>
+            <tr>
+                <th>
+                    <p class="has-text-centered">Karta ({{ cards.length }})</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Ime</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Set</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Jezik</p>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let card of cards">
+                <th>
+                    <div class="has-text-centered">
+                        <img class="ml-auto img-card" *ngIf="card.image_uris" src="{{card.image_uris.small}}" alt="">
+                        <ng-container *ngIf="!card.image_uris && card.card_faces">
+                            <img class="img-card" *ngFor="let face of card.card_faces" src="{{face.image_uris?.small}}"
+                                alt="">
+                        </ng-container>
+                    </div>
+                </th>
+                <td class="is-vcentered">{{ card.name }}</td>
+                <td class="is-vcentered">
+                    <div class="set-table-icon-wrapper">
+                        <img class="set-table-icon" src="{{ this.getSetIcon(card.set_id) }}" alt="set icon" />
+                    </div>
+                    <div>
+                        {{ card.set_name }}
+                    </div>
+                </td>
+                <td class="is-vcentered">{{ mapLanguage(card.lang) }}</td>
+                <td class="is-vcentered"><button class="button is-primary has-text-black"
+                        (click)="selectCard(card)">Ponudi</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

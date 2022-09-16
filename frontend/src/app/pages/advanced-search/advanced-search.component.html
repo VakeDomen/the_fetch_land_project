@@ -1,3 +1,9 @@
 <div class="container">
-    <app-sale-search-table></app-sale-search-table>
+    <div class="box mt-3 mb-5" *ngIf="pageState == 'search'">
+        <app-sale-search (salesToCheck)="checkSales($event)"></app-sale-search>
+    </div>
+
+    <div class="box mt-3 mb-5" *ngIf="pageState == 'sales'">
+        <app-sale-list [cardSales]="salesToCheck" (back)="pageState = 'search'"></app-sale-list>
+    </div>
 </div>
