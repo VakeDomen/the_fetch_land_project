@@ -4,11 +4,13 @@ table! {
         sale_type -> Text,
         user_id -> Text,
         sale_object_id -> Text,
-        location_coords -> Text,
         created -> Text,
         description -> Text,
         price -> Integer,
         amount -> Integer,
+        contact_type -> Text,
+        location -> Text,
+        web_address -> Text,
     }
 }
 

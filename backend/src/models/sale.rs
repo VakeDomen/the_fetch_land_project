@@ -9,11 +9,13 @@ pub struct Sale {
     pub sale_type: String,
     pub user_id: String,
     pub sale_object_id: String,
-    pub location_coords: String,
     pub created: String,
     pub description: String,
     pub price: i32,
     pub amount: i32,
+    pub contact_type: String,
+    pub location: String,
+    pub web_address: String,
 }
 
 impl Sale {
@@ -23,11 +25,13 @@ impl Sale {
             sale_type: sqlite_sale.sale_type, 
             user_id: sqlite_sale.user_id, 
             sale_object_id: sqlite_sale.sale_object_id, 
-            location_coords: sqlite_sale.location_coords, 
+            location: sqlite_sale.location, 
             created: sqlite_sale.created, 
             description: sqlite_sale.description, 
             price: sqlite_sale.price, 
-            amount: sqlite_sale.amount
+            amount: sqlite_sale.amount,
+            contact_type: sqlite_sale.contact_type,
+            web_address: sqlite_sale.web_address,            
         }
     }
 }

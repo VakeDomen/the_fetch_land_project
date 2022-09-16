@@ -13,11 +13,13 @@ pub struct SqliteSale {
     pub sale_type: String,
     pub user_id: String,
     pub sale_object_id: String,
-    pub location_coords: String,
     pub created: String,
     pub description: String,
     pub price: i32,
     pub amount: i32,
+    pub contact_type: String,
+    pub location: String,
+    pub web_address: String,
 }
 
 impl SqliteSale {
@@ -27,11 +29,13 @@ impl SqliteSale {
             sale_type: post_data.sale_type, 
             user_id: uid, 
             sale_object_id: post_data.sale_object_id, 
-            location_coords: post_data.location_coords, 
             created: Utc::now().naive_utc().to_string(), 
             description: post_data.description, 
             price: post_data.price,
             amount: post_data.amount,
+            contact_type: post_data.contact_type,
+            location: post_data.location, 
+            web_address: post_data.web_address,
         }
     }
 }

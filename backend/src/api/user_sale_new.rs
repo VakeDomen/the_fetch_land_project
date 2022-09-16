@@ -8,10 +8,12 @@ use crate::{services::{auth_jwt::decode_jwt, database::sale_operaations::insert_
 pub struct SalePostData {
     pub sale_type: String,
     pub sale_object_id: String,
-    pub location_coords: String,
     pub description: String,
     pub price: i32,
     pub amount: i32,
+    pub contact_type: String,
+    pub location: String,
+    pub web_address: String,
 }
 
 #[post("/user/sale/")]
