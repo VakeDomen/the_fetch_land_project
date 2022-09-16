@@ -5,11 +5,27 @@ export class TrieTree<T> {
         this.children = [];
     }
 
-    insertWord(word: string, obj: T): void {
+    insertWord(word: string, obj: T, split?: boolean): void {
+        console.log("TO INSERT: ", word);
+        
         word = word.toUpperCase();
         if(word.length === 0) {
             return;
         }
+
+        if (split) {
+            const chunks = word.split(" ");
+            if (chunks.length > 1) {
+                for (let i = 1 ; i < chunks.length ; i++) {
+                    let toInsert = "";
+                    for (let j = i ; j < chunks.length ; j++) {
+                        toInsert += " " + chunks[j]
+                    }
+                    this.insertWord(toInsert.trim(), obj);
+                }
+            }
+        }
+
         let letterChild: Node<T> | null = null;
         for (const child of this.children) {
             if (child.char === word.charAt(0)) {

@@ -74,4 +74,8 @@ export class DataService {
   getUserCredentials(uid: string): Observable<UserCredentials> {
     return this.cache.getCached<UserCredentials>(`${this.apiUrlUser}credentials/${uid}`);
   }
+
+  getLatestSales(num?: number): Observable<Sale[]> {
+    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/latest/${num ?? ''}`);
+  }
 }

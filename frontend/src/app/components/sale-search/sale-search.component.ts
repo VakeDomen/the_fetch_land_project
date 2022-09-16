@@ -34,8 +34,8 @@ export class SaleSearchComponent implements OnInit {
   ngOnInit(): void {
     const query = sessionStorage.getItem("saleSearchQeury");
     if (query) {
-      this.prefixQuery = query;
-      this.refreshCards()
+      this.search(query)
+      this.refreshCards();
     }
   }
   
@@ -72,7 +72,7 @@ export class SaleSearchComponent implements OnInit {
     this.cardSales = cardSales;
     this.tree = new TrieTree();
     for (const cardSale of cardSales) {
-      this.tree.insertWord(cardSale.card.name, cardSale);
+      this.tree.insertWord(cardSale.card.name, cardSale, true);
     }
     this.data.insertCardsToTrie(cardSales.map(cs => cs.card));
   }
@@ -80,10 +80,15 @@ export class SaleSearchComponent implements OnInit {
   public search(value: string) {
     sessionStorage.setItem("saleSearchQeury", value);
     this.prefixQuery = value;
+    let queryExecuted = false;
     if (this.prefixQuery.length == 2) {
+      queryExecuted = true;
       this.refreshCards()
     }
     this.cardSales = this.tree.collect(this.prefixQuery);
+    if (!this.cardSales.length && !queryExecuted) {
+      this.refreshCards()
+    }
   }
 
   public backTrigger() {

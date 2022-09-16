@@ -26,6 +26,7 @@ import { SaleSearchTableComponent } from './components/sale-search-table/sale-se
 import { SaleSearchComponent } from './components/sale-search/sale-search.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { SaleCardComponent } from './components/sale-card/sale-card.component';
+import { NewSalesTableComponent } from './components/new-sales-table/new-sales-table.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { SaleCardComponent } from './components/sale-card/sale-card.component';
     SaleSearchTableComponent,
     SaleSearchComponent,
     SaleListComponent,
-    SaleCardComponent
+    SaleCardComponent,
+    NewSalesTableComponent
   ],
   imports: [
     BrowserModule,

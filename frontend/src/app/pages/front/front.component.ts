@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-front',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FrontComponent implements OnInit {
 
-  constructor() { }
+  public searchQuery: string = '';
+
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  public search() {
+    sessionStorage.setItem("saleSearchQeury", this.searchQuery);
+    this.router.navigate(["search"]);
+  }
 }
