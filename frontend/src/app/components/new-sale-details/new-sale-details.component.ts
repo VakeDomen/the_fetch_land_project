@@ -60,6 +60,6 @@ export class NewSaleDetailsComponent implements OnInit {
   }
 
   private newSaleResp(resp: Sale): void {
-    this.newSale.emit(this.sale);
+    this.newSale.emit(resp);
   }
 }

@@ -27,6 +27,37 @@
                     </span>
                 </div>
             </div>
+
+
+            <div class="field column is-half">
+                <label class="label">Top kontakta</label>
+                <div class="select">
+                    <select 
+                        class="form-control" 
+                        id="pCategory" 
+                        name="pCategory" 
+                        [(ngModel)]="sale.contact_type"
+                    >
+                        <option [ngValue]="'PHONE'">Telefonska št.</option>
+                        <option [ngValue]="'EMAIL'">Email</option>
+                        <option [ngValue]="'WEB'">Spletni naslov (spletne trgovine)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field column is-half" *ngIf="sale.contact_type == 'WEB'">
+                <label class="label">Spletni naslov</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" [(ngModel)]="sale.web_address">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-link"></i>
+                    </span>
+                    <span class="icon is-small is-right has-text-success" *ngIf="isContactValid()">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+            </div>
+
             <div class="field column is-12">
                 <label class="label">Opis / dodatni podatki</label>
                 <div class="control has-icons-left has-icons-right">

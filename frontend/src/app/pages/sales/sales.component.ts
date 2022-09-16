@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CardSelectComponent } from 'src/app/components/card-select/card-select.component';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -19,6 +22,8 @@ export class SalesComponent implements OnInit {
 
   constructor(
     private data: DataService,
+    private auth: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +35,24 @@ export class SalesComponent implements OnInit {
     this.sales = sales;
   }
 
+  public startSearch() {
+    this.checkContactData();
+    this.pageState = 'search';
+  }
+
+  private checkContactData() {
+    const userString = sessionStorage.getItem('user');
+    // not logged in
+    if (!userString) {
+      return this.router.navigate(['']);
+    }
+    const user = JSON.parse(userString) as User;
+    if (!user.phone || !user.name || user.phone == '' || user.name == '') {
+      return this.router.navigate(["profile"]);
+    }
+    return;
+  }
+
   public nextToDetails(card: Card): void {
     this.newSaleCard = card
     this.newSale = {
@@ -38,7 +61,7 @@ export class SalesComponent implements OnInit {
       description: "",
       price: 0,
       amount: 0,
-      contact_type: 'EMAIL',
+      contact_type: 'PHONE',
       location: '',
       web_address: '',
     } as Sale;

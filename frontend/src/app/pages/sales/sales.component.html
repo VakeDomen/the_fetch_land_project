@@ -1,7 +1,7 @@
 <div class="container mt-5 mb-5">
     <div class="box mt-3" *ngIf="pageState == 'list'">
         <app-my-offer-list 
-            (addOffer)="pageState = 'search'"
+            (addOffer)="startSearch()"
             [sales]="sales"
         ></app-my-offer-list>    
     </div>
