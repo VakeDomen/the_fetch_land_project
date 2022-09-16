@@ -20,7 +20,16 @@ pub static NAME_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
     let all_cards = ALL_CARDS.lock().unwrap();
     let mut trie = TrieTree::new();
     for card in all_cards.values() {
-        trie.insert(card.name.clone().to_lowercase(), card.id.clone());
+        trie.insert(card.name.clone().to_lowercase(), card.id.clone(), false);
+    }
+    Mutex::new(trie)
+});
+
+pub static NAME_PARTIALS_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
+    let all_cards = ALL_CARDS.lock().unwrap();
+    let mut trie = TrieTree::new();
+    for card in all_cards.values() {
+        trie.insert(card.name.clone().to_lowercase(), card.id.clone(), true);
     }
     Mutex::new(trie)
 });

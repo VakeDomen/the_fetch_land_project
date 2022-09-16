@@ -1,7 +1,7 @@
 use std::env;
 use actix_cors::Cors;
 use actix_web_httpauth::extractors::bearer::Config;
-use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales, card_sales_name::get_card_sales_by_name, user_credentials::user_credentials, card_sales_latest::{card_sales_latest, card_sales_latest_default}};
+use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales, card_sales_name::{get_card_sales_by_name, get_card_sales_by_name_partials}, user_credentials::user_credentials, card_sales_latest::{card_sales_latest, card_sales_latest_default}};
 use dotenv::dotenv;
 use actix_web::{web::Data, App, HttpServer, http};
 use models::state::AppState;
@@ -99,6 +99,7 @@ async fn main() -> std::io::Result<()> {
             .service(user_credentials)
             .service(card_sales_latest_default)
             .service(card_sales_latest)
+            .service(get_card_sales_by_name_partials)
     })
     .bind_openssl("0.0.0.0:8080", builder)?
     .run()

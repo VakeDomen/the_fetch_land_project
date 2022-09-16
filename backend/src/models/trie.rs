@@ -16,22 +16,23 @@ impl TrieTree {
         Self { head: None }
     }
 
-    pub fn insert(&mut self, word: String, value: String) -> bool {
+    pub fn insert(&mut self, word: String, value: String, split: bool) -> bool {
         if word.is_empty() {
             return false;
         }
-
-        let chunks: Vec<&str> = word.split(" ").collect();
-        if chunks.len() > 1 {
-            for i in 1..chunks.len() {
-                let mut to_insert = "".to_string();
-                for j in i..chunks.len() {
-                    to_insert = format!("{} {}", to_insert, chunks[j]);
+        if split {
+            let chunks: Vec<&str> = word.split(" ").collect();
+            if chunks.len() > 1 {
+                for i in 1..chunks.len() {
+                    let mut to_insert = "".to_string();
+                    for j in i..chunks.len() {
+                        to_insert = format!("{} {}", to_insert, chunks[j]);
+                    }
+                    match &mut self.head {
+                        Some(head) => head.insert(to_insert.trim().to_string(), value.clone()),
+                        None => false,
+                    };
                 }
-                match &mut self.head {
-                    Some(head) => head.insert(to_insert.trim().to_string(), value.clone()),
-                    None => false,
-                };
             }
         }
 
@@ -91,7 +92,9 @@ impl TrieNode {
         // we are the last node
         if word.is_empty() {
             self.leaf = true;
-            self.values.push(value);
+            if !self.values.contains(&value) {
+                self.values.push(value);
+            }
             true
         } else {
             let first_char = word.remove(0);
