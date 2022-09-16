@@ -10,3 +10,4 @@ pub mod card_sales_name;
 pub mod user_sales;
 pub mod user_sale_new;
 pub mod user_sale_delete;
+pub mod user_credentials;

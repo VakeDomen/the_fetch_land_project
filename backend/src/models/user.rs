@@ -5,9 +5,9 @@ use crate::database::models::SqliteUser;
 #[derive(Serialize)]
 pub struct User {
     id: String,
-    name: String,
-    email: String,
-    phone: String,
+    pub name: String,
+    pub email: String,
+    pub phone: String,
     img: String,
 }
 
@@ -20,5 +20,18 @@ impl User {
             phone: sqlite_user.phone,
             img: sqlite_user.img,
         }
+    }
+}
+
+#[derive(Debug, Serialize)]
+pub struct UserCredentials {
+    pub name: String,
+    pub email: String,
+    pub phone: String,
+}
+
+impl UserCredentials {
+    pub fn from(user: User) -> Self {
+        Self { name: user.name, email: user.email, phone: user.phone }
     }
 }
