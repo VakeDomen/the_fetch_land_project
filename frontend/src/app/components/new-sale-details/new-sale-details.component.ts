@@ -27,30 +27,28 @@ export class NewSaleDetailsComponent implements OnInit {
   }
 
   public isInputValid(): boolean {
-    return this.isAmountValid() &&
+    return this.isContactValid() &&
+      this.isAmountValid() &&
       this.isPriceValid() &&
       this.isLocationValid();
   }
 
   public isAmountValid(): boolean {
-    if (!this.sale?.amount || this.sale?.amount <= 0) {
-      return false;
-    }
-    return true;
+    return (!!this.sale?.amount && this.sale?.amount > 0);
   }
 
   public isPriceValid(): boolean {
-    if (!this.sale || this.sale?.price < 0) {
-      return false;
-    }
-    return true;
+    return (!!this.sale && this.sale.price >= 0);
   }
 
   public isLocationValid(): boolean {
-    if (!this.sale?.location || this.sale?.location === "") {
-      return false;
-    }
-    return true;
+    return (!!this.sale?.location && this.sale?.location === "");
+  }
+
+  public isContactValid(): boolean {
+    return (this.sale?.contact_type == 'EMAIL') ||
+      (this.sale?.contact_type == 'PHONE') || 
+      (this.sale?.contact_type == 'WEB' && !!this.sale.web_address && this.sale.web_address != '')
   }
 
   public submitSale() {
