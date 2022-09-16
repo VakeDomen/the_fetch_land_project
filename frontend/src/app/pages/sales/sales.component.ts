@@ -31,7 +31,7 @@ export class SalesComponent implements OnInit {
   }
 
   private saveSales(sales: Sale[]): void {
-    sales = sales.map((s: Sale) => {s.price /= 100; return s});
+    // sales = sales.map((s: Sale) => {s.price /= 100; return s});
     this.sales = sales;
   }
 
@@ -69,7 +69,7 @@ export class SalesComponent implements OnInit {
   }
 
   public newSaleSubmitted(sale: Sale) {
-    sale.price /= 100;
+    // sale.price /= 100;
     this.sales.push(sale);
     this.pageState = 'list';
   }

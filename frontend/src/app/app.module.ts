@@ -25,6 +25,7 @@ import { MyOffersTableComponent } from './components/my-offers-table/my-offers-t
 import { SaleSearchTableComponent } from './components/sale-search-table/sale-search-table.component';
 import { SaleSearchComponent } from './components/sale-search/sale-search.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
+import { SaleCardComponent } from './components/sale-card/sale-card.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SaleListComponent } from './components/sale-list/sale-list.component';
     MyOffersTableComponent,
     SaleSearchTableComponent,
     SaleSearchComponent,
-    SaleListComponent
+    SaleListComponent,
+    SaleCardComponent
   ],
   imports: [
     BrowserModule,

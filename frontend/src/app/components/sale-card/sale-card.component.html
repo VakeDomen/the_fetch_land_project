@@ -1,0 +1,117 @@
+<div class="container box sale-card mb-5">
+    <article class="media" *ngIf="cardSale">
+        <div class="media-content">
+            <div class="columns">
+                <div class="column is-9 has-text-centered" *ngIf="!isLoggedIn()">
+                    <h1 class="title is-5">Za kontaktne podatke se <a (click)="routeToLogin()" class="is-underlined has-text-primary">vpiši</a>.</h1>
+                </div>
+
+                <!-- seller -->
+                <div 
+                    class="column is-2" 
+                    *ngIf="isLoggedIn() && sellerCredentials"
+                      
+                >
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-one-fifth is-hidden-mobile">
+                            <i class="fas fa-user fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading">Seller</p>
+                            <p class="title is-5">{{ sellerCredentials.name }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- location -->
+
+                <div class="column is-3" *ngIf="isLoggedIn() && sellerCredentials && cardSale.contact_type != 'WEB'">
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-one-fifth is-hidden-mobile">
+                            <i class="fas fa-street-view fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading">Lokacija</p>
+                            <p class="title is-5">{{ cardSale.location }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- contact -->
+                <div class="column is-4" *ngIf="isLoggedIn() && sellerCredentials && cardSale.contact_type == 'EMAIL'">
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-2 is-hidden-mobile">
+                            <i class="fas fa-envelope fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading">Email</p>
+                            <a class="title is-5 has-text-primary" href="mailto:{{sellerCredentials.email}}">{{ sellerCredentials.email }}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-4" *ngIf="isLoggedIn() && sellerCredentials && cardSale.contact_type == 'PHONE'">
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-one-fifth is-hidden-mobile">
+                            <i class="fas fa-phone fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading">Telefonska št.</p>
+                            <a class="title is-5 has-text-primary" href="tel:{{sellerCredentials.phone}}">{{ sellerCredentials.phone }}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-offset-3 is-4" *ngIf="isLoggedIn() && sellerCredentials && cardSale.contact_type == 'WEB'">
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-one-fifth is-hidden-mobile">
+                            <i class="fas fa-link fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading">Spletni naslov</p>
+                            <a class="title is-5 has-text-primary">{{ shortenWebUrl(cardSale.web_address) }}</a>
+                        </div>
+                    </div>
+                </div>
+
+               
+                
+                <div class="column">
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-one-fifth is-hidden-mobile">
+                            <i class="fas fa-hashtag fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading pl-1">Količina</p>
+                            <p class="title is-5">
+                                {{ cardSale.amount }}
+                            </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="columns">
+                        <div class="column has-text-centered-mobile is-one-fifth is-hidden-mobile">
+                            <i class="fas fa-coins fa-2x icon-center"></i>
+                        </div>
+                        <div class="column has-text-centered-mobile">
+                            <p class="heading pl-1">Cena</p>
+                            <p class="title is-5">
+                                {{ cardSale.price / 100}} €
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <p class="description" *ngIf="cardSale.description"> {{ cardSale.description }}</p>
+            <p class="description has-text-centered-mobile" *ngIf="!cardSale.description">Ponudba ne vsebuje opisa</p>
+        </div>
+            
+    </article>
+
+    <div *ngIf="!cardSale">
+        <div class="level">
+            <div class="level-item has-text-centered-mobile">
+                Unable to display cardSale!
+            </div>
+        </div>
+    </div>
+</div>

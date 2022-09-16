@@ -7,6 +7,7 @@ import { Sale } from '../models/sale.model';
 import { ScryfallResponse } from '../models/scryfall-response.model';
 import { Set } from '../models/set.model';
 import { TrieTree } from '../models/trie.model';
+import { UserCredentials } from '../models/user-credentials.model';
 import { User } from '../models/user.model';
 import { CacheService } from './cache.service';
 
@@ -68,5 +69,9 @@ export class DataService {
 
   getSalesByPrefix(prefix: string, lang?: string): Observable<Sale[]> {
     return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/name/${lang ?? 'en'}/${prefix}`)
+  }
+
+  getUserCredentials(uid: string): Observable<UserCredentials> {
+    return this.cache.getCached<UserCredentials>(`${this.apiUrlUser}credentials/${uid}`);
   }
 }
