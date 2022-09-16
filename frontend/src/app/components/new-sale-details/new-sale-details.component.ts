@@ -47,7 +47,7 @@ export class NewSaleDetailsComponent implements OnInit {
   }
 
   public isLocationValid(): boolean {
-    if (!this.sale?.location_coords || this.sale?.location_coords === "") {
+    if (!this.sale?.location || this.sale?.location === "") {
       return false;
     }
     return true;

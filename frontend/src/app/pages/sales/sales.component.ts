@@ -35,10 +35,12 @@ export class SalesComponent implements OnInit {
     this.newSale = {
       sale_type: "CARD",
       sale_object_id: card.id,
-      location_coords: "",
       description: "",
       price: 0,
       amount: 0,
+      contact_type: 'EMAIL',
+      location: '',
+      web_address: '',
     } as Sale;
     this.pageState = 'detalis';
   }
