@@ -42,13 +42,14 @@ export class NewSaleDetailsComponent implements OnInit {
   }
 
   public isLocationValid(): boolean {
-    return (!!this.sale?.location && this.sale?.location === "");
+    return (this.sale?.contact_type == 'WEB') ||
+      (!!this.sale?.location && this.sale?.location != "");
   }
 
   public isContactValid(): boolean {
     return (this.sale?.contact_type == 'EMAIL') ||
       (this.sale?.contact_type == 'PHONE') || 
-      (this.sale?.contact_type == 'WEB' && !!this.sale.web_address && this.sale.web_address != '')
+      (this.sale?.contact_type == 'WEB' && !!this.sale?.web_address && this.sale?.web_address != '')
   }
 
   public submitSale() {

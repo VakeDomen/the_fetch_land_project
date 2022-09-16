@@ -69,6 +69,7 @@ export class SalesComponent implements OnInit {
   }
 
   public newSaleSubmitted(sale: Sale) {
+    sale.price /= 100;
     this.sales.push(sale);
     this.pageState = 'list';
   }

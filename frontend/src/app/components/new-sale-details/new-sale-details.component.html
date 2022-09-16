@@ -15,22 +15,11 @@
    
     <div class="block columns" *ngIf="sale">
         <div class="column is-half columns is-multiline">
-            <div class="field column is-12">
-                <label class="label">Približna lokacija</label>
-                <div class="control has-icons-left has-icons-right">
-                    <input class="input" type="text" [(ngModel)]="sale.location">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    <span class="icon is-small is-right has-text-success" *ngIf="isLocationValid()">
-                        <i class="fas fa-check"></i>
-                    </span>
-                </div>
-            </div>
+            
 
 
             <div class="field column is-half">
-                <label class="label">Top kontakta</label>
+                <label class="label">Tip kontakta *</label>
                 <div class="select">
                     <select 
                         class="form-control" 
@@ -46,13 +35,26 @@
             </div>
 
             <div class="field column is-half" *ngIf="sale.contact_type == 'WEB'">
-                <label class="label">Spletni naslov</label>
+                <label class="label">Spletni naslov *</label>
                 <div class="control has-icons-left has-icons-right">
                     <input class="input" type="text" [(ngModel)]="sale.web_address">
                     <span class="icon is-small is-left">
                         <i class="fas fa-link"></i>
                     </span>
                     <span class="icon is-small is-right has-text-success" *ngIf="isContactValid()">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field column is-half" *ngIf="sale.contact_type != 'WEB'">
+                <label class="label">Približna lokacija *</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" [(ngModel)]="sale.location">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-street-view"></i>
+                    </span>
+                    <span class="icon is-small is-right has-text-success" *ngIf="isLocationValid()">
                         <i class="fas fa-check"></i>
                     </span>
                 </div>
@@ -65,7 +67,7 @@
                 </div>
             </div>
             <div class="field column is-half">
-                <label class="label">Št. kart</label>
+                <label class="label">Št. kart *</label>
                 <div class="control has-icons-left has-icons-right">
                     <input class="input" type="number" [(ngModel)]="sale.amount">
                     <span class="icon is-small is-left">
@@ -77,7 +79,7 @@
                 </div>
             </div>
             <div class="field column is-half">
-                <label class="label">Cena €/karto</label>
+                <label class="label">Cena €/karto *</label>
                 <div class="control has-icons-left has-icons-right">
                     <input class="input" type="number" [(ngModel)]="sale.price">
                     <span class="icon is-small is-left">
