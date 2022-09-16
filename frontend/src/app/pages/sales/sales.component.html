@@ -1,22 +1,26 @@
 <div class="container mt-5 mb-5">
-    <div class="box mt-3" *ngIf="pageState == 'list'">
-        <app-my-offer-list 
-            (addOffer)="startSearch()"
-            [sales]="sales"
-        ></app-my-offer-list>    
-    </div>
-    <div class="box mt-3" *ngIf="pageState == 'search'">
-        <app-card-select 
-            (back)="pageState = 'list'" 
-            (cardSelected)="nextToDetails($event)"
-        ></app-card-select>
-    </div>
-    <div class="box mt-3" *ngIf="pageState == 'detalis'">
-        <app-new-sale-details 
-            [sale]="newSale" 
-            [card]="newSaleCard" 
-            (back)="pageState = 'search'" 
-            (newSale)="newSaleSubmitted($event)"
-        ></app-new-sale-details>
-    </div>
+    <app-my-offer-list 
+        [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
+        class="box mt-3 animat" 
+        *ngIf="pageState == 'list'"
+        (addOffer)="startSearch()"
+        [sales]="sales"
+    ></app-my-offer-list>    
+    <app-card-select 
+        [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
+        class="box mt-3" 
+        *ngIf="pageState == 'search'"
+        (back)="backToList()" 
+        (cardSelected)="nextToDetails($event)"
+    ></app-card-select>
+    <app-new-sale-details 
+        [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
+        
+        class="box mt-3" 
+        *ngIf="pageState == 'detalis'"
+        [sale]="newSale" 
+        [card]="newSaleCard" 
+        (back)="backToSearch()" 
+        (newSale)="newSaleSubmitted($event)"
+    ></app-new-sale-details>
 </div>

@@ -1,9 +1,17 @@
 <div class="container">
-    <div class="box mt-3 mb-5" *ngIf="pageState == 'search'">
+    <div 
+        class="box mt-3 mb-5" 
+        *ngIf="pageState == 'search'"
+        [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
+    >
         <app-sale-search (salesToCheck)="checkSales($event)"></app-sale-search>
     </div>
 
-    <div class="box mt-3 mb-5" *ngIf="pageState == 'sales'">
-        <app-sale-list [cardSales]="salesToCheck" (back)="pageState = 'search'"></app-sale-list>
+    <div 
+        class="box mt-3 mb-5" 
+        *ngIf="pageState == 'sales'"
+        [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
+    >
+        <app-sale-list [cardSales]="salesToCheck" (back)="backToList()"></app-sale-list>
     </div>
 </div>

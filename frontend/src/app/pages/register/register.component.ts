@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
@@ -7,7 +8,15 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.sass']
+  styleUrls: ['./register.component.sass'],
+  animations: [
+    trigger('enter', [
+       transition(':enter', [
+        style({ transform: 'translateX(200%)' }),
+        animate('200ms'),
+      ])
+    ]),
+  ]  
 })
 export class RegisterComponent implements OnInit {
 
@@ -20,7 +29,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
   ) { }
-
+  
   ngOnInit(): void {
     if (!this.auth.isLoggedIn()) {
       this.router.navigate([""]);

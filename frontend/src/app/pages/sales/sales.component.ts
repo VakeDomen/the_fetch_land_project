@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CardSelectComponent } from 'src/app/components/card-select/card-select.component';
+import { animate, query, stagger, state, style, transition, trigger } from '@angular/animations';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
 import { User } from 'src/app/models/user.model';
@@ -10,7 +10,17 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-sales',
   templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.sass']
+  styleUrls: ['./sales.component.sass'],
+  animations: [
+    trigger('enter', [
+      state('left', style({})),
+      state('right', style({})),
+      transition(':enter', [
+        style({ transform: 'translateX({{ trans }}%)' }),
+        animate('200ms'),
+      ])
+    ]),
+  ]
 })
 export class SalesComponent implements OnInit {
 
@@ -18,26 +28,51 @@ export class SalesComponent implements OnInit {
   public newSale: Sale | undefined;
   public newSaleCard: Card | undefined;
 
-  public pageState: 'list' | 'search' | 'detalis' = 'list'
+
+  public pageState: 'list' | 'search' | 'detalis' = 'list';
+  private transitionXValue = 200;
+  public transitionDirection: 'left' | 'right' = 'left';
+  public transitionEnter = 0;
+  public transitionLeave = 0;
+  
 
   constructor(
     private data: DataService,
     private auth: AuthService,
     private router: Router,
-  ) { }
+  ) {
+    this.setTransitionValues('right');
+  }
 
   ngOnInit(): void {
+    this.setTransitionValues('left');
     this.data.getUserSales().subscribe((sales: Sale[]) => this.saveSales(sales));
   }
 
+  private setTransitionValues(value: 'left' | 'right') {
+    this.transitionDirection = value;
+    this.transitionEnter = (value == 'left' ? this.transitionXValue : -this.transitionXValue);
+    this.transitionLeave = (value == 'left' ? -this.transitionXValue : this.transitionXValue);
+  }
+
   private saveSales(sales: Sale[]): void {
-    // sales = sales.map((s: Sale) => {s.price /= 100; return s});
     this.sales = sales;
   }
 
   public startSearch() {
     this.checkContactData();
+    this.setTransitionValues('left');
     this.pageState = 'search';
+  }
+
+  public backToList() {
+    this.setTransitionValues('right');
+    this.pageState = 'list'
+  }
+
+  public backToSearch() {
+    this.setTransitionValues('right');
+    this.pageState = 'search'
   }
 
   private checkContactData() {
@@ -54,6 +89,7 @@ export class SalesComponent implements OnInit {
   }
 
   public nextToDetails(card: Card): void {
+    this.setTransitionValues('left');
     this.newSaleCard = card
     this.newSale = {
       sale_type: "CARD",
@@ -71,6 +107,7 @@ export class SalesComponent implements OnInit {
   public newSaleSubmitted(sale: Sale) {
     // sale.price /= 100;
     this.sales.push(sale);
+    this.setTransitionValues('left');
     this.pageState = 'list';
   }
 }

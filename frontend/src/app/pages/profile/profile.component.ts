@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
@@ -6,7 +7,15 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.sass']
+  styleUrls: ['./profile.component.sass'],
+  animations: [
+    trigger('enter', [
+       transition(':enter', [
+        style({ transform: 'translateX(200%)' }),
+        animate('200ms'),
+      ])
+    ]),
+  ]  
 })
 export class ProfileComponent implements OnInit {
 
