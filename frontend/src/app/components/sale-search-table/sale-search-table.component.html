@@ -35,13 +35,17 @@
                         {{ card.set_name }}
                     </div>
                 </td>
-                <td class="is-vcentered"><button class="button is-primary has-text-black" (click)="checkSales(card)">Ponudbe</button></td>
+                <td class="is-vcentered"><button class="button is-primary has-text-black" (click)="checkSales(card)">Ponudbe ({{numOfSales(card)}})</button></td>
             </tr>
         </tbody>
     </table>
 
 
-    <div class="block has-text-centered">
-        <h1 class="subtitle is-3" *ngIf="!cardSales.length">Ni ponudb!</h1>
+    <div class="block has-text-centered" *ngIf="!hasSearched()">
+        <h1 class="subtitle is-3" *ngIf="!cardSales.length">Vpiši ime iskane karte</h1>
+    </div>
+
+    <div class="block has-text-centered" *ngIf="hasSearched()">
+        <h1 class="subtitle is-3" *ngIf="!cardSales.length">Ni ponudb za iskano karto</h1>
     </div>
 </div>

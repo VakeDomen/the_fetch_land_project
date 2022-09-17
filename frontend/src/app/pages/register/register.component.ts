@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
     private data: DataService,
     private router: Router,
     private auth: AuthService,
+    private toastr: ToastrService,
   ) { }
   
   ngOnInit(): void {
@@ -44,17 +46,16 @@ export class RegisterComponent implements OnInit {
     ) {
       this.data.submitContactInfo(this.usernameInput, this.phoneInput).subscribe((user: User) => {
         sessionStorage.setItem("user", JSON.stringify(user));
+        this.toastr.success("Uspešeno posodobljeno", "")
         this.router.navigate([""]);
       })
     }
   }
 
   public changeUsername(event: any) {
-    console.log(event);
     this.usernameInput = event;
   }
   public changePhone(event: any) {
-    console.log(event);
     this.phoneInput = event;
   }
 }

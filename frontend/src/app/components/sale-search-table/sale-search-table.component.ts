@@ -66,4 +66,12 @@ export class SaleSearchTableComponent implements OnChanges {
   public checkSales(card: Card) {
     this.salesToCheck.emit(this.cardSales.filter(c => c.card.id == card.id));
   }
+
+  public numOfSales(card: Card) {
+     return this.cardSales.filter(c => c.card.id == card.id).length;
+  }
+
+  public hasSearched() {
+    return !!sessionStorage.getItem("saleSearchQeury");
+  }
 }

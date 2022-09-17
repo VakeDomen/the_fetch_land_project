@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { DataService } from 'src/app/services/data.service';
 
@@ -26,6 +27,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private data: DataService,
+    private toastr: ToastrService,
   ) { 
     const user_data = sessionStorage.getItem("user");
     if (!user_data) {
@@ -54,6 +56,7 @@ export class ProfileComponent implements OnInit {
   public submitData() {
     if (this.changes) {
       this.data.submitContactInfo(this.user.name, this.user.phone).subscribe((user: User) => {
+        this.toastr.success("Uspešeno posodobljeno", "")
         sessionStorage.setItem("user", JSON.stringify(user));
       })
     }

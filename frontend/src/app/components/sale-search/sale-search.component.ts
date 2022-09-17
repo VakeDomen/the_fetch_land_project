@@ -33,6 +33,7 @@ export class SaleSearchComponent implements OnInit {
   ngOnInit(): void {
     const query = sessionStorage.getItem("saleSearchQeury");
     if (query) {
+      this.prefixQuery = query;
       this.refreshCardsPartials();
     }
   }

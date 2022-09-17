@@ -7,7 +7,6 @@ import { FrontComponent } from './pages/front/front.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { SaleComponent } from './pages/sale/sale.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
 import { TokenComponent } from './pages/token/token.component';
@@ -29,6 +28,7 @@ import { SaleCardComponent } from './components/sale-card/sale-card.component';
 import { NewSalesTableComponent } from './components/new-sales-table/new-sales-table.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -38,7 +38,6 @@ import { FooterComponent } from './components/footer/footer.component';
     ContactComponent,
     ProfileComponent,
     RegisterComponent,
-    SaleComponent,
     NavbarComponent,
     AdvancedSearchComponent,
     TokenComponent,
@@ -63,6 +62,7 @@ import { FooterComponent } from './components/footer/footer.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

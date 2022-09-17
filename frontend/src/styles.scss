@@ -104,3 +104,13 @@ body {
 .label {
     color: $fl_light;
 }
+
+
+#toast-container {
+  margin-top: 5% !important;
+  background-color: $fl_orange !important;
+}
+
+#toast-container>.toast-success {
+  background-color: $fl_orange !important;
+}
