@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { FrontComponent } from './pages/front/front.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SaleComponent } from './pages/sale/sale.component';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: "contact",
     component: ContactComponent,
+  },
+  {
+    path: "privacy",
+    component: PrivacyPolicyComponent,
   },
   {
     path: "profile",

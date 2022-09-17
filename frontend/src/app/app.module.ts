@@ -27,6 +27,8 @@ import { SaleSearchComponent } from './components/sale-search/sale-search.compon
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { SaleCardComponent } from './components/sale-card/sale-card.component';
 import { NewSalesTableComponent } from './components/new-sales-table/new-sales-table.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { NewSalesTableComponent } from './components/new-sales-table/new-sales-t
     SaleSearchComponent,
     SaleListComponent,
     SaleCardComponent,
-    NewSalesTableComponent
+    NewSalesTableComponent,
+    PrivacyPolicyComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

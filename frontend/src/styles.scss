@@ -51,13 +51,16 @@ $input-icon-color: $fl_orange;
 $divider-color: $fl_black;
 $divider-background-color: $fl_light;
 
-// ------------ TABKE ------------
+// ------------ TABLE ------------
 $table-color: $fl_light;
 $table-background-color: $fl_black;
 $table-cell-border: $fl_light;
 $table-head-cell-color: $fl_orange;
 $table-striped-row-even-background-color: $fl_black_secondary;
 
+// ------------ FOOTER ------------
+$footer-background-color: $fl_black;
+$footer-color: $fl_light;
 
 @import "../node_modules/bulma/bulma.sass";
 
