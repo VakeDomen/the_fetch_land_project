@@ -6,6 +6,7 @@ import { Sale } from 'src/app/models/sale.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sales',
@@ -29,18 +30,22 @@ export class SalesComponent implements OnInit {
   public newSaleCard: Card | undefined;
   public saleToEdit: Sale | undefined;
   public saleToEditCard: Card | undefined;
+  private saleToDelete: Sale | undefined;
 
   public pageState: 'list' | 'search' | 'detalis' | 'edit' = 'list';
   private transitionXValue = 200;
   public transitionDirection: 'left' | 'right' = 'left';
   public transitionEnter = 0;
   public transitionLeave = 0;
+
+  public deleteModal: boolean = false;
   
 
   constructor(
     private data: DataService,
     private auth: AuthService,
     private router: Router,
+    private toastr: ToastrService,
   ) {
     this.setTransitionValues('right');
   }
@@ -125,6 +130,29 @@ export class SalesComponent implements OnInit {
   }
 
   public deleteSaleTrigger(sale: Sale) {
-    
+    this.saleToDelete = sale;
+    this.deleteModal = true;
+  }
+
+  public deleteSale() {
+    if (this.saleToDelete) {
+      this.data.deleteSale(this.saleToDelete.id).subscribe((resp: any) => this.succesfullSaleDeletion(resp));
+    }
+  }
+
+  private succesfullSaleDeletion(resp: any) {
+    if (this.saleToDelete) {
+      const index =  this.sales.indexOf(this.saleToDelete);
+      if (index != -1) {
+        const newSales = [];
+        for (const sale of this.sales) {
+          if (sale.id == this.saleToDelete.id) continue;
+          newSales.push(sale);
+        }
+        this.sales = newSales;
+        this.deleteModal = false;
+        this.toastr.success("Ponudba izbrisana!", "")
+      }
+    }
   }
 }

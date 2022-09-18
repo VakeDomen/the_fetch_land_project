@@ -59,12 +59,9 @@ export class DataService {
     if (!cards) {
       return;
     }
-    
     for (const card of cards) {
       this.cardTrie.insertWord(card.id, card);
     }
-    console.log(this.cardTrie);
-    
   }
 
   getCardById(id: string): Observable<Card> {
@@ -88,5 +85,9 @@ export class DataService {
 
   getLatestSales(num?: number): Observable<Sale[]> {
     return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/latest/${num ?? ''}`);
+  }
+
+  deleteSale(id: string): Observable<any>  {
+    return this.http.delete<any>(`${this.apiUrlUser}sale/${id}`);
   }
 }

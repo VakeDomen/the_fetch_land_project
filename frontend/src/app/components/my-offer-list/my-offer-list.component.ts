@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Sale } from 'src/app/models/sale.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { Sale } from 'src/app/models/sale.model';
   templateUrl: './my-offer-list.component.html',
   styleUrls: ['./my-offer-list.component.sass']
 })
-export class MyOfferListComponent implements OnInit {
+export class MyOfferListComponent implements OnChanges {
 
   @Output() private addOffer = new EventEmitter();
   @Output() private editSale = new EventEmitter<Sale>();
@@ -14,9 +14,7 @@ export class MyOfferListComponent implements OnInit {
   @Input() public sales: Sale[] = [];
 
   constructor() { }
-
-  ngOnInit(): void {
-
+  ngOnChanges(changes: SimpleChanges): void {
   }
 
   addOfferTrigger() {

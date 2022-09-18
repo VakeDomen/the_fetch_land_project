@@ -6,8 +6,6 @@ export class TrieTree<T> {
     }
 
     insertWord(word: string, obj: T, split?: boolean): void {
-        console.log("TO INSERT: ", word);
-        
         word = word.toUpperCase();
         if(word.length === 0) {
             return;

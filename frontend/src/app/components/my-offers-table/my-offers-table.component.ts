@@ -22,12 +22,14 @@ export class MyOffersTableComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.cardCounter = 0;
     for (const sale of this.sales) {
       this.data.getCardById(sale.sale_object_id).subscribe((cards: Card) => this.handleFetchResponse(cards));
     }
   }
   
   handleFetchResponse(card: Card): void {
+
     this.cardCounter++;
     this.data.insertCardsToTrie([card]);
     this.dataReady = this.sales.length == this.cardCounter;
