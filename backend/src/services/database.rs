@@ -1,4 +1,5 @@
 pub mod sale_operations {
+    use diesel::dsl::count;
     use diesel::result::Error;
     use diesel::{prelude::*, insert_into};
 
@@ -7,6 +8,33 @@ pub mod sale_operations {
     use crate::database::schema::sales::dsl::*;
 
     use super::sqlite_operations::establish_connection;
+
+    pub fn get_num_of_sales() -> Result<i64, Error> {
+        let conn = establish_connection();
+        sales
+            .select(count(id))
+            .first(&conn)
+    }
+
+    pub fn get_sales_paged_by_price(page_size: i64, page_offset: i64) -> Result<Vec<SqliteSale>, Error> {
+        let conn = establish_connection();
+        let offset = (page_offset + 1) * page_size;
+        sales
+            .order(price)
+            .limit(page_size)
+            .offset(offset)
+            .load::<SqliteSale>(&conn)
+    }
+
+    pub fn get_sales_paged_by_created(page_size: i64, page_offset: i64) -> Result<Vec<SqliteSale>, Error> {
+        let conn = establish_connection();
+        let offset = (page_offset + 1) * page_size;
+        sales
+            .order(created)
+            .limit(page_size)
+            .offset(offset)
+            .load::<SqliteSale>(&conn)
+    }
 
     pub fn insert_sale(sqlite_sale: SqliteSale) ->  Result<SqliteSale, Error> {
         let conn = establish_connection();
@@ -18,28 +46,25 @@ pub mod sale_operations {
 
     pub fn get_latest_sales(num: i64) -> Result<Vec<SqliteSale>, Error> {
         let conn = establish_connection();
-        let sqlite_sales = sales
+        sales
             .order(created.desc())
             .limit(num)
-            .load::<SqliteSale>(&conn)?;
-        Ok(sqlite_sales)
+            .load::<SqliteSale>(&conn)
     }
 
     pub fn get_sales_by_user(uid: String) -> Result<Vec<SqliteSale>, Error> {
         let conn = establish_connection();
-        let resp = sales
+        sales
             .filter(user_id.eq(uid))
-            .load::<SqliteSale>(&conn)?;
-        Ok(resp)
+            .load::<SqliteSale>(&conn)
     }
 
     pub fn get_sales_by_card(cid: String) -> Result<Vec<SqliteSale>, Error> {
         let conn = establish_connection();
-        let resp = sales
+        sales
             .filter(sale_object_id.eq(cid))
             .filter(sale_type.eq("CARD"))
-            .load::<SqliteSale>(&conn)?;
-        Ok(resp)
+            .load::<SqliteSale>(&conn)
     }
 
     pub fn update_sale(sid: String, owner_id: String, data: SaleEditPatchData) -> Result<(), Error> {
