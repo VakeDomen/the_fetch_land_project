@@ -2,6 +2,7 @@ pub mod sale_operations {
     use diesel::result::Error;
     use diesel::{prelude::*, insert_into};
 
+    use crate::api::user_sale_edit::SaleEditPatchData;
     use crate::database::models::SqliteSale;
     use crate::database::schema::sales::dsl::*;
 
@@ -39,6 +40,25 @@ pub mod sale_operations {
             .filter(sale_type.eq("CARD"))
             .load::<SqliteSale>(&conn)?;
         Ok(resp)
+    }
+
+    pub fn update_sale(sid: String, owner_id: String, data: SaleEditPatchData) -> Result<(), Error> {
+        let conn = establish_connection();
+        diesel::update(
+                sales
+                    .filter(id.eq(sid))
+                    .filter(user_id.eq(owner_id)
+                )
+            )
+            .set((
+                description.eq(data.description),
+                price.eq(data.price),
+                amount.eq(data.amount),
+                contact_type.eq(data.contact_type),
+                location.eq(data.location),
+                web_address.eq(data.web_address)))
+            .execute(&conn)?;
+        Ok(())
     }
 
     pub fn delete_sale(uid: String, sid: String) -> Result<(), Error> {
