@@ -9,6 +9,8 @@ import { Sale } from 'src/app/models/sale.model';
 export class MyOfferListComponent implements OnInit {
 
   @Output() private addOffer = new EventEmitter();
+  @Output() private editSale = new EventEmitter<Sale>();
+  @Output() private deleteSale = new EventEmitter<Sale>();
   @Input() public sales: Sale[] = [];
 
   constructor() { }
@@ -21,4 +23,11 @@ export class MyOfferListComponent implements OnInit {
     this.addOffer.emit();
   }
 
+  editSaleTrigger(sale: Sale) {
+    this.editSale.emit(sale);
+  }
+
+  deleteSaleTrigger(sale: Sale) {
+    this.deleteSale.emit(sale);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
 import { DataService } from 'src/app/services/data.service';
@@ -11,6 +11,8 @@ import { DataService } from 'src/app/services/data.service';
 export class MyOffersTableComponent implements OnChanges {
 
   @Input() sales: Sale[] = [];
+  @Output() editSale = new EventEmitter<Sale>();
+  @Output() deleteSale = new EventEmitter<Sale>();
 
   cardCounter: number = 0;
   dataReady: boolean = false;
@@ -33,5 +35,13 @@ export class MyOffersTableComponent implements OnChanges {
 
   getCard(id: string) {
     return this.data.getCardByIdFromTrie(id).pop()
+  }
+
+  editSaleTrigger(sale: Sale) {
+    this.editSale.emit(sale);
+  }
+
+  deleteSaleTrigger(sale: Sale) {
+    this.deleteSale.emit(sale);
   }
 }

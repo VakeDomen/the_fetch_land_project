@@ -4,6 +4,8 @@
         class="box mt-3 animat" 
         *ngIf="pageState == 'list'"
         (addOffer)="startSearch()"
+        (editSale)="editSaleTrigger($event)"
+        (deleteSale)="deleteSaleTrigger($event)"
         [sales]="sales"
     ></app-my-offer-list>    
     <app-card-select 
@@ -15,12 +17,21 @@
     ></app-card-select>
     <app-new-sale-details 
         [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
-        
         class="box mt-3" 
         *ngIf="pageState == 'detalis'"
         [sale]="newSale" 
         [card]="newSaleCard" 
         (back)="backToSearch()" 
         (newSale)="newSaleSubmitted($event)"
+    ></app-new-sale-details>
+    <app-new-sale-details
+        [@enter]="{value: transitionDirection, params: { trans: transitionEnter}}"
+        class="box mt-3" 
+        *ngIf="pageState == 'edit'"
+        [editMode]="true"
+        [sale]="saleToEdit" 
+        [card]="saleToEditCard" 
+        (back)="backToList()" 
+        (editedSale)="saleEdited($event)"
     ></app-new-sale-details>
 </div>

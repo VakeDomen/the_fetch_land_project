@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Card } from 'src/app/models/card.model';
-import { NewSale } from 'src/app/models/new-sale.model';
+import { NewSale } from 'src/app/models/sale-new.model';
 import { Sale } from 'src/app/models/sale.model';
 import { TrieTree } from 'src/app/models/trie.model';
 import { DataService } from 'src/app/services/data.service';

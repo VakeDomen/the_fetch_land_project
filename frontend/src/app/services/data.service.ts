@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Card } from '../models/card.model';
+import { SaleEdit } from '../models/sale-edit.model';
 import { Sale } from '../models/sale.model';
 import { ScryfallResponse } from '../models/scryfall-response.model';
 import { Set } from '../models/set.model';
@@ -48,6 +49,10 @@ export class DataService {
 
   postSale(sale: Sale): Observable<Sale> {
     return this.http.post<Sale>(`${this.apiUrlUser}sale/`, sale);
+  }
+  
+  postSaleEdit(sid: string, sale: SaleEdit): Observable<Sale> {
+    return this.http.patch<Sale>(`${this.apiUrlUser}sale/${sid}`, sale);
   }
 
   insertCardsToTrie(cards: Card[]) {

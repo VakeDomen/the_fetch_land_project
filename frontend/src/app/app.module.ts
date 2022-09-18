@@ -54,7 +54,7 @@ import { ToastrModule } from 'ngx-toastr';
     SaleCardComponent,
     NewSalesTableComponent,
     PrivacyPolicyComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

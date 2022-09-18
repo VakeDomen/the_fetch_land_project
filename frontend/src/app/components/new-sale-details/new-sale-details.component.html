@@ -5,11 +5,12 @@
         </div>
 
         <div class="column is-6 has-text-centered">
-            <h1 class="subtitle is-3">Izpolni podatke (2/2)</h1>
+            <h1 *ngIf="!editMode" class="subtitle is-3">Izpolni podatke (2/2)</h1>
+            <h1 *ngIf="editMode" class="subtitle is-3">Uredi podatke</h1>
         </div>
 
         <div class="column is-3 has-text-right">
-            <button class="button is-primary has-text-black" (click)="submitSale()" [disabled]="!isInputValid()">Potrdi</button>
+            <button class="button is-primary has-text-black" (click)="finnish()" [disabled]="!isInputValid()">Potrdi</button>
         </div>
     </div>
    
@@ -81,7 +82,7 @@
             <div class="field column is-half">
                 <label class="label">Cena €/karto *</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input class="input" type="number" [(ngModel)]="sale.price">
+                    <input class="input" type="number" [(ngModel)]="price">
                     <span class="icon is-small is-left">
                         <i class="fas fa-user"></i>
                     </span>

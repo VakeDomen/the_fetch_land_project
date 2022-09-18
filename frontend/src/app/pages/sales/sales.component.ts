@@ -27,9 +27,10 @@ export class SalesComponent implements OnInit {
   public sales: Sale[] = [];
   public newSale: Sale | undefined;
   public newSaleCard: Card | undefined;
+  public saleToEdit: Sale | undefined;
+  public saleToEditCard: Card | undefined;
 
-
-  public pageState: 'list' | 'search' | 'detalis' = 'list';
+  public pageState: 'list' | 'search' | 'detalis' | 'edit' = 'list';
   private transitionXValue = 200;
   public transitionDirection: 'left' | 'right' = 'left';
   public transitionEnter = 0;
@@ -109,5 +110,21 @@ export class SalesComponent implements OnInit {
     this.sales.push(sale);
     this.setTransitionValues('left');
     this.pageState = 'list';
+  }
+
+  public saleEdited(sale: Sale) {
+    this.setTransitionValues('left');
+    this.pageState = 'list';
+  }
+
+  public editSaleTrigger(sale: Sale) {
+    this.saleToEditCard = this.data.getCardByIdFromTrie(sale.sale_object_id).pop();
+    this.saleToEdit = sale;
+    this.setTransitionValues('left');
+    this.pageState = 'edit';
+  }
+
+  public deleteSaleTrigger(sale: Sale) {
+    
   }
 }

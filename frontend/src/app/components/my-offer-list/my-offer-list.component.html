@@ -19,7 +19,11 @@
 </div>
 
 <div class="block" *ngIf="sales.length > 0">
-    <app-my-offers-table [sales]="sales"></app-my-offers-table>
+    <app-my-offers-table 
+        [sales]="sales"
+        (editSale)="editSaleTrigger($event)"
+        (deleteSale)="deleteSaleTrigger($event)"
+    ></app-my-offers-table>
 </div>
 
 <div class="is-divider" *ngIf="sales.length == 0"></div>

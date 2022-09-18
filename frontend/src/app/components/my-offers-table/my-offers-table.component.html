@@ -1,27 +1,51 @@
-<table class="table is-fullwidth is-striped has-text-centered" *ngIf="sales.length && dataReady">
-    <thead>
-        <tr>
-            <th><p class="has-text-centered">Karta</p></th>
-            <th><p class="has-text-centered">Ime</p></th>
-            <th><p class="has-text-centered">Število</p></th>
-            <th><p class="has-text-centered">Cena</p></th>
-            <th><p class="has-text-centered">Opis</p></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let sale of sales; ">
-            <th>
-                <div class="has-text-centered">
-                    <img class="ml-auto img-card" *ngIf="getCard(sale.sale_object_id)?.image_uris" src="{{getCard(sale.sale_object_id)?.image_uris?.small}}" alt="">
-                    <ng-container *ngIf="!getCard(sale.sale_object_id)?.image_uris && getCard(sale.sale_object_id)?.card_faces">
-                        <img class="img-card" *ngFor="let face of getCard(sale.sale_object_id)?.card_faces" src="{{face.image_uris?.small}}" alt="">
-                    </ng-container>
-                </div>
-            </th>
-            <td class="is-vcentered">{{ getCard(sale.sale_object_id)?.name }}</td>
-            <td class="is-vcentered">{{ sale.amount }}</td>
-            <td class="is-vcentered">{{ sale.price / 100 }}€</td>
-            <td class="is-vcentered">{{ sale.description }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-container">
+    <table class="table is-fullwidth is-striped has-text-centered" *ngIf="sales.length && dataReady">
+        <thead>
+            <tr>
+                <th>
+                    <p class="has-text-centered">Karta</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Ime</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Število</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Cena</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Opis</p>
+                </th>
+                <th>
+                    <p class="has-text-centered">Opis</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let sale of sales; ">
+                <th>
+                    <div class="has-text-centered">
+                        <img class="ml-auto img-card" *ngIf="getCard(sale.sale_object_id)?.image_uris"
+                            src="{{getCard(sale.sale_object_id)?.image_uris?.small}}" alt="">
+                        <ng-container
+                            *ngIf="!getCard(sale.sale_object_id)?.image_uris && getCard(sale.sale_object_id)?.card_faces">
+                            <img class="img-card" *ngFor="let face of getCard(sale.sale_object_id)?.card_faces"
+                                src="{{face.image_uris?.small}}" alt="">
+                        </ng-container>
+                    </div>
+                </th>
+                <td class="is-vcentered">{{ getCard(sale.sale_object_id)?.name }}</td>
+                <td class="is-vcentered">{{ sale.amount }}</td>
+                <td class="is-vcentered">{{ sale.price / 100 }}€</td>
+                <td class="is-vcentered">{{ sale.description }}</td>
+                <td class="is-vcentered">
+                    <div class="level">
+                        <div class="level-item"><button class="button has-text-black is-primary" (click)="editSaleTrigger(sale)">Uredi</button></div>
+                        <div class="level-item"><button class="button has-text-black is-danger" (click)="deleteSaleTrigger(sale)">Izbirši</button></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
