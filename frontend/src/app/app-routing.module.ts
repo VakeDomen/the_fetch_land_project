@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdvancedSearchComponent } from './pages/advanced-search/advanced-search.component';
+import { AllSalesComponent } from './pages/all-sales/all-sales.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { FrontComponent } from './pages/front/front.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
@@ -33,6 +34,10 @@ const routes: Routes = [
     path: "sales",
     component: SalesComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: "all",
+    component: AllSalesComponent,
   },
   {
     path: "search",

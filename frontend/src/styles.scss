@@ -5,7 +5,7 @@
 $fl_orange: #ef8700;
 $fl_dark_orange: #ef7600;
 $fl_light: #fdc780;
-$fl_black: hsl(0deg, 0%, 14%);;
+$fl_black: hsl(0deg, 0%, 14%);
 $fl_black_secondary: hsl(0deg, 0%, 20%);
 
 $primary: $fl_orange;
@@ -61,6 +61,19 @@ $table-striped-row-even-background-color: $fl_black_secondary;
 // ------------ FOOTER ------------
 $footer-background-color: $fl_black;
 $footer-color: $fl_light;
+
+// ------------ PAGINATION ------------
+$pagination-color: $fl_orange;
+$pagination-border-color: $fl_orange;
+$pagination-border-color: $fl_orange;
+$pagination-active-border-color: $fl_orange;
+$pagination-active-color: $fl_orange;
+$pagination-hover-color: $fl_light;
+$pagination-focus-border-color: $fl_orange;
+$pagination-hover-border-color: $fl_light;
+$pagination-disabled-border-color: $fl_orange;
+$pagination-current-background-color: $fl_orange;
+
 
 @import "../node_modules/bulma/bulma.sass";
 

@@ -1,5 +1,5 @@
 import { SafeCall } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
@@ -14,9 +14,16 @@ import { ScryfallResponse } from 'src/app/models/scryfall-response.model';
 })
 export class NewSalesTableComponent implements OnInit {
 
+  @Input() paginated: boolean = false;
+  @Input() private pageSize: number = 5
+
   public cardSales: CardSale[] = [];
   public cards: Card[] = [];
   public sets: Set[] = []
+  public amountOfSales: number = 0;
+  public amountOfPages: number = 0;
+
+  public currentPage: number = 0;
 
   
   constructor(
@@ -24,10 +31,41 @@ export class NewSalesTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.data.getLatestSales(5).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
+    this.data.getAmountOfSales().subscribe((sales: number) => this.calcPages(sales));
     this.data.getSets().subscribe((setsData: ScryfallResponse<Set>) => {this.sets = setsData.data})
+    this.getPage();
   }
 
+  public getPreviousPage() {
+    if (this.canGetPreviousPage()) {
+      this.currentPage--;
+      this.getPage();
+    }
+  }
+
+  public canGetPreviousPage(): boolean {
+    return this.currentPage > 0;
+  }
+
+  public canGetNextPage(): boolean {
+    return this.currentPage < this.amountOfPages - 1;
+  }
+
+  public getNextPage() {
+    if (this.canGetNextPage()) {
+      this.currentPage++;
+      this.getPage();
+    }
+  }
+
+  private getPage() {
+    this.data.getSalesPaged(this.pageSize, this.currentPage, 'created').subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
+  }
+
+  private calcPages(sales: number) {
+    this.amountOfSales = sales;
+    this.amountOfPages = Math.ceil(this.amountOfSales / this.pageSize);
+  }
 
   private async fillTrieSetup(sales: Sale[]): Promise<void> {
     const cardPromises = sales.map((s: Sale) => {

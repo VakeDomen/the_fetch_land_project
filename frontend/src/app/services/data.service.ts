@@ -90,4 +90,12 @@ export class DataService {
   deleteSale(id: string): Observable<any>  {
     return this.http.delete<any>(`${this.apiUrlUser}sale/${id}`);
   }
+
+  getAmountOfSales(): Observable<number> {
+    return this.cache.getCached<number>(`${this.apiUrlCard}sales/num/`);
+  }
+
+  getSalesPaged(page_size: number, page_offset: number, column_sort: string): Observable<Sale[]> {
+    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/paged/${page_size}/${page_offset}/${column_sort}`);
+  }
 }

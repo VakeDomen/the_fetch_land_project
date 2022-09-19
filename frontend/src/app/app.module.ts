@@ -30,6 +30,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { FooterComponent } from './components/footer/footer.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgcCookieConsentConfig, NgcCookieConsentModule } from 'ngx-cookieconsent';
+import { AllSalesComponent } from './pages/all-sales/all-sales.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -71,6 +72,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     NewSalesTableComponent,
     PrivacyPolicyComponent,
     FooterComponent,
+    AllSalesComponent,
   ],
   imports: [
     BrowserModule,

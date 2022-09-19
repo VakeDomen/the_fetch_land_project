@@ -24,6 +24,15 @@
         </div>
 
         <div class="navbar-end">
+            <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='all'}"
+                (click)="activeTab='all'; tab.emit('all') ; toggleNavbar();" [routerLink]="['/all']"
+                routerLinkActive="router-link-active">
+                <span class="file-icon mr-2 mt-1">
+                    <i class="fas fa-sparkles"></i>
+                </span>
+                Nove ponudbe
+                
+            </a>
             <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='search'}"
                 (click)="activeTab='search'; tab.emit('search') ; toggleNavbar();" [routerLink]="['/search']"
                 routerLinkActive="router-link-active">
