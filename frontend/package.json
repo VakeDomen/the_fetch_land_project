@@ -20,6 +20,8 @@
     "@angular/router": "^14.0.0",
     "bulma": "^0.9.4",
     "bulma-extensions": "^6.2.7",
+    "cookieconsent": "^3.1.1",
+    "ngx-cookieconsent": "^2.2.3",
     "ngx-toastr": "^15.0.0",
     "primeng": "^14.0.2",
     "rxjs": "~7.5.0",

@@ -29,7 +29,6 @@ export class MyOffersTableComponent implements OnChanges {
   }
   
   handleFetchResponse(card: Card): void {
-
     this.cardCounter++;
     this.data.insertCardsToTrie([card]);
     this.dataReady = this.sales.length == this.cardCounter;

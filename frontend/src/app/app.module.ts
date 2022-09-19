@@ -29,7 +29,23 @@ import { NewSalesTableComponent } from './components/new-sales-table/new-sales-t
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NgcCookieConsentConfig, NgcCookieConsentModule } from 'ngx-cookieconsent';
 
+const cookieConfig: NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'localhost' // or 'your.domain.com' 
+  },
+  palette: {
+    popup: {
+      background: 'hsl(0deg, 0%, 14%);'
+    },
+    button: {
+      background: '#ef7600'
+    }
+  },
+  theme: 'edgeless',
+  type: 'opt-out'
+};
 
 @NgModule({
   declarations: [
@@ -63,6 +79,7 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot(),
+    NgcCookieConsentModule.forRoot(cookieConfig)
   ],
   providers: [
     {
