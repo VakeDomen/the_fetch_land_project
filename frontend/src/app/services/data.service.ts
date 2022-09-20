@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Card } from '../models/card.model';
+import { NotificationMessage } from '../models/notificationn.model';
 import { SaleEdit } from '../models/sale-edit.model';
 import { Sale } from '../models/sale.model';
 import { ScryfallResponse } from '../models/scryfall-response.model';
@@ -19,6 +20,7 @@ export class DataService {
 
   private apiUrlUser = environment.api_url + '/user/';
   private apiUrlCard = environment.api_url + '/card/';
+  private apiUrlNotification = environment.api_url + '/notify/';
 
   private cardTrie: TrieTree<Card> = new TrieTree();
 
@@ -97,5 +99,9 @@ export class DataService {
 
   getSalesPaged(page_size: number, page_offset: number, column_sort: string): Observable<Sale[]> {
     return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/paged/${page_size}/${page_offset}/${column_sort}`);
+  }
+
+  sendNotification(notification: NotificationMessage): Observable<undefined> {
+    return this.http.post<undefined>(this.apiUrlNotification, notification)
   }
 }

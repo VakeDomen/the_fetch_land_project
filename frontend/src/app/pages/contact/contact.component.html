@@ -1,6 +1,29 @@
 <div class="container">
 
+    <div class="box mt-5">
+        <div class="level">
+            <div class="level-left has-text-centered-mobile">
+                <h1 class="subtitle is-3">Imate vprašanje/grajo/pohvalo?</h1>
+            </div>
+            <div class="level-right has-text-centered-moobile">
+                <button class="button is-primary has-text-black" [disabled]="!textareaContent" (click)="sendMessage()">Pošlji</button>
+            </div>
+        </div>
+        <textarea class="textarea" [(ngModel)]="textareaContent"></textarea>
+        <p class="has-text-centered mt-2" *ngIf="notLoggedIn()">
+            V kolikor želite odgovor, se prej prosim <span class="is-underlined" (click)="routeToLogin()">vpišite</span>.
+        </p>
+    </div>
+
+    <app-privacy-policy></app-privacy-policy>
+    <div class="content has-text-centered box">
+        <p>Copyright © Domen Vake</p>
+        <a href="mailto:vake.domen94@gmail.com" class="has-text-primary">
+            <span class="icon-text">
+                <span>Email</span>
+            </span>
+        </a>
+    </div>
 </div>
 
 
-<app-footer id="footer"></app-footer>
