@@ -1,6 +1,6 @@
 <div class="table-container">
     <div class="has-items-centered">
-        <div class="columns">
+        <div class="columns" *ngIf="paginated">
             <div class="column is-3  has-text-left has-text-centered-mobile">
                 <button class="button is-primary has-text-black pagination-previous" [disabled]="!canGetPreviousPage()" (click)="getPreviousPage()">Nazaj</button>
 

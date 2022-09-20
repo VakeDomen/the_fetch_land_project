@@ -15,7 +15,7 @@ import { ScryfallResponse } from 'src/app/models/scryfall-response.model';
 export class NewSalesTableComponent implements OnInit {
 
   @Input() paginated: boolean = false;
-  @Input() private pageSize: number = 5
+  @Input() pageSize: number = 5
 
   public cardSales: CardSale[] = [];
   public cards: Card[] = [];
