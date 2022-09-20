@@ -18,7 +18,7 @@ pub mod sale_operations {
 
     pub fn get_sales_paged_by_price(page_size: i64, page_offset: i64) -> Result<Vec<SqliteSale>, Error> {
         let conn = establish_connection();
-        let offset = (page_offset + 1) * page_size;
+        let offset = (page_offset) * page_size;
         sales
             .order(price)
             .limit(page_size)
@@ -28,9 +28,9 @@ pub mod sale_operations {
 
     pub fn get_sales_paged_by_created(page_size: i64, page_offset: i64) -> Result<Vec<SqliteSale>, Error> {
         let conn = establish_connection();
-        let offset = (page_offset + 1) * page_size;
+        let offset = (page_offset) * page_size;
         sales
-            .order(created)
+            .order(created.desc())
             .limit(page_size)
             .offset(offset)
             .load::<SqliteSale>(&conn)

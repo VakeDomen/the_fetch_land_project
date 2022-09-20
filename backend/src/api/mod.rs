@@ -15,3 +15,4 @@ pub mod user_credentials;
 pub mod card_sales_latest;
 pub mod user_sale_edit;
 pub mod card_sales_paged;
+pub mod notification_telegram;

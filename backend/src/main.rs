@@ -1,7 +1,7 @@
 use std::env;
 use actix_cors::Cors;
 use actix_web_httpauth::extractors::bearer::Config;
-use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales, card_sales_name::{get_card_sales_by_name, get_card_sales_by_name_partials}, user_credentials::user_credentials, card_sales_latest::{card_sales_latest, card_sales_latest_default}, user_sale_edit::user_sale_edit, card_sales_paged::card_sales_paged, card_sales_num::card_sales_num};
+use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales, card_sales_name::{get_card_sales_by_name, get_card_sales_by_name_partials}, user_credentials::user_credentials, card_sales_latest::{card_sales_latest, card_sales_latest_default}, user_sale_edit::user_sale_edit, card_sales_paged::card_sales_paged, card_sales_num::card_sales_num, notification_telegram::notify_telegram};
 use dotenv::dotenv;
 use actix_web::{web::Data, App, HttpServer, http};
 use models::state::AppState;
@@ -23,6 +23,7 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_BACKTRACE", "1");
     env_logger::init();
     dotenv().ok();
+    env::var("TELOXIDE_TOKEN").expect("$TELOXIDE_TOKEN is not set");
     
     // setup ssl
     let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
@@ -86,6 +87,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(Config::default())
             .service(auth)
             .service(login)
+            .service(notify_telegram)
             .service(get_card)
             .service(get_card_by_name)
             .service(card_sales)
