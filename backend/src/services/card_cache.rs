@@ -1,5 +1,6 @@
-use std::{collections::HashMap, sync::Mutex};
+use std::{collections::HashMap, sync::Mutex, fs::File,time::SystemTime, io::{BufWriter, BufReader}};
 
+use bincode::serialize_into;
 use once_cell::sync::Lazy;
 
 use crate::models::{card::Card, trie::TrieTree};
@@ -10,27 +11,48 @@ use super::scryfall::{get_bulk_data, download_card_data};
 const ALL_CARDS_HASH_MAP_FILE_PATH: &str = "./all_cards_hash_map.json";
 
 pub static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
-    match serde_any::from_file(ALL_CARDS_HASH_MAP_FILE_PATH) {
-        Ok(hm) => Mutex::new(hm),
-        Err(_) => Mutex::new(HashMap::new())
+    let t0 = SystemTime::now();
+    let file = match File::open(ALL_CARDS_HASH_MAP_FILE_PATH) {
+        Ok(f) => f,
+        Err(e) => {
+            println!("Error reading HashMap file: {}", e.to_string());
+            return Mutex::new(HashMap::new())
+        },
+    };
+    match bincode::deserialize_from(BufReader::new(file)) {
+        Ok(hm) => {
+            match t0.elapsed() {
+                Ok(elapsed) => println!("Took {} seconds to load HashMap from disk", elapsed.as_secs()),
+                Err(e) => println!("Error: {e:?}"),
+            }
+            Mutex::new(hm)
+        },
+        Err(e) => {
+            println!("ERROR LOADING HM {}", e.to_string());
+            Mutex::new(HashMap::new())
+        }
     }
 });
 
 pub static NAME_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
+    print!("CREATING TRIE");
     let all_cards = ALL_CARDS.lock().unwrap();
     let mut trie = TrieTree::new();
     for card in all_cards.values() {
         trie.insert(card.name.clone().to_lowercase(), card.id.clone(), false);
     }
+    print!("TRIE CREATED");
     Mutex::new(trie)
 });
 
 pub static NAME_PARTIALS_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
+    print!("CREATING PARTIALS TRIE");
     let all_cards = ALL_CARDS.lock().unwrap();
     let mut trie = TrieTree::new();
     for card in all_cards.values() {
         trie.insert(card.name.clone().to_lowercase(), card.id.clone(), true);
     }
+    print!("PARTIALS TRIE CREATED");
     Mutex::new(trie)
 });
 
@@ -57,9 +79,16 @@ pub fn save_cards_to_cache(content: &str) {
 }
 
 pub fn save_cache() {
+    let t0 = SystemTime::now();
     let all_cards = ALL_CARDS.lock().unwrap();
-    match serde_any::to_file(ALL_CARDS_HASH_MAP_FILE_PATH, &*all_cards) {
-        Ok(_) => {},
+    let mut f = BufWriter::new(File::create(ALL_CARDS_HASH_MAP_FILE_PATH).unwrap());
+    match serialize_into(&mut f, &*all_cards) {
+        Ok(_) => {
+            match t0.elapsed() {
+                Ok(elapsed) => println!("Took {} seconds to save  hashmap to disk", elapsed.as_secs()),
+                Err(e) => println!("Error: {e:?}"),
+            }
+        },
         Err(e) => {println!("Error saving task queue: {:?}", e);}
     };
 }

@@ -6,7 +6,7 @@ use dotenv::dotenv;
 use actix_web::{web::Data, App, HttpServer, http};
 use models::state::AppState;
 use oauth2::{ClientId, ClientSecret, AuthUrl, TokenUrl, basic::BasicClient, RedirectUrl};
-use services::card_cache::setup_card_cache;
+use services::card_cache::{setup_card_cache, ALL_CARDS};
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 mod models;
@@ -24,6 +24,7 @@ async fn main() -> std::io::Result<()> {
     env_logger::init();
     dotenv().ok();
     env::var("TELOXIDE_TOKEN").expect("$TELOXIDE_TOKEN is not set");
+    let port = env::var("PORT").expect("$PORT is not set");
     
     // setup ssl
     let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
@@ -36,7 +37,17 @@ async fn main() -> std::io::Result<()> {
         .unwrap();
 
     // setup card cache (may take a while if no cards loded yet)
-    setup_card_cache().await;
+    let is_empty = {
+        println!("CHECK HM");
+        let hm = ALL_CARDS.lock().unwrap();
+        hm.is_empty()
+    };
+    if is_empty {
+        println!("HM IS EMPTY");
+        setup_card_cache().await;
+    } else{
+        println!("HM NOT EMPTY");
+    }
 
     // setup Http server
     HttpServer::new(|| {
@@ -106,7 +117,7 @@ async fn main() -> std::io::Result<()> {
             .service(card_sales_paged)
             .service(card_sales_num)
     })
-    .bind_openssl("0.0.0.0:8080", builder)?
+    .bind_openssl(format!("0.0.0.0:{}", port), builder)?
     .run()
     .await
 }
