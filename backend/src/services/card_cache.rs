@@ -35,24 +35,20 @@ pub static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
 });
 
 pub static NAME_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
-    print!("CREATING TRIE");
     let all_cards = ALL_CARDS.lock().unwrap();
     let mut trie = TrieTree::new();
     for card in all_cards.values() {
         trie.insert(card.name.clone().to_lowercase(), card.id.clone(), false);
     }
-    print!("TRIE CREATED");
     Mutex::new(trie)
 });
 
 pub static NAME_PARTIALS_TRIE: Lazy<Mutex<TrieTree>> = Lazy::new(|| {
-    print!("CREATING PARTIALS TRIE");
     let all_cards = ALL_CARDS.lock().unwrap();
     let mut trie = TrieTree::new();
     for card in all_cards.values() {
         trie.insert(card.name.clone().to_lowercase(), card.id.clone(), true);
     }
-    print!("PARTIALS TRIE CREATED");
     Mutex::new(trie)
 });
 
