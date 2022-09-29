@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationMessage } from 'src/app/models/notificationn.model';
@@ -7,7 +8,15 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.sass']
+  styleUrls: ['./contact.component.sass'],
+  animations: [
+    trigger('enter', [
+       transition(':enter', [
+        style({ transform: 'translateX(200%)' }),
+        animate('200ms'),
+      ])
+    ]),
+  ]  
 })
 export class ContactComponent implements OnInit {
 
