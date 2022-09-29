@@ -9,7 +9,6 @@ pub async fn user_get(auth: BearerAuth) -> HttpResponse {
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
     };
-    
     match get_user_by_id(user_id) {
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
         Ok(user_option) => match user_option {

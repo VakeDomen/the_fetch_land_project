@@ -9,7 +9,6 @@ pub async fn user_sales(auth: BearerAuth) -> HttpResponse {
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
     };
-    
     let sqlite_sales = match get_sales_by_user(user_id) {
         Ok(sales) => sales,
         Err(e) => return HttpResponse::InternalServerError().json(e.to_string())

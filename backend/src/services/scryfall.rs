@@ -2,7 +2,9 @@ use crate::{models::scryfall::BulkResponse, services::card_cache::{save_cards_to
 
 use super::card_cache::ALL_CARDS;
 
-pub async fn download_card_data(bulk_response: &BulkResponse) {
+pub async fn get_card_data(bulk_response: &BulkResponse) {
+    // find card data url
+    println!("[SCRYFALL] Parsing bulk card URL.");
     let mut card_uri = None;
     for bulk_data in bulk_response.data.iter() {
         if bulk_data.data_type.eq("all_cards") {
@@ -13,7 +15,8 @@ pub async fn download_card_data(bulk_response: &BulkResponse) {
         Some(u) => u,
         None => return,
     };
-    println!("Dowanloading cards");
+    // GET data
+    println!("[SCRYFALL] Fetching all cards from URL.");
     let response = match reqwest::get(target).await {
         Ok(resp) => resp,
         Err(e) => {
@@ -21,13 +24,12 @@ pub async fn download_card_data(bulk_response: &BulkResponse) {
             return;
         }
     };
-    println!("Creating card file");
-    let content = fetch_cards_data_text(response).await;
-    println!("Pasring cards");
-    match content {
+    println!("[SCRYFALL] Extracting card raw data from response...");
+    match extract_card_data_string_from_resp(response).await {
         Some(c) => {
+            println!("[SCRYFALL] Saving cards to cache");
             save_cards_to_cache(&c);
-            println!("Writing cards to file");
+            println!("[SCRYFALL] Saving cards to file");
             save_cache();
         },
         None => {
@@ -37,7 +39,7 @@ pub async fn download_card_data(bulk_response: &BulkResponse) {
     
 }
 
-async fn fetch_cards_data_text(response: reqwest::Response) -> Option<String> {
+async fn extract_card_data_string_from_resp(response: reqwest::Response) -> Option<String> {
     let empty = {
         let all_cards = ALL_CARDS.lock().unwrap();
         all_cards.is_empty()

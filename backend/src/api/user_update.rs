@@ -16,12 +16,10 @@ pub async fn user_update(auth: BearerAuth, body: web::Json<UserPatchData>) -> Ht
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
     };
-    
     match update_user_info(user_id.clone(), body.into_inner()) {
         Ok(_) => (),
         Err(e) => return HttpResponse::InternalServerError().body(e.to_string()),
     };
-
     match get_user_by_id(user_id) {
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
         Ok(user_option) => match user_option {

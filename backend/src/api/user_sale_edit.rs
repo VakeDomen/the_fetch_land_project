@@ -24,7 +24,6 @@ pub async fn user_sale_edit(
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
     };
-    
     match update_sale(sale_id.to_string(), user_id, body.0) {
         Ok(_) => HttpResponse::Ok().finish(),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string())

@@ -9,12 +9,10 @@ pub async fn user_delete(auth: BearerAuth) -> HttpResponse {
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
     };
-    
     match delete_all_user_sales(user_id.clone()) {
         Ok(_) => (),
         Err(e) => return HttpResponse::InternalServerError().json(e.to_string())
     }
-
     match delete_user(user_id) {
         Ok(_) => HttpResponse::Ok().finish(),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string())

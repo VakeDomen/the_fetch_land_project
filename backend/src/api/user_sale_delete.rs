@@ -9,7 +9,6 @@ pub async fn user_sale_delete(auth: BearerAuth, sale_id: web::Path<String>) -> H
         Some(uid) => uid,
         None => return HttpResponse::Unauthorized().finish(),
     };
-    
     match delete_sale(user_id, sale_id.to_string()) {
         Ok(_) => HttpResponse::Ok().finish(),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string())
