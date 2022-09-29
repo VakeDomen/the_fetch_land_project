@@ -24,6 +24,8 @@ async fn main() -> std::io::Result<()> {
     let (
         port,
         own_ssl,
+        cors_url,
+        auth_hook_url,
         oauth_client_id,
         oauth_client_secret,
     ) = setup_env();
@@ -46,7 +48,7 @@ async fn main() -> std::io::Result<()> {
     let mut server = HttpServer::new(move || {
         // setup CORS
         let cors = Cors::default()
-              .allowed_origin("http://localhost:4200")
+              .allowed_origin(cors_url.as_str())
               .allowed_methods(vec!["GET", "POST", "PATCH", "DELETE"])
               .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
               .allowed_header(http::header::CONTENT_TYPE)
@@ -57,7 +59,7 @@ async fn main() -> std::io::Result<()> {
         let google_client_secret_struct = ClientSecret::new(oauth_client_secret.to_owned());
         let auth_url_endpoint = "https://accounts.google.com/o/oauth2/v2/auth".to_string();
         let token_url_endpoint = "https://www.googleapis.com/oauth2/v3/token".to_string();
-        let redirect_url = "https://localhost:8080/auth/hook".to_string();
+        let redirect_url = auth_hook_url.to_string();
         let auth_url = AuthUrl::new(auth_url_endpoint).expect("Invalid authorization endpoint URL");
         let token_url_struct = TokenUrl::new(token_url_endpoint).expect("Invalid token endpoint URL");
         let token_url = Some(token_url_struct);
@@ -115,7 +117,7 @@ async fn main() -> std::io::Result<()> {
     server.run().await
 }
 
-fn setup_env() -> (u16, bool, String, String) {
+fn setup_env() -> (u16, bool, String, String, String, String) {
     dotenv().ok();
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     let port = env::var("PORT").expect("$PORT is not set").parse::<u16>().unwrap();
@@ -139,9 +141,13 @@ fn setup_env() -> (u16, bool, String, String) {
     env::var("TELOXIDE_TOKEN").expect("$TELOXIDE_TOKEN is not set");
     let oauth_client_id = env::var("OAUTH_CLIENT_ID").expect("Missing the OAUTH_CLIENT_ID environment variable.");
     let oauth_client_secret = env::var("OAUTH_CLIENT_SECRET").expect("Missing the OAUTH_CLIENT_SECRET environment variable.");
+    let cors_url = env::var("CORS_DOMAIN").expect("Missing the CORS_DOMAIN environment variable.");
+    let auth_hook_url = env::var("AUTH_HOOK_URL").expect("Missing the AUTH_HOOK_URL environment variable.");
     (
         port,
         own_ssl,
+        cors_url,
+        auth_hook_url,
         oauth_client_id,
         oauth_client_secret,
     )
