@@ -73,10 +73,11 @@ pub async fn auth(
         }
     };
     
+    let redirect_url = env::var("AUTH_REDIRECT_URL").expect("$AUTH_REDIRECT_URL is not set");
     match encode_jwt(user.id) {
         // Ok(token) => HttpResponse::Ok().json(JWTTokenResponse { token }),
         Ok(token) => HttpResponse::Found()
-            .append_header((header::LOCATION, format!("http://localhost:4200/token/{}", token))).finish(),
+            .append_header((header::LOCATION, format!("{}{}", redirect_url, token))).finish(),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
     }
 }

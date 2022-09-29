@@ -139,6 +139,7 @@ fn setup_env() -> (u16, bool, String, String, String, String) {
         Err(_) => ()
     }
     env::var("TELOXIDE_TOKEN").expect("$TELOXIDE_TOKEN is not set");
+    env::var("AUTH_REDIRECT_URL").expect("$AUTH_REDIRECT_URL is not set");
     let oauth_client_id = env::var("OAUTH_CLIENT_ID").expect("Missing the OAUTH_CLIENT_ID environment variable.");
     let oauth_client_secret = env::var("OAUTH_CLIENT_SECRET").expect("Missing the OAUTH_CLIENT_SECRET environment variable.");
     let cors_url = env::var("CORS_DOMAIN").expect("Missing the CORS_DOMAIN environment variable.");
