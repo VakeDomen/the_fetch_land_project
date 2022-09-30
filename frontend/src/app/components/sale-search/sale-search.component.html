@@ -36,5 +36,6 @@
             </div>
         </div>
     </div>
+    <progress class="progress is-small is-primary" max="100" *ngIf="searching"></progress>
     <app-sale-search-table [cardSales]="cardSales" (salesToCheck)="checkSales($event)"></app-sale-search-table>
 </div>

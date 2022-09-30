@@ -24,6 +24,8 @@ export class SaleSearchComponent implements OnInit {
   selectedCard: Card | undefined;
   itemString: string = "";
   public cardSales: CardSale[] = [];
+  public searching: boolean = false;
+  private shouldSearch: boolean = false;
 
 
   constructor(
@@ -47,6 +49,8 @@ export class SaleSearchComponent implements OnInit {
   }
 
   public refreshCardsPartials() {
+    this.shouldSearch = true;
+    setTimeout(()=> {if (this.shouldSearch) {this.searching = true}}, 50); 
     this.data.getSalesByPartialPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
   }
 
@@ -67,6 +71,9 @@ export class SaleSearchComponent implements OnInit {
       cs.card = card;
       return cs;
     });
+    
+    this.shouldSearch = false;
+    this.searching = false;
     this.fillTrie(this.cardSales)
   }
 
