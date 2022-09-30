@@ -33,7 +33,11 @@ export class AppComponent {
     private ccService: NgcCookieConsentService,
     private router: Router,
   ) {
-    
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'MEASUREMENT-ID', { 'page_path': event.urlAfterRedirects });
+      }      
+    })
   }
 
 
