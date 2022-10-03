@@ -104,4 +104,8 @@ export class DataService {
   sendNotification(notification: NotificationMessage): Observable<undefined> {
     return this.http.post<undefined>(this.apiUrlNotification, notification)
   }
+
+  getCardSalesById(cid: string): Observable<Sale[]> {
+    return this.cache.getCached(`${this.apiUrlCard}sales/id/${cid}`);
+  }
 }

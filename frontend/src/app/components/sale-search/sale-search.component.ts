@@ -38,10 +38,9 @@ export class SaleSearchComponent implements OnInit {
     this.route
       .queryParamMap
       .subscribe((params: ParamMap) => {
-        const name = params.get('name');
-        console.log(name)
-        if (name) {
-          sessionStorage.setItem('saleSearchQeury', name);
+        const queryName = params.get('name');
+        if (queryName) {
+          sessionStorage.setItem('saleSearchQeury', queryName);
         }
         this.setupPreQuery()
       }

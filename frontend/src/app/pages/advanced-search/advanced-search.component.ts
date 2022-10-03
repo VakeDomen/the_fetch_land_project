@@ -1,6 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
+import { Card } from 'src/app/models/card.model';
+import { Sale } from 'src/app/models/sale.model';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-advanced-search',
@@ -26,11 +30,44 @@ export class AdvancedSearchComponent implements OnInit {
   public transitionEnter = 0;
   public transitionLeave = 0;
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private data: DataService
+  ) {
     this.setTransitionValues('left');
   }
 
   ngOnInit(): void {
+    this.route
+      .queryParamMap
+      .subscribe((params: ParamMap) => {
+        const queryId = params.get('id');
+        if (queryId) {
+          this.setupPreQuery(queryId)
+        }
+      }
+    );
+  }
+
+  private setupPreQuery(cardId: string) {
+    this.data.getCardById(cardId).subscribe((card: Card) => {
+      this.data.insertCardsToTrie([card]);
+      this.data.getCardSalesById(cardId).subscribe((sales: Sale[]) => {
+        this.checkSales(this.generateCardSales(cardId, sales));
+      })
+    })
+  }
+
+  private generateCardSales(cardId: string, sales: Sale[]): CardSale[] {
+    const card = this.data.getCardByIdFromTrie(cardId).pop();
+    if (!card) {
+      return [];
+    }
+    return sales.map((s: Sale) => {
+      const cardSale = s as CardSale;
+      cardSale.card = card;
+      return cardSale;
+    })
   }
 
   private setTransitionValues(value: 'left' | 'right') {

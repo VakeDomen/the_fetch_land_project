@@ -16,17 +16,17 @@
         </div>
 
         <!-- table -->
-        <table class="table is-fullwidth is-striped has-text-centered" *ngIf="cardSales.length">
+        <table class="table is-fullwidth is-striped " *ngIf="cardSales.length">
             <thead>
                 <tr>
                     <th>
-                        <p class="has-text-centered">Karta ({{ cardSales.length }})</p>
+                        <p class="">Karta ({{ cardSales.length }})</p>
                     </th>
                     <th>
-                        <p class="has-text-centered">Ime</p>
+                        <p class="">Ime</p>
                     </th>
                     <th>
-                        <p class="has-text-centered">Set</p>
+                        <p class="">Set</p>
                     </th>
                     <th>
                         <p class="has-text-centered">Cena</p>
@@ -36,27 +36,26 @@
             <tbody>
                 <tr *ngFor="let sale of cardSales">
                     <th>
-                        <div class="has-text-centered">
-                            <img class="ml-auto img-card" *ngIf="sale.card.image_uris"
+                        <div class="is-vertical-center">
+
+                            <div class="">
+                                <img class="ml-auto img-card" *ngIf="sale.card.image_uris"
                                 src="{{sale.card.image_uris.small}}" alt="">
-                            <ng-container *ngIf="!sale.card.image_uris && sale.card.card_faces">
-                                <img class="img-card" *ngFor="let face of sale.card.card_faces"
+                                <ng-container *ngIf="!sale.card.image_uris && sale.card.card_faces">
+                                    <img class="img-card" *ngFor="let face of sale.card.card_faces"
                                     src="{{face.image_uris?.small}}" alt="">
-                            </ng-container>
+                                </ng-container>
+                            </div>
                         </div>
                     </th>
                     <td class="is-vcentered has-text-weight-bold is-size-3-tablet">
                         <a 
-                            *ngIf="!paginated" 
                             class="has-text-primary"
                             [routerLink]="['/search']"
-                            [queryParams]="{ name: sale.card.name}"    
+                            [queryParams]="{ id: sale.card.id}"    
                         >
                             {{ sale.card.name }}
                         </a>
-                        <span *ngIf="paginated">
-                            {{ sale.card.name }}
-                        </span>
                     </td>
                     <td class="is-vcentered">
                         <div class="set-table-icon-wrapper">
@@ -66,15 +65,15 @@
                             {{ sale.card.set_name }}
                         </div>
                     </td>
-                    <td class="is-vcentered ">
-                        <div class="columns has-text-centered limit-width ml-auto">
+                    <td class="is-vcentered has-text-centered">
+                        <div class="columns limit-width ml-auto">
                             <div class="column has-text-centered-mobile is-2 is-hidden-mobile">
                                 <i class="fas fa-coins fa-2x icon-center"></i>
                             </div>
                             <div class="column has-text-centered-mobile">
-                                <p class="heading pl-1">Cena</p>
+                                <p class="heading pl-1 is-hidden-mobile">Cena</p>
                                 <p class="title is-5">
-                                    {{ sale.price / 100}} €
+                                    {{ sale.price / 100}}€
                             </div>
                         </div>
                     </td>
