@@ -45,7 +45,19 @@
                             </ng-container>
                         </div>
                     </th>
-                    <td class="is-vcentered has-text-weight-bold is-size-3-tablet">{{ sale.card.name }}</td>
+                    <td class="is-vcentered has-text-weight-bold is-size-3-tablet">
+                        <a 
+                            *ngIf="!paginated" 
+                            class="has-text-primary"
+                            [routerLink]="['/search']"
+                            [queryParams]="{ name: sale.card.name}"    
+                        >
+                            {{ sale.card.name }}
+                        </a>
+                        <span *ngIf="paginated">
+                            {{ sale.card.name }}
+                        </span>
+                    </td>
                     <td class="is-vcentered">
                         <div class="set-table-icon-wrapper">
                             <img class="set-table-icon" src="{{ this.getSetIcon(sale.card.set_id) }}" alt="set icon" />

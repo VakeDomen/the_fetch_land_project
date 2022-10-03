@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
@@ -30,9 +31,24 @@ export class SaleSearchComponent implements OnInit {
 
   constructor(
     private data: DataService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.route
+      .queryParamMap
+      .subscribe((params: ParamMap) => {
+        const name = params.get('name');
+        console.log(name)
+        if (name) {
+          sessionStorage.setItem('saleSearchQeury', name);
+        }
+        this.setupPreQuery()
+      }
+    );
+  }
+
+  private setupPreQuery() {
     const query = sessionStorage.getItem("saleSearchQeury");
     if (query) {
       this.prefixQuery = query;

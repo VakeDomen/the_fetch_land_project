@@ -6,6 +6,7 @@ import { Sale } from 'src/app/models/sale.model';
 import { DataService } from 'src/app/services/data.service';
 import { Set } from 'src/app/models/set.model';
 import { ScryfallResponse } from 'src/app/models/scryfall-response.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-sales-table',
@@ -28,6 +29,7 @@ export class NewSalesTableComponent implements OnInit {
   
   constructor(
     private data: DataService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
