@@ -1,19 +1,19 @@
+<div class="columns" *ngIf="paginated">
+    <div class="column is-3  has-text-left has-text-centered-mobile">
+        <button *ngIf="amountOfPages > 1" class="button is-primary has-text-black pagination-previous" [disabled]="!canGetPreviousPage()" (click)="getPreviousPage()">Nazaj</button>
+
+    </div>
+
+    <div class="column is-6 has-text-centered">
+        <h1 class="subtitle is-3">Stran ({{ currentPage + 1}}/{{amountOfPages}}) </h1>
+    </div>
+
+    <div class="column is-3 has-text-right has-text-centered-mobile">
+        <button *ngIf="amountOfPages > 1" class="button is-primary has-text-black pagination-next" [disabled]="!canGetNextPage()" (click)="getNextPage()">Naprej</button>
+    </div>
+</div>
 <div class="table-container">
     <div class="has-items-centered">
-        <div class="columns" *ngIf="paginated">
-            <div class="column is-3  has-text-left has-text-centered-mobile">
-                <button *ngIf="amountOfPages > 1" class="button is-primary has-text-black pagination-previous" [disabled]="!canGetPreviousPage()" (click)="getPreviousPage()">Nazaj</button>
-
-            </div>
-    
-            <div class="column is-6 has-text-centered">
-                <h1 class="subtitle is-3">Stran ({{ currentPage + 1}}/{{amountOfPages}}) </h1>
-            </div>
-    
-            <div class="column is-3 has-text-right has-text-centered-mobile">
-                <button *ngIf="amountOfPages > 1" class="button is-primary has-text-black pagination-next" [disabled]="!canGetNextPage()" (click)="getNextPage()">Naprej</button>
-            </div>
-        </div>
 
         <!-- table -->
         <table class="table is-fullwidth is-striped " *ngIf="cardSales.length">
