@@ -2,7 +2,7 @@
     <div class="has-items-centered">
         <div class="columns" *ngIf="paginated">
             <div class="column is-3  has-text-left has-text-centered-mobile">
-                <button class="button is-primary has-text-black pagination-previous" [disabled]="!canGetPreviousPage()" (click)="getPreviousPage()">Nazaj</button>
+                <button *ngIf="amountOfPages > 1" class="button is-primary has-text-black pagination-previous" [disabled]="!canGetPreviousPage()" (click)="getPreviousPage()">Nazaj</button>
 
             </div>
     
@@ -11,7 +11,7 @@
             </div>
     
             <div class="column is-3 has-text-right has-text-centered-mobile">
-                <button class="button is-primary has-text-black pagination-next" [disabled]="!canGetNextPage()" (click)="getNextPage()">Naprej</button>
+                <button *ngIf="amountOfPages > 1" class="button is-primary has-text-black pagination-next" [disabled]="!canGetNextPage()" (click)="getNextPage()">Naprej</button>
             </div>
         </div>
 
