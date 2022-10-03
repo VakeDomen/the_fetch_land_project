@@ -34,8 +34,9 @@ import { AllSalesComponent } from './pages/all-sales/all-sales.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
-    domain: 'localhost' // or 'your.domain.com' 
+    domain: 'fetchland.eu' // or 'your.domain.com' 
   },
+  position: "bottom-right",
   palette: {
     popup: {
       background: 'hsl(0deg, 0%, 20%);'
