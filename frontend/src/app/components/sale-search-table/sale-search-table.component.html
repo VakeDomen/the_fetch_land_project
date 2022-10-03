@@ -42,10 +42,22 @@
 
 
     <div class="block has-text-centered" *ngIf="!hasSearched()">
-        <p *ngIf="!cardSales.length">Vpiši ime iskane karte</p>
+        <p *ngIf="!cardSales.length">
+            Vpiši ime iskane karte 
+            <i class="far fa-keyboard"></i>
+        </p>
     </div>
 
     <div class="block has-text-centered" *ngIf="hasSearched()">
-        <p *ngIf="!cardSales.length">Ni ponudb za iskano karto</p>
+        <p *ngIf="!cardSales.length">
+            <span *ngIf="queryPrefix.length == 1">
+                Dopiši še kakšno črko, mogoče se kaj najde
+                <i class="far fa-keyboard"></i>
+            </span> 
+            <span *ngIf="queryPrefix.length > 1">
+                Ni ponudb za iskano karto
+                <i class="far fa-frown"></i>
+            </span> 
+        </p>
     </div>
 </div>

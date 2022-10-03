@@ -38,7 +38,7 @@ const cookieConfig: NgcCookieConsentConfig = {
   },
   palette: {
     popup: {
-      background: 'hsl(0deg, 0%, 14%);'
+      background: 'hsl(0deg, 0%, 20%);'
     },
     button: {
       background: '#ef7600'

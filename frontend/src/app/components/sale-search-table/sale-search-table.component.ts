@@ -13,6 +13,7 @@ import { Card } from 'src/app/models/card.model';
 export class SaleSearchTableComponent implements OnChanges {
 
   @Input() cardSales: CardSale[] = [];
+  @Input() public queryPrefix: string = "";
   @Output() salesToCheck = new EventEmitter<CardSale[]>();
 
   public cardsOnSale: Card[] = [];
