@@ -14,6 +14,7 @@ export class CardTableComponent implements OnChanges {
 
   @Input() cards: Card[] = [];
   @Input() displayMode: 'new_sale' = 'new_sale';
+  @Input() totalCards: number = 0;
 
   @Output() cardSelected = new EventEmitter<Card>();
 

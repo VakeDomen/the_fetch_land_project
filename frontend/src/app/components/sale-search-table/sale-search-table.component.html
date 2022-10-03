@@ -42,10 +42,10 @@
 
 
     <div class="block has-text-centered" *ngIf="!hasSearched()">
-        <h1 class="subtitle is-3" *ngIf="!cardSales.length">Vpiši ime iskane karte</h1>
+        <p *ngIf="!cardSales.length">Vpiši ime iskane karte</p>
     </div>
 
     <div class="block has-text-centered" *ngIf="hasSearched()">
-        <h1 class="subtitle is-3" *ngIf="!cardSales.length">Ni ponudb za iskano karto</h1>
+        <p *ngIf="!cardSales.length">Ni ponudb za iskano karto</p>
     </div>
 </div>

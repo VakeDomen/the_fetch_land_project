@@ -52,5 +52,6 @@
             </div>
         </div>
     </div>
-    <app-card-table [cards]="cards" (cardSelected)="emitSelectedCard($event)"></app-card-table>
+    <progress class="progress is-small is-primary" max="100" *ngIf="searching"></progress>
+    <app-card-table [cards]="cardsToShow" [totalCards]="cards.length" (cardSelected)="emitSelectedCard($event)"></app-card-table>
 </div>

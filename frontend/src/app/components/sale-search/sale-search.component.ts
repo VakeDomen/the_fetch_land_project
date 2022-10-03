@@ -65,11 +65,19 @@ export class SaleSearchComponent implements OnInit {
 
   public refreshCardsPartials() {
     this.shouldSearch = true;
-    setTimeout(()=> {if (this.shouldSearch) {this.searching = true}}, 50); 
+    setTimeout(() => {if (this.shouldSearch) {this.searching = true}}, 100); 
     this.data.getSalesByPartialPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
   }
 
   private async fillTrieSetup(sales: Sale[]): Promise<void> {
+    const cardSales = await this.generateCardSaleObjects(sales);    
+    this.fillTrie(cardSales)
+    this.cardSales = cardSales;
+    this.shouldSearch = false;
+    this.searching = false;
+  }
+
+  private async generateCardSaleObjects(sales: Sale[]) {
     const cardPromises = sales.map((s: Sale) => {
       const card = this.data.getCardByIdFromTrie(s.sale_object_id);
       if (card.length) {
@@ -80,16 +88,12 @@ export class SaleSearchComponent implements OnInit {
     });
     const cards = await Promise.all(cardPromises);
     this.data.insertCardsToTrie(cards);
-    this.cardSales = sales.map((sale: Sale) => {
+    return sales.map((sale: Sale) => {
       const card = this.data.getCardByIdFromTrie(sale.sale_object_id).pop() as Card;
       const cs = sale as CardSale;
       cs.card = card;
       return cs;
     });
-    
-    this.shouldSearch = false;
-    this.searching = false;
-    this.fillTrie(this.cardSales)
   }
 
   private fillTrie(cardSales: CardSale[]): void {
