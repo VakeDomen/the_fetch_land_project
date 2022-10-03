@@ -20,6 +20,16 @@ impl TrieTree {
         if word.is_empty() {
             return false;
         }
+
+        if self.head.is_none() {
+            self.head = Some(Box::new(TrieNode {
+                letter: None,
+                leaf: false,
+                values: vec![],
+                children: vec![],
+            }));
+        }
+
         if split {
             let chunks: Vec<&str> = word.split(" ").collect();
             if chunks.len() > 1 {
@@ -35,16 +45,6 @@ impl TrieTree {
                 }
             }
         }
-
-        if self.head.is_none() {
-            self.head = Some(Box::new(TrieNode {
-                letter: None,
-                leaf: false,
-                values: vec![],
-                children: vec![],
-            }));
-        }
-
         match &mut self.head {
             Some(head) => head.insert(word, value),
             None => false,

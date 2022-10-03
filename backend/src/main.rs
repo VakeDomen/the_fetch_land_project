@@ -9,6 +9,8 @@ use oauth2::{ClientId, ClientSecret, AuthUrl, TokenUrl, basic::BasicClient, Redi
 use services::card_cache::{setup_card_cache, ALL_CARDS};
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
+use crate::api::card_sales_id::get_card_sales_by_id;
+
 mod models;
 mod api;
 mod database;
@@ -100,6 +102,7 @@ async fn main() -> std::io::Result<()> {
             .service(card_sales_latest_default)
             .service(card_sales_latest)
             .service(get_card_sales_by_name_partials)
+            .service(get_card_sales_by_id)
             .service(user_sale_edit)
             .service(card_sales_paged)
             .service(card_sales_num)
