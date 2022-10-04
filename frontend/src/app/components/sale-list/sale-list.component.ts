@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
 
@@ -14,10 +15,14 @@ export class SaleListComponent implements OnChanges {
 
   public card: Card | undefined;
 
-  constructor() { }
+  constructor(
+    private title: Title,
+  ) { }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.cardSales.length) {
       this.card = this.cardSales[0].card;
+      this.title.setTitle(`${this.card.name} | TheFethclandProject`);
     }
   }
 

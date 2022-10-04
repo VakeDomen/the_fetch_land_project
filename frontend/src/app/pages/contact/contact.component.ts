@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationMessage } from 'src/app/models/notificationn.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,9 +27,11 @@ export class ContactComponent implements OnInit {
     private auth: AuthService,
     private data: DataService,
     private toastr: ToastrService,
+    private title: Title,
   ) { }
 
   ngOnInit(): void {
+    this.title.setTitle("Kontakt | TheFethclandProject");
   }
 
   public sendMessage() {

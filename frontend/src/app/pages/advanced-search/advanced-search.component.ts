@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
@@ -32,12 +33,14 @@ export class AdvancedSearchComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private data: DataService
+    private data: DataService,
+    private title: Title,
   ) {
     this.setTransitionValues('left');
   }
 
   ngOnInit(): void {
+    this.title.setTitle("Iskanje kart | TheFethclandProject");
     this.route
       .queryParamMap
       .subscribe((params: ParamMap) => {

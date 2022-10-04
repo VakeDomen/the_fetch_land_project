@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,9 +13,11 @@ export class FrontComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private title: Title,
   ) { }
 
   ngOnInit(): void {
+    this.title.setTitle("TheFethclandProject");
   }
 
   public search() {

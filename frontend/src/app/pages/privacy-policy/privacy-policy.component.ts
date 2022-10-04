@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -16,9 +17,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivacyPolicyComponent implements OnInit {
 
-  constructor() { }
+  @Input() private changeTitle: boolean = false;
+
+  constructor(
+    private title: Title,
+  ) { }
 
   ngOnInit(): void {
+    this.title.setTitle("Varovanje osebnih podatkov | TheFethclandProject");
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
@@ -32,9 +33,11 @@ export class SaleSearchComponent implements OnInit {
   constructor(
     private data: DataService,
     private route: ActivatedRoute,
+    private title: Title,
   ) {}
 
   ngOnInit(): void {
+    this.title.setTitle("Iskanje kart | TheFethclandProject");
     this.route
       .queryParamMap
       .subscribe((params: ParamMap) => {

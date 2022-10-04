@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-all-sales',
@@ -16,9 +17,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllSalesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private title: Title,
+  ) { }
 
   ngOnInit(): void {
+    this.title.setTitle("Nove ponudbe | TheFetchlandProject")
   }
 
 }

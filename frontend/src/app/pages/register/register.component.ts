@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
@@ -30,9 +31,11 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private toastr: ToastrService,
+    private title: Title,
   ) { }
   
   ngOnInit(): void {
+    this.title.setTitle("Registracija | TheFethclandProject");
     if (!this.auth.isLoggedIn()) {
       this.router.navigate([""]);
     }

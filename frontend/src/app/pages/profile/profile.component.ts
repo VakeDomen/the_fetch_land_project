@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private data: DataService,
     private toastr: ToastrService,
+    private title: Title,
   ) { 
     const user_data = sessionStorage.getItem("user");
     if (!user_data) {
@@ -38,6 +40,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.title.setTitle("Moj profil | TheFethclandProject");
   }
   
   public changeUsername(event: any) {
