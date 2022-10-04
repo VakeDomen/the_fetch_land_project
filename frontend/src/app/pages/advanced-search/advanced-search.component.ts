@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
@@ -35,11 +35,9 @@ export class AdvancedSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private data: DataService,
     private title: Title,
+    private router: Router,
   ) {
     this.setTransitionValues('left');
-  }
-
-  ngOnInit(): void {
     this.title.setTitle("Iskanje kart | TheFethclandProject");
     this.route
       .queryParamMap
@@ -50,6 +48,9 @@ export class AdvancedSearchComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnInit(): void {
   }
 
   private setupPreQuery(cardId: string) {
@@ -83,11 +84,13 @@ export class AdvancedSearchComponent implements OnInit {
     this.salesToCheck = cardSales;
     this.setTransitionValues('left');
     this.pageState = 'sales'
+    this.router.navigate(['.'], { relativeTo: this.route, queryParams: { id: this.salesToCheck[0].card.id }});
   }
 
   public backToList() {
     this.setTransitionValues('right')
     this.pageState = 'search'
+    this.router.navigate(['.'], { relativeTo: this.route, queryParams: { name: this.salesToCheck[0].card.name }});
   }
 
 }

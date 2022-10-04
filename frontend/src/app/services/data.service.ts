@@ -42,7 +42,7 @@ export class DataService {
   }
 
   getCardsByPrefix(prefix: string, lang?: string): Observable<Card[]> {
-    return this.cache.getCached<Card[]>(`${this.apiUrlCard}name/${lang ?? 'en'}/${prefix}`)
+    return this.cache.getCached<Card[]>(`${this.apiUrlCard}name/${lang ?? 'en'}/${encodeURIComponent(prefix)}`)
   }
 
   getSets(): Observable<ScryfallResponse<Set>> {
@@ -75,11 +75,11 @@ export class DataService {
   }
 
   getSalesByPrefix(prefix: string, lang?: string): Observable<Sale[]> {
-    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/name/${lang ?? 'en'}/${prefix}`)
+    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/name/${lang ?? 'en'}/${encodeURIComponent(prefix)}`)
   }
 
   getSalesByPartialPrefix(prefix: string, lang?: string): Observable<Sale[]> {
-    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/partials/${lang ?? 'en'}/${prefix}`)
+    return this.cache.getCached<Sale[]>(`${this.apiUrlCard}sales/partials/${lang ?? 'en'}/${encodeURIComponent(prefix)}`)
   }
   getUserCredentials(uid: string): Observable<UserCredentials> {
     return this.cache.getCached<UserCredentials>(`${this.apiUrlUser}credentials/${uid}`);

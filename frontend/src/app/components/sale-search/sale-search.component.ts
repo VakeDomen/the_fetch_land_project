@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
@@ -17,14 +17,10 @@ export class SaleSearchComponent implements OnInit {
   @Output() back = new EventEmitter();
   @Output() salesToCheck = new EventEmitter<CardSale[]>();
 
-  
   public cardLang: string = "en";
   public prefixQuery: string = "";
-
-  // autocomplete card search
   private tree: TrieTree<CardSale> = new TrieTree();
-  selectedCard: Card | undefined;
-  itemString: string = "";
+  public selectedCard: Card | undefined;
   public cardSales: CardSale[] = [];
   public searching: boolean = false;
   private shouldSearch: boolean = false;
@@ -34,9 +30,8 @@ export class SaleSearchComponent implements OnInit {
     private data: DataService,
     private route: ActivatedRoute,
     private title: Title,
-  ) {}
-
-  ngOnInit(): void {
+    private router: Router,
+  ) {
     this.title.setTitle("Iskanje kart | TheFethclandProject");
     this.route
       .queryParamMap
@@ -46,8 +41,10 @@ export class SaleSearchComponent implements OnInit {
           sessionStorage.setItem('saleSearchQeury', queryName);
         }
         this.setupPreQuery()
-      }
-    );
+      });
+  }
+
+  ngOnInit(): void {
   }
 
   private setupPreQuery() {
@@ -57,7 +54,7 @@ export class SaleSearchComponent implements OnInit {
       this.refreshCardsPartials();
     }
   }
-  
+
   public emitSelectedCard(card: Card) {
     this.cardSelected.emit(card);
   }
@@ -68,12 +65,12 @@ export class SaleSearchComponent implements OnInit {
 
   public refreshCardsPartials() {
     this.shouldSearch = true;
-    setTimeout(() => {if (this.shouldSearch) {this.searching = true}}, 100); 
+    setTimeout(() => { if (this.shouldSearch) { this.searching = true } }, 100);
     this.data.getSalesByPartialPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
   }
 
   private async fillTrieSetup(sales: Sale[]): Promise<void> {
-    const cardSales = await this.generateCardSaleObjects(sales);    
+    const cardSales = await this.generateCardSaleObjects(sales);
     this.fillTrie(cardSales)
     this.cardSales = cardSales;
     this.shouldSearch = false;
@@ -108,6 +105,7 @@ export class SaleSearchComponent implements OnInit {
 
   public search() {
     sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
+    this.router.navigate(['.'], { relativeTo: this.route, queryParams: { name: this.prefixQuery } });
     if (this.prefixQuery.length > 1) this.refreshCardsPartials()
     else this.cardSales = this.tree.collect(this.prefixQuery);
   }
