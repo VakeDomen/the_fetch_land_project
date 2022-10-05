@@ -22,9 +22,9 @@ $navbar-dropdown-item-active-color: $fl_black;
 $navbar-tab-hover-border-bottom-color: $fl_orange;
 $navbar-tab-active-border-bottom-color: $fl_orange;
 
-$navbar-item-hover-background-color: $fl_orange; 
+$navbar-item-hover-background-color: $fl_orange;
 $navbar-item-active-background-color: $fl_dark_orange;
-$navbar-tab-hover-background-color: $fl_orange; 
+$navbar-tab-hover-background-color: $fl_orange;
 $navbar-tab-active-background-color: $fl_dark_orange;
 $navbar-dropdown-background-color: $fl_black;
 $navbar-dropdown-item-hover-background-color: $fl_black;
@@ -77,16 +77,15 @@ $pagination-current-background-color: $fl_orange;
 // ------------ PROGRESS BAR ------------
 $progress-bar-background-color: $fl_black_secondary;
 
-
 @import "../node_modules/bulma/bulma.sass";
 
-@import '~node_modules/bulma/sass/utilities/_all';
-@import '~node_modules/bulma/sass/base/_all';
-@import '~node_modules/bulma/sass/elements/_all';
-@import '~node_modules/bulma/sass/form/_all';
-@import '~node_modules/bulma/sass/components/navbar';
-@import '~node_modules/bulma/sass/layout/hero';
-@import '~node_modules/bulma/sass/layout/section';
+@import "~node_modules/bulma/sass/utilities/_all";
+@import "~node_modules/bulma/sass/base/_all";
+@import "~node_modules/bulma/sass/elements/_all";
+@import "~node_modules/bulma/sass/form/_all";
+@import "~node_modules/bulma/sass/components/navbar";
+@import "~node_modules/bulma/sass/layout/hero";
+@import "~node_modules/bulma/sass/layout/section";
 
 // Import Extensions
 @import "../node_modules/bulma-extensions/bulma-accordion/src/sass/index";
@@ -105,32 +104,40 @@ $progress-bar-background-color: $fl_black_secondary;
 @import "../node_modules/bulma-extensions/bulma-tagsinput/src/sass/index";
 @import "../node_modules/bulma-extensions/bulma-timeline/src/sass/index";
 
-html { background-color: black; }
-
-body {
-    background-image: url('assets/bg/bg1.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 100% 100%;
-    height: 100vh;
-    overflow-x: scroll;
-    box-shadow:inset 0 0 0 2000px rgba(0, 0, 0, 0.4);
-  }
-
-.label {
-    color: $fl_light;
+html {
+  background-color: black;
 }
 
+body {
+  background-image: url("assets/bg/bg1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4);
+}
+
+.label {
+  color: $fl_light;
+}
 
 #toast-container {
   margin-top: 5% !important;
   background-color: $fl_orange !important;
 }
 
-#toast-container>.toast-success {
+#toast-container > .toast-success {
   background-color: $fl_orange !important;
 }
 
 .spacer {
   padding-bottom: 100px;
+}
+
+.navbar-item {
+  button,
+  .buttons {
+    margin: 0px !important;
+  }
 }

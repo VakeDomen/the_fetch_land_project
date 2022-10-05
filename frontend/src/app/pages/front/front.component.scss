@@ -1,0 +1,58 @@
+#search__section {
+  padding: 150px 50px;
+
+  .search-wrapper {
+    margin-top: 70px;
+    padding: 0em 100px;
+  }
+
+  .search-btn {
+    display: none;
+  }
+
+  .logo-wrapper {
+    max-width: 1200px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .new-offers {
+    margin-top: 60px;
+  }
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+@media only screen and (max-width: 1024px) {
+  .search-btn {
+    display: block !important;
+    button {
+      display: block !important;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search-wrapper {
+    margin-top: 50px !important;
+    padding: 0px 20px !important;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .logo-wrapper {
+    display: none;
+  }
+
+  #search__section {
+    padding: 30px 20px;
+
+    .search-btn {
+      margin-top: 25px;
+    }
+  }
+}

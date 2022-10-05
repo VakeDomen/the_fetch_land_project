@@ -1,77 +1,127 @@
-<nav class="navbar has-background-black-ter" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand ">
-        <a class="navbar-logo mt-1" (click)="activeTab='home'; tab.emit('home') ; closeNavbar()" [routerLink]="['/']">
-            <div>
-                <p class="navbar-item-center-icon">
-                    <!-- <img src="assets/logo/fetchland_logo_thin.png" alt="logo" class="is-hidden-mobile mt-2 ml-3" width="250">
+<nav
+  class="navbar has-background-black-ter"
+  role="navigation"
+  aria-label="main navigation"
+>
+  <div class="navbar-brand">
+    <a
+      class="navbar-logo mt-1"
+      (click)="activeTab = 'home'; tab.emit('home'); closeNavbar()"
+      [routerLink]="['/']"
+    >
+      <div>
+        <p class="navbar-item-center-icon">
+          <!-- <img src="assets/logo/fetchland_logo_thin.png" alt="logo" class="is-hidden-mobile mt-2 ml-3" width="250">
                     <img src="assets/logo/fetchland_logo_img.png" alt="logo" class="is-hidden-tablet mt-3 ml-3" width="48"> -->
-                    <img src="assets/logo/fetchland_logo_thin.png" alt="logo" class="mt-2 ml-3" width="250">
-                </p>
-            </div>
-        </a>
+          <img
+            src="assets/logo/fetchland_logo_thin.png"
+            alt="logo"
+            class="mt-2 ml-3"
+            width="250"
+          />
+        </p>
+      </div>
+    </a>
 
-        <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger has-text-primary" aria-label="menu"
-            aria-expanded="false" data-target="navMenu">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
+    <a
+      (click)="toggleNavbar()"
+      role="button"
+      #navBurger
+      class="navbar-burger burger has-text-primary"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navMenu"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
 
-    <div #navMenu id="navMenu" class="navbar-menu has-background-black-ter">
-        <div class="navbar-start" >
-            
+  <div #navMenu id="navMenu" class="navbar-menu has-background-black-ter">
+    <div class="navbar-start"></div>
+
+    <div class="navbar-end">
+      <a
+        class="navbar-item navbar-item-center-icon"
+        [ngClass]="{ 'is-active': activeTab === 'all' }"
+        (click)="activeTab = 'all'; tab.emit('all'); toggleNavbar()"
+        [routerLink]="['/all']"
+        routerLinkActive="router-link-active"
+      >
+        <span class="file-icon mr-2 mt-1">
+          <i class="fas fa-sparkles"></i>
+        </span>
+        Nove ponudbe
+      </a>
+      <a
+        class="navbar-item navbar-item-center-icon"
+        [ngClass]="{ 'is-active': activeTab === 'search' }"
+        (click)="activeTab = 'search'; tab.emit('search'); toggleNavbar()"
+        [routerLink]="['/search']"
+        routerLinkActive="router-link-active"
+      >
+        <span class="file-icon mr-2 mt-1">
+          <i class="fad fa-search"></i>
+        </span>
+        Napredno iskanje
+      </a>
+      <a
+        *ngIf="isLoggedIn()"
+        class="navbar-item navbar-item-center-icon"
+        [ngClass]="{ 'is-active': activeTab === 'sales' }"
+        (click)="activeTab = 'sales'; tab.emit('sales'); toggleNavbar()"
+        [routerLink]="['/sales']"
+        routerLinkActive="router-link-active"
+      >
+        <span class="file-icon mr-2 mt-1">
+          <i class="fas fa-coins"></i>
+        </span>
+        Moje ponudbe
+      </a>
+      <a
+        *ngIf="isLoggedIn()"
+        class="navbar-item navbar-item-center-icon"
+        [ngClass]="{ 'is-active': activeTab === 'profile' }"
+        (click)="activeTab = 'profile'; tab.emit('profile'); toggleNavbar()"
+        [routerLink]="['/profile']"
+        routerLinkActive="router-link-active"
+      >
+        <span class="file-icon mr-2 mt-1">
+          <i class="fas fa-user-cog"></i>
+        </span>
+        Profil
+      </a>
+      <a
+        class="navbar-item navbar-item-center-icon"
+        [ngClass]="{ 'is-active': activeTab === 'contact' }"
+        (click)="activeTab = 'contact'; tab.emit('contact'); toggleNavbar()"
+        [routerLink]="['/contact']"
+        routerLinkActive="router-link-active"
+      >
+        <span class="file-icon mr-2 mt-1">
+          <i class="fas fa-address-card"></i>
+        </span>
+        Kontakt
+      </a>
+      <div class="navbar-item">
+        <div class="buttons">
+          <button
+            *ngIf="!isLoggedIn()"
+            class="loginBtn has-text-black loginBtn--google"
+            (click)="googleLogin()"
+          >
+            Login
+          </button>
+          <button
+            *ngIf="isLoggedIn()"
+            class="button has-text-black is-primary"
+            (click)="logout()"
+          >
+            Logout
+          </button>
         </div>
-
-        <div class="navbar-end">
-            <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='all'}"
-                (click)="activeTab='all'; tab.emit('all') ; toggleNavbar();" [routerLink]="['/all']"
-                routerLinkActive="router-link-active">
-                <span class="file-icon mr-2 mt-1">
-                    <i class="fas fa-sparkles"></i>
-                </span>
-                Nove ponudbe
-                
-            </a>
-            <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='search'}"
-                (click)="activeTab='search'; tab.emit('search') ; toggleNavbar();" [routerLink]="['/search']"
-                routerLinkActive="router-link-active">
-                <span class="file-icon mr-2 mt-1">
-                    <i class="fad fa-search"></i>
-                </span>
-                Napredno iskanje
-                
-            </a>
-            <a *ngIf="isLoggedIn()" class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='sales'}"
-                (click)="activeTab='sales'; tab.emit('sales') ; toggleNavbar();" [routerLink]="['/sales']"
-                routerLinkActive="router-link-active">
-                <span class="file-icon mr-2 mt-1">
-                    <i class="fas fa-coins"></i>
-                </span>
-                Moje ponudbe
-            </a>
-            <a *ngIf="isLoggedIn()" class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='profile'}"
-                (click)="activeTab='profile'; tab.emit('profile') ; toggleNavbar();" [routerLink]="['/profile']"
-                routerLinkActive="router-link-active" >
-                <span class="file-icon mr-2 mt-1">
-                    <i class="fas fa-user-cog"></i>
-                </span>
-                Profil
-            </a>
-            <a class="navbar-item navbar-item-center-icon" [ngClass]="{'is-active': activeTab==='contact'}"
-                (click)="activeTab='contact'; tab.emit('contact') ; toggleNavbar();" [routerLink]="['/contact']"
-                routerLinkActive="router-link-active">
-                <span class="file-icon mr-2 mt-1">
-                    <i class="fas fa-address-card"></i>
-                </span>
-                Kontakt
-            </a>
-            <div class="navbar-item">
-                <div class="buttons ">
-                    <button *ngIf="!isLoggedIn()" class="loginBtn has-text-black loginBtn--google" (click)="googleLogin()">Login</button>
-                    <button *ngIf="isLoggedIn()" class="button has-text-black is-primary" (click)="logout()">Logout</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </nav>
