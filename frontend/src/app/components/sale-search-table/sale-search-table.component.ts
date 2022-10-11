@@ -4,6 +4,7 @@ import { ScryfallResponse } from 'src/app/models/scryfall-response.model';
 import { DataService } from 'src/app/services/data.service';
 import { Set } from 'src/app/models/set.model';
 import { Card } from 'src/app/models/card.model';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-sale-search-table',
@@ -21,6 +22,7 @@ export class SaleSearchTableComponent implements OnChanges {
 
   constructor(
     private data: DataService,
+    private sessionStorage: SessionService,
   ) {
     this.data.getSets().subscribe((setsData: ScryfallResponse<Set>) => {
       this.sets = setsData.data;
@@ -70,6 +72,6 @@ export class SaleSearchTableComponent implements OnChanges {
   }
 
   public hasSearched() {
-    return !!sessionStorage.getItem("saleSearchQeury");
+    return !!this.sessionStorage.getItem("saleSearchQeury");
   }
 }

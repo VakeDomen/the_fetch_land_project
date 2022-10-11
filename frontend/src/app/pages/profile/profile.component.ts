@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { DataService } from 'src/app/services/data.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,8 +31,9 @@ export class ProfileComponent implements OnInit {
     private data: DataService,
     private toastr: ToastrService,
     private title: Title,
+    private sessionStorage: SessionService,
   ) { 
-    const user_data = sessionStorage.getItem("user");
+    const user_data = this.sessionStorage.getItem("user");
     if (!user_data) {
       this.router.navigate([""]);
     } 
@@ -60,7 +62,7 @@ export class ProfileComponent implements OnInit {
     if (this.changes) {
       this.data.submitContactInfo(this.user.name, this.user.phone).subscribe((user: User) => {
         this.toastr.success("Uspešeno posodobljeno", "")
-        sessionStorage.setItem("user", JSON.stringify(user));
+        this.sessionStorage.setItem("user", JSON.stringify(user));
       })
     }
   }

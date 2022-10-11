@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     constructor(
         private auth: AuthService,
         private router: Router,
+        private sessionStorage: SessionService,
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -18,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 setHeaders: {
                     'Content-Type' : 'application/json; charset=utf-8',
                     'Accept'       : 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                    'Authorization': `Bearer ${this.sessionStorage.getItem("token")}`,
                 },
             });
         }

@@ -6,6 +6,7 @@ import { Card } from 'src/app/models/card.model';
 import { Sale } from 'src/app/models/sale.model';
 import { TrieTree } from 'src/app/models/trie.model';
 import { DataService } from 'src/app/services/data.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-sale-search',
@@ -31,6 +32,7 @@ export class SaleSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private title: Title,
     private router: Router,
+    private sessionStorage: SessionService,
   ) {
     this.title.setTitle("Iskanje kart | TheFethclandProject");
     this.route
@@ -38,7 +40,7 @@ export class SaleSearchComponent implements OnInit {
       .subscribe((params: ParamMap) => {
         const queryName = params.get('name');
         if (queryName) {
-          sessionStorage.setItem('saleSearchQeury', queryName);
+          this.sessionStorage.setItem('saleSearchQeury', queryName);
         }
         this.setupPreQuery()
       });
@@ -48,7 +50,7 @@ export class SaleSearchComponent implements OnInit {
   }
 
   private setupPreQuery() {
-    const query = sessionStorage.getItem("saleSearchQeury");
+    const query = this.sessionStorage.getItem("saleSearchQeury");
     if (query) {
       this.prefixQuery = query;
       this.refreshCardsPartials();
@@ -104,7 +106,7 @@ export class SaleSearchComponent implements OnInit {
   }
 
   public search() {
-    sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
+    this.sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
     this.router.navigate(['.'], { relativeTo: this.route, queryParams: { name: this.prefixQuery } });
     if (this.prefixQuery.length > 1) this.refreshCardsPartials()
     else this.cardSales = this.tree.collect(this.prefixQuery);

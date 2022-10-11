@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-token',
@@ -18,6 +19,7 @@ export class TokenComponent implements OnInit {
     private router: Router,
     private data: DataService,
     private toastr: ToastrService,
+    private sessionStorage: SessionService,
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class TokenComponent implements OnInit {
       this.auth.login(token);
       this.toastr.success("Uspešen vpis", "")
       this.data.getUser().subscribe((data: User) => {
-        sessionStorage.setItem("user", JSON.stringify(data));
+        this.sessionStorage.setItem("user", JSON.stringify(data));
         if (!data.name || !data.phone) {
           return this.router.navigate(["/register"]);
         }

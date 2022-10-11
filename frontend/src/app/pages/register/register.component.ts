@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
     private auth: AuthService,
     private toastr: ToastrService,
     private title: Title,
+    private sessionStorage: SessionService,
   ) { }
   
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class RegisterComponent implements OnInit {
       this.phoneInput.length > 8
     ) {
       this.data.submitContactInfo(this.usernameInput, this.phoneInput).subscribe((user: User) => {
-        sessionStorage.setItem("user", JSON.stringify(user));
+        this.sessionStorage.setItem("user", JSON.stringify(user));
         this.toastr.success("Uspešeno posodobljeno", "")
         this.router.navigate([""]);
       })

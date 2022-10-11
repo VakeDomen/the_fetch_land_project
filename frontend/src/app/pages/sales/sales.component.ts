@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-sales',
@@ -48,6 +49,7 @@ export class SalesComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private title: Title,
+    private sessionStorage: SessionService,
   ) {
     this.setTransitionValues('right');
   }
@@ -85,7 +87,7 @@ export class SalesComponent implements OnInit {
   }
 
   private checkContactData() {
-    const userString = sessionStorage.getItem('user');
+    const userString = this.sessionStorage.getItem('user');
     // not logged in
     if (!userString) {
       return this.router.navigate(['']);

@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { BehaviorSubject, filter, Subscription } from 'rxjs';
 import {
   NgcCookieConsentService,
   NgcNoCookieLawEvent,
   NgcInitializeEvent,
   NgcStatusChangeEvent,
 } from "ngx-cookieconsent";
+import { isPlatformBrowser } from '@angular/common';
 
 
 declare const gtag: Function;
@@ -20,6 +21,8 @@ declare const gtag: Function;
 export class AppComponent {
   title = 'The_Fetch_Land_Project';
   private subbed: boolean = false;
+  // SSR
+  static isBrowser = new BehaviorSubject<boolean>(false);
 
   //keep refs to subscriptions to be able to unsubscribe later
   private popupOpenSubscription: Subscription | undefined;
@@ -32,12 +35,16 @@ export class AppComponent {
   constructor(
     private ccService: NgcCookieConsentService,
     private router: Router,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        gtag('config', 'MEASUREMENT-ID', { 'page_path': event.urlAfterRedirects });
-      }      
-    })
+    AppComponent.isBrowser.next(isPlatformBrowser(platformId));
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          gtag('config', 'MEASUREMENT-ID', { 'page_path': event.urlAfterRedirects });
+        }      
+      })
+    }
   }
 
 

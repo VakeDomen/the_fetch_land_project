@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-front',
@@ -14,6 +15,7 @@ export class FrontComponent implements OnInit {
   constructor(
     private router: Router,
     private title: Title,
+    private sessionStorage: SessionService,
   ) { }
 
   ngOnInit(): void {
@@ -21,7 +23,7 @@ export class FrontComponent implements OnInit {
   }
 
   public search() {
-    sessionStorage.setItem("saleSearchQeury", this.searchQuery);
+    this.sessionStorage.setItem("saleSearchQeury", this.searchQuery);
     this.router.navigate(["search"]);
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +10,24 @@ import { User } from '../models/user.model';
 export class AuthService {
   constructor(
     private router: Router,
+    private sessionStorage: SessionService,
   ) { }
   
   getToken() {
-    sessionStorage.getItem("token");
+    this.sessionStorage.getItem("token");
   }
 
   logout() {
-    sessionStorage.removeItem("token");
+    this.sessionStorage.removeItem("token");
     this.router.navigate([""]);
   }
   
   login(token: string) {
-    sessionStorage.setItem("token", token);
+    this.sessionStorage.setItem("token", token);
   }
 
   public getUserEmail(): string {
-    const user_string = sessionStorage.getItem("user");
+    const user_string = this.sessionStorage.getItem("user");
     if (!user_string) return "";
     const user: User = JSON.parse(user_string);
     if (!user.email) return "";
@@ -34,7 +35,7 @@ export class AuthService {
   }
   
   public isLoggedIn(): boolean {
-    return !!sessionStorage.getItem("token");
+    return !!this.sessionStorage.getItem("token");
   }
 
   public getGoogleLoginUrl(): string {
