@@ -23,8 +23,17 @@ export class SaleListComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.cardSales.length) {
       this.card = this.cardSales[0].card;
+      const imageLink = this.card.image_uris ? 
+        this.card.image_uris.small : 
+        (
+          this.card.card_faces ? 
+            this.card.card_faces[0].image_uris?.small : 
+            'assets/logo/fetchland_logo_img.png'
+        );
       this.title.setTitle(`${this.card.name} | TheFethclandProject`);
       this.meta.updateTag({name: "description", content: `Pregled oglasov za karto ${this.card.name}.`});
+      this.meta.updateTag({name: "og:description", content: `Pregled oglasov za karto ${this.card.name}.`});
+      this.meta.updateTag({name: "og:image", content: `${imageLink}`});
     }
   }
 
