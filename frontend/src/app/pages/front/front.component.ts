@@ -5,12 +5,15 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-front',
   templateUrl: './front.component.html',
-  styleUrls: ['./front.component.scss'],
+  styleUrls: ['./front.component.sass'],
 })
 export class FrontComponent implements OnInit {
   public searchQuery: string = '';
 
-  constructor(private router: Router, private title: Title) {}
+  constructor(
+    private router: Router, 
+    private title: Title
+  ) {}
 
   ngOnInit(): void {
     this.title.setTitle('TheFethclandProject');
