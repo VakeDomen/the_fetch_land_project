@@ -96,13 +96,29 @@
         <div class="column is-half columns is-multiline has-text-centered">
             <div class="field column is-12">
                 <div class="has-text-centered">
-                    <img *ngIf="card && card.image_uris" class="ml-auto img-card-single"
-                        src="{{card.image_uris.normal}}" alt="">
+                    <img 
+                        *ngIf="card && card.image_uris" 
+                        loading="lazy" 
+                        class="ml-auto img-card-single"
+                        src="{{card.image_uris.normal}}" 
+                        alt="Card image {{card.name}}"
+                    >
                     <ng-container *ngIf="card && !card.image_uris && card.card_faces">
-                        <img class="img-card-double" *ngFor="let face of card.card_faces"
-                            src="{{face.image_uris?.normal}}" alt="">
+                        <img 
+                            class="img-card-double" 
+                            loading="lazy" 
+                            *ngFor="let face of card.card_faces"
+                            src="{{face.image_uris?.normal}}" 
+                            alt="Card face image {{card.name}}"
+                        >
                     </ng-container>
-                    <img class="card-image m-auto" *ngIf="!card" src="assets/card/card_back.png" alt="">
+                    <img 
+                        class="card-image m-auto" 
+                        loading="lazy" 
+                        *ngIf="!card" 
+                        src="assets/card/card_back.png" 
+                        alt="Card back (image placeholder)"
+                    >
                 </div>
             </div>
         </div>

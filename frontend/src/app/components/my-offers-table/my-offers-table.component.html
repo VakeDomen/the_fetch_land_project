@@ -26,12 +26,22 @@
             <tr *ngFor="let sale of sales; ">
                 <th>
                     <div class="has-text-centered">
-                        <img class="ml-auto img-card" *ngIf="getCard(sale.sale_object_id)?.image_uris"
-                            src="{{getCard(sale.sale_object_id)?.image_uris?.small}}" alt="">
+                        <img 
+                            class="ml-auto img-card" 
+                            loading="lazy" 
+                            *ngIf="getCard(sale.sale_object_id)?.image_uris"
+                            src="{{getCard(sale.sale_object_id)?.image_uris?.small}}" 
+                            alt="Card image {{getCard(sale.sale_object_id)?.name}}"
+                        >
                         <ng-container
                             *ngIf="!getCard(sale.sale_object_id)?.image_uris && getCard(sale.sale_object_id)?.card_faces">
-                            <img class="img-card" *ngFor="let face of getCard(sale.sale_object_id)?.card_faces"
-                                src="{{face.image_uris?.small}}" alt="">
+                            <img 
+                                class="img-card" 
+                                loading="lazy" 
+                                *ngFor="let face of getCard(sale.sale_object_id)?.card_faces"
+                                src="{{face.image_uris?.small}}" 
+                                alt="Card face image {{getCard(sale.sale_object_id)?.name}}"
+                            >
                         </ng-container>
                     </div>
                 </th>

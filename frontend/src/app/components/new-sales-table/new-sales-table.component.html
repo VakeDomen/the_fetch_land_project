@@ -39,11 +39,21 @@
                         <div class="is-vertical-center">
 
                             <div class="">
-                                <img class="ml-auto img-card" *ngIf="sale.card.image_uris"
-                                src="{{sale.card.image_uris.small}}" alt="">
+                                <img 
+                                    class="ml-auto img-card" 
+                                    loading="lazy" 
+                                    *ngIf="sale.card.image_uris"
+                                    src="{{sale.card.image_uris.small}}" 
+                                    alt="Card face image {{sale.card.name}}"
+                                >
                                 <ng-container *ngIf="!sale.card.image_uris && sale.card.card_faces">
-                                    <img class="img-card" *ngFor="let face of sale.card.card_faces"
-                                    src="{{face.image_uris?.small}}" alt="">
+                                    <img 
+                                        class="img-card" 
+                                        loading="lazy" 
+                                        *ngFor="let face of sale.card.card_faces"
+                                        src="{{face.image_uris?.small}}" 
+                                        alt="Card face image {{sale.card.name}}"
+                                    >
                                 </ng-container>
                             </div>
                         </div>
@@ -59,7 +69,12 @@
                     </td>
                     <td class="is-vcentered">
                         <div class="set-table-icon-wrapper">
-                            <img class="set-table-icon" src="{{ this.getSetIcon(sale.card.set_id) }}" alt="set icon" />
+                            <img 
+                                class="set-table-icon" 
+                                loading="lazy" 
+                                src="{{ this.getSetIcon(sale.card.set_id) }}" 
+                                alt="Set image {{sale.card.set_name}}" 
+                            />
                         </div>
                         <div>
                             {{ sale.card.set_name }}

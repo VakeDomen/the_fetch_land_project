@@ -18,18 +18,33 @@
             <tr *ngFor="let card of cardsOnSale">
                 <th>
                     <div class="has-text-centered">
-                        <img class="ml-auto img-card" *ngIf="card.image_uris"
-                            src="{{card.image_uris.small}}" alt="">
+                        <img 
+                            class="ml-auto img-card" 
+                            loading="lazy" 
+                            *ngIf="card.image_uris"
+                            src="{{card.image_uris.small}}" 
+                            alt="Card image {{card.name}}"
+                        >
                         <ng-container *ngIf="!card.image_uris && card.card_faces">
-                            <img class="img-card" *ngFor="let face of card.card_faces"
-                                src="{{face.image_uris?.small}}" alt="">
+                            <img 
+                                class="img-card" 
+                                loading="lazy" 
+                                *ngFor="let face of card.card_faces"
+                                src="{{face.image_uris?.small}}" 
+                                alt="Card image face {{card.name}}"
+                            >
                         </ng-container>
                     </div>
                 </th>
                 <td class="is-vcentered">{{ card.name }}</td>
                 <td class="is-vcentered">
                     <div class="set-table-icon-wrapper">
-                        <img class="set-table-icon" src="{{ this.getSetIcon(card.set_id) }}" alt="set icon" />
+                        <img 
+                            class="set-table-icon" 
+                            loading="lazy" 
+                            src="{{ this.getSetIcon(card.set_id) }}" 
+                            alt="Set image {{card.set_name}}"
+                        />
                     </div>
                     <div>
                         {{ card.set_name }}
