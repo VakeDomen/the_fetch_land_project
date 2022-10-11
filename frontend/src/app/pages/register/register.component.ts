@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
@@ -32,10 +32,12 @@ export class RegisterComponent implements OnInit {
     private auth: AuthService,
     private toastr: ToastrService,
     private title: Title,
+    private meta: Meta,
   ) { }
   
   ngOnInit(): void {
     this.title.setTitle("Registracija | TheFethclandProject");
+    this.meta.updateTag({name: "description", content: "Registracija kontaktnih podatkov, za omogočanje dodajanja novih ponudb"});
     if (!this.auth.isLoggedIn()) {
       this.router.navigate([""]);
     }

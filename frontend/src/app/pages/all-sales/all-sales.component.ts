@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-all-sales',
@@ -19,10 +19,12 @@ export class AllSalesComponent implements OnInit {
 
   constructor(
     private title: Title,
+    private meta: Meta,
   ) { }
 
   ngOnInit(): void {
-    this.title.setTitle("Nove ponudbe | TheFetchlandProject")
+    this.title.setTitle("Nove ponudbe | TheFetchlandProject");
+    this.meta.updateTag({name: "description", content: "Pregled novih ponub, ki so bile nedavno objavljene na oglasniku."});
   }
 
 }

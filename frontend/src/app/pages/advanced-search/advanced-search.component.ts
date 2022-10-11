@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CardSale } from 'src/app/models/card-sale.model';
 import { Card } from 'src/app/models/card.model';
@@ -36,9 +36,11 @@ export class AdvancedSearchComponent implements OnInit {
     private data: DataService,
     private title: Title,
     private router: Router,
+    private meta: Meta,
   ) {
     this.setTransitionValues('left');
     this.title.setTitle("Iskanje kart | TheFethclandProject");
+    this.meta.updateTag({name: "description", content: "Naprednejše iskanje ponudb kart."});
     this.route
       .queryParamMap
       .subscribe((params: ParamMap) => {

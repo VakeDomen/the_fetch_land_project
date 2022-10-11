@@ -7,7 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { ToastrService } from 'ngx-toastr';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sales',
@@ -48,12 +48,14 @@ export class SalesComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private title: Title,
+    private meta: Meta,
   ) {
     this.setTransitionValues('right');
   }
 
   ngOnInit(): void {
     this.title.setTitle("Moje ponudbe | TheFethclandProject");
+    this.meta.updateTag({name: "description", content: "Pregled svojih ponudb in dodajanje novih oglasov."});
     this.setTransitionValues('left');
     this.data.getUserSales().subscribe((sales: Sale[]) => this.saveSales(sales));
   }

@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationMessage } from 'src/app/models/notificationn.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,10 +28,12 @@ export class ContactComponent implements OnInit {
     private data: DataService,
     private toastr: ToastrService,
     private title: Title,
+    private meta: Meta,
   ) { }
 
   ngOnInit(): void {
     this.title.setTitle("Kontakt | TheFethclandProject");
+    this.meta.updateTag({name: "description", content: "Kontakt razvijalca strani ter opis strani in varovanja podatkov."});
   }
 
   public sendMessage() {
