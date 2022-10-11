@@ -1,12 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @charset "utf-8";
-@import "~bulma/sass/utilities/initial-variables";
-
-$fl_orange: #ef8700;
-$fl_dark_orange: #ef7600;
-$fl_light: #fdc780;
-$fl_black: hsl(0deg, 0%, 14%);
-$fl_black_secondary: hsl(0deg, 0%, 20%);
+@import "../src/colors.scss";
+@import "bulma/sass/utilities/initial-variables";
 
 $primary: $fl_orange;
 
@@ -77,39 +72,25 @@ $pagination-current-background-color: $fl_orange;
 // ------------ PROGRESS BAR ------------
 $progress-bar-background-color: $fl_black_secondary;
 
-@import "../node_modules/bulma/bulma.sass";
+@import "bulma/bulma.sass";
 
-@import "~node_modules/bulma/sass/utilities/_all";
-@import "~node_modules/bulma/sass/base/_all";
-@import "~node_modules/bulma/sass/elements/_all";
-@import "~node_modules/bulma/sass/form/_all";
-@import "~node_modules/bulma/sass/components/navbar";
-@import "~node_modules/bulma/sass/layout/hero";
-@import "~node_modules/bulma/sass/layout/section";
+@import "bulma/sass/utilities/_all";
+@import "bulma/sass/base/_all";
+@import "bulma/sass/elements/_all";
+@import "bulma/sass/form/_all";
+@import "bulma/sass/components/navbar";
+@import "bulma/sass/layout/section";
 
 // Import Extensions
-@import "../node_modules/bulma-extensions/bulma-accordion/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-badge/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-calendar/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-carousel/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-checkradio/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-divider/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-iconpicker/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-pageloader/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-pricingtable/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-quickview/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-ribbon/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-steps/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-switch/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-tagsinput/src/sass/index";
-@import "../node_modules/bulma-extensions/bulma-timeline/src/sass/index";
+@import "bulma-extensions/bulma-divider/src/sass/index";
+
 
 html {
   background-color: black;
 }
 
 body {
-  background-image: url("assets/bg/bg1.jpg");
+  background-image: url("assets/bg/bg2.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
