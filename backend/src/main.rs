@@ -26,7 +26,8 @@ async fn main() -> std::io::Result<()> {
     let (
         port,
         own_ssl,
-        cors_url,
+        cors_url_1,
+        cors_url_2,
         auth_hook_url,
         oauth_client_id,
         oauth_client_secret,
@@ -50,11 +51,12 @@ async fn main() -> std::io::Result<()> {
     let mut server = HttpServer::new(move || {
         // setup CORS
         let cors = Cors::default()
-              .allowed_origin(cors_url.as_str())
-              .allowed_methods(vec!["GET", "POST", "PATCH", "DELETE"])
-              .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
-              .allowed_header(http::header::CONTENT_TYPE)
-              .max_age(3600);
+            .allowed_origin(cors_url_1.as_str())
+            .allowed_origin(cors_url_2.as_str())
+            .allowed_methods(vec!["GET", "POST", "PATCH", "DELETE"])
+            .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+            .allowed_header(http::header::CONTENT_TYPE)
+            .max_age(3600);
 
         // setup google auth client
         let google_client_id = ClientId::new(oauth_client_id.to_owned());
@@ -120,7 +122,7 @@ async fn main() -> std::io::Result<()> {
     server.run().await
 }
 
-fn setup_env() -> (u16, bool, String, String, String, String) {
+fn setup_env() -> (u16, bool, String, String, String, String, String) {
     dotenv().ok();
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     let port = env::var("PORT").expect("$PORT is not set").parse::<u16>().unwrap();
@@ -145,12 +147,14 @@ fn setup_env() -> (u16, bool, String, String, String, String) {
     env::var("AUTH_REDIRECT_URL").expect("$AUTH_REDIRECT_URL is not set");
     let oauth_client_id = env::var("OAUTH_CLIENT_ID").expect("Missing the OAUTH_CLIENT_ID environment variable.");
     let oauth_client_secret = env::var("OAUTH_CLIENT_SECRET").expect("Missing the OAUTH_CLIENT_SECRET environment variable.");
-    let cors_url = env::var("CORS_DOMAIN").expect("Missing the CORS_DOMAIN environment variable.");
+    let cors_url_1 = env::var("CORS_DOMAIN_1").expect("Missing the CORS_DOMAIN_2 environment variable.");
+    let cors_url_2 = env::var("CORS_DOMAIN_2").expect("Missing the CORS_DOMAIN_2 environment variable.");
     let auth_hook_url = env::var("AUTH_HOOK_URL").expect("Missing the AUTH_HOOK_URL environment variable.");
     (
         port,
         own_ssl,
-        cors_url,
+        cors_url_1,
+        cors_url_2,
         auth_hook_url,
         oauth_client_id,
         oauth_client_secret,
