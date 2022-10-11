@@ -6,10 +6,9 @@ import { SessionService } from 'src/app/services/session.service';
 @Component({
   selector: 'app-front',
   templateUrl: './front.component.html',
-  styleUrls: ['./front.component.sass']
+  styleUrls: ['./front.component.sass'],
 })
 export class FrontComponent implements OnInit {
-
   public searchQuery: string = '';
 
   constructor(
@@ -19,7 +18,7 @@ export class FrontComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title.setTitle("TheFethclandProject");
+    this.title.setTitle('TheFethclandProject');
   }
 
   public search() {

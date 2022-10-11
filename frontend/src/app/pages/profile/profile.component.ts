@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
     private toastr: ToastrService,
     private title: Title,
     private sessionStorage: SessionService,
+    private meta: Meta,
   ) { 
     const user_data = this.sessionStorage.getItem("user");
     if (!user_data) {
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle("Moj profil | TheFethclandProject");
+    this.meta.updateTag({name: "description", content: "Pregled in urejanje profila (kontaktni podatki)."});
   }
   
   public changeUsername(event: any) {
