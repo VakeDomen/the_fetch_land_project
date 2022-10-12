@@ -3,7 +3,7 @@ sudo rm -r node_modules
 npx -p @angular/cli@14 npm install
 # -- SSR
 npx -p @angular/cli@14 npm run build:ssr
-systemctl restart fetchland_web.service
+sudo systemctl restart fetchland_web.service
 
 # -- non SSR
 #npx -p @angular/cli@14 ng build --configuration production
