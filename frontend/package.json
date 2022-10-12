@@ -26,6 +26,7 @@
     "@nguniversal/express-engine": "^14.2.0",
     "bulma": "^0.9.4",
     "bulma-extensions": "^6.2.7",
+    "compression": "^1.7.4",
     "cookieconsent": "^3.1.1",
     "express": "^4.15.2",
     "ngx-cookieconsent": "^2.2.3",
