@@ -28,7 +28,7 @@ export class SaleListComponent implements OnChanges {
         (
           this.card.card_faces ? 
             this.card.card_faces[0].image_uris?.small : 
-            'assets/logo/fetchland_logo_img.png'
+            'assets/logo/fetchland_logo_img.webp'
         );
       this.title.setTitle(`${this.card.name} | TheFethclandProject`);
       this.meta.updateTag({name: "description", content: `Pregled oglasov za karto ${this.card.name}.`});
