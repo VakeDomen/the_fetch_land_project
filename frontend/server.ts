@@ -5,7 +5,6 @@ import {ngExpressEngine} from '@nguniversal/express-engine';
 import * as express from 'express';
 import {existsSync} from 'fs';
 import {join} from 'path';
-import * as compression from 'compression';
 
 import {AppServerModule} from './src/main.server';
 
@@ -14,8 +13,6 @@ export function app(): express.Express {
   const server = express();
   const distFolder = join(process.cwd(), 'dist/The_Fetch_Land_Project/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
-
-  server.use(compression());
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine('html', ngExpressEngine({
