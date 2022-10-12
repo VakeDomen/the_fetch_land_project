@@ -31,7 +31,6 @@ export class TokenComponent implements OnInit {
         return this.router.navigate([""]);
       }
       this.auth.login(token);
-      this.toastr.success("Uspešen vpis", "")
       this.data.getUser().subscribe((data: User) => {
         this.sessionStorage.setItem("user", JSON.stringify(data));
         if (!data.name || !data.phone) {
