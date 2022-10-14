@@ -53,7 +53,7 @@ export class SaleSearchComponent implements OnInit {
     const query = this.sessionStorage.getItem("saleSearchQeury");
     if (query) {
       this.prefixQuery = query;
-      this.refreshCardsPartials();
+      this.refreshCardsPartials(this.prefixQuery);
     }
   }
 
@@ -62,16 +62,21 @@ export class SaleSearchComponent implements OnInit {
   }
 
   public refreshCards() {
-    this.data.getSalesByPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
+    this.data.getSalesByPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales, this.prefixQuery))
   }
 
-  public refreshCardsPartials() {
+  public refreshCardsPartials(previousQueryPrefix: string) {
     this.shouldSearch = true;
     setTimeout(() => { if (this.shouldSearch) { this.searching = true } }, 100);
-    this.data.getSalesByPartialPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales))
+    this.data.getSalesByPartialPrefix(this.prefixQuery, this.cardLang).subscribe((sales: Sale[]) => this.fillTrieSetup(sales, previousQueryPrefix))
   }
 
-  private async fillTrieSetup(sales: Sale[]): Promise<void> {
+  private async fillTrieSetup(sales: Sale[], previousQueryPrefix: string): Promise<void> {
+    if (this.prefixQuery != previousQueryPrefix) {
+      this.shouldSearch = false;
+      this.searching = false;
+      return;
+    }
     const cardSales = await this.generateCardSaleObjects(sales);
     this.fillTrie(cardSales)
     this.cardSales = cardSales;
@@ -108,8 +113,16 @@ export class SaleSearchComponent implements OnInit {
   public search() {
     this.sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
     this.router.navigate(['.'], { relativeTo: this.route, queryParams: { name: this.prefixQuery } });
-    if (this.prefixQuery.length > 1) this.refreshCardsPartials()
-    else this.cardSales = this.tree.collect(this.prefixQuery);
+    if (this.prefixQuery.length > 1) {
+      let varFreeze = JSON.stringify(this.prefixQuery);
+      setTimeout(() => this.conditionalRefresh(varFreeze), 300);
+    } else this.cardSales = this.tree.collect(this.prefixQuery);
+  }
+
+  private conditionalRefresh(previousQueryPrefix: string) {
+    if (this.prefixQuery == previousQueryPrefix) {
+      this.refreshCardsPartials(previousQueryPrefix);
+    }
   }
 
   public backTrigger() {
