@@ -26,7 +26,6 @@ export class SaleSearchComponent implements OnInit {
   public searching: boolean = false;
   private shouldSearch: boolean = false;
 
-
   constructor(
     private data: DataService,
     private route: ActivatedRoute,
@@ -35,15 +34,17 @@ export class SaleSearchComponent implements OnInit {
     private sessionStorage: SessionService,
   ) {
     this.title.setTitle("Iskanje kart | TheFethclandProject");
-    this.route
-      .queryParamMap
-      .subscribe((params: ParamMap) => {
+    let triggers = 0;
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
+      if (triggers == 0) {
         const queryName = params.get('name');
         if (queryName) {
           this.sessionStorage.setItem('saleSearchQeury', queryName);
         }
         this.setupPreQuery()
-      });
+      }
+      triggers++;
+    });
   }
 
   ngOnInit(): void {
@@ -72,14 +73,11 @@ export class SaleSearchComponent implements OnInit {
   }
 
   private async fillTrieSetup(sales: Sale[], previousQueryPrefix: string): Promise<void> {
-    if (this.prefixQuery != previousQueryPrefix) {
-      this.shouldSearch = false;
-      this.searching = false;
-      return;
-    }
     const cardSales = await this.generateCardSaleObjects(sales);
     this.fillTrie(cardSales)
-    this.cardSales = cardSales;
+    if (this.prefixQuery == previousQueryPrefix) {
+      this.cardSales = cardSales;
+    }
     this.shouldSearch = false;
     this.searching = false;
   }
@@ -104,7 +102,6 @@ export class SaleSearchComponent implements OnInit {
   }
 
   private fillTrie(cardSales: CardSale[]): void {
-    this.cardSales = cardSales;
     for (const cardSale of cardSales) {
       this.tree.insertWord(cardSale.card.name, cardSale, false);
     }
@@ -114,8 +111,9 @@ export class SaleSearchComponent implements OnInit {
     this.sessionStorage.setItem("saleSearchQeury", this.prefixQuery);
     this.router.navigate(['.'], { relativeTo: this.route, queryParams: { name: this.prefixQuery } });
     if (this.prefixQuery.length > 1) {
-      let varFreeze = JSON.stringify(this.prefixQuery);
-      setTimeout(() => this.conditionalRefresh(varFreeze), 300);
+      // clone variable
+      let varFreeze: string = JSON.parse(JSON.stringify(this.prefixQuery));
+      setTimeout(() => this.conditionalRefresh(varFreeze), 200);
     } else this.cardSales = this.tree.collect(this.prefixQuery);
   }
 
@@ -123,6 +121,7 @@ export class SaleSearchComponent implements OnInit {
     if (this.prefixQuery == previousQueryPrefix) {
       this.refreshCardsPartials(previousQueryPrefix);
     }
+    
   }
 
   public backTrigger() {
