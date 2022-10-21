@@ -2,7 +2,6 @@ use serde::Serialize;
 
 use crate::database::models::SqliteSale;
 
-
 #[derive(Serialize)]
 pub struct Sale {
     pub id: String,

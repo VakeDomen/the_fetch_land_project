@@ -104,6 +104,57 @@ pub mod sale_operations {
     }
 }
 
+pub mod subscription_operations {
+    use diesel::result::Error;
+    use diesel::{prelude::*, insert_into};
+
+    use crate::database::models::SqliteSubscription;
+    use crate::database::schema::subscriptions::dsl::*;
+
+    use super::sqlite_operations::establish_connection;
+
+    pub fn insert_subscription(sqlite_sub: SqliteSubscription) ->  Result<SqliteSubscription, Error> {
+        let conn = establish_connection();
+        let _ = insert_into(subscriptions)
+            .values(&sqlite_sub)
+            .execute(&conn)?;
+        Ok(sqlite_sub)
+    }
+
+    pub fn get_subscriptions_by_user(uid: String) -> Result<Vec<SqliteSubscription>, Error> {
+        let conn = establish_connection();
+        subscriptions
+            .filter(user_id.eq(uid))
+            .load::<SqliteSubscription>(&conn)
+    }
+
+    pub fn get_subscribtions_by_card(cid: String) -> Result<Vec<SqliteSubscription>, Error> {
+        let conn = establish_connection();
+        subscriptions
+            .filter(sale_object_id.eq(cid))
+            .filter(sale_type.eq("CARD"))
+            .load::<SqliteSubscription>(&conn)
+    }
+
+    pub fn delete_subscription(uid: String, sid: String) -> Result<(), Error> {
+        let conn = establish_connection();
+        diesel::delete(subscriptions
+                .filter(id.eq(sid))
+                .filter(user_id.eq(uid))
+            )
+            .execute(&conn)?;
+        Ok(())
+    }
+
+    pub fn delete_all_user_subscriptions(uid: String) -> Result<(), Error> {
+        let conn = establish_connection();
+        diesel::delete(subscriptions.filter(user_id.eq(uid)))
+            .execute(&conn)?;
+        Ok(())
+    }
+}
+
+
 pub mod user_operations {
     use diesel::{prelude::*, insert_into};
     use diesel::result::Error;

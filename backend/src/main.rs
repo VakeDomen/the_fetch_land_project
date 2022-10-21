@@ -1,15 +1,34 @@
 use std::env;
 use actix_cors::Cors;
 use actix_web_httpauth::extractors::bearer::Config;
-use api::{auth_hook::auth, auth_login::login, user_update::{user_update}, card_id::get_card, card_name::get_card_by_name, user_get::user_get, user_delete::user_delete, user_sales::user_sales, user_sale_delete::user_sale_delete, user_sale_new::user_sale_new, card_sales::card_sales, card_sales_name::{get_card_sales_by_name, get_card_sales_by_name_partials}, user_credentials::user_credentials, card_sales_latest::{card_sales_latest, card_sales_latest_default}, user_sale_edit::user_sale_edit, card_sales_paged::card_sales_paged, card_sales_num::card_sales_num, notification_telegram::notify_telegram};
+use api::{
+    auth_hook::auth, 
+    auth_login::login, 
+    user_update::user_update, 
+    card_id::get_card, 
+    card_name::get_card_by_name, 
+    user_get::user_get, 
+    user_delete::user_delete, 
+    user_sales::user_sales, 
+    user_sale_delete::user_sale_delete, 
+    user_sale_new::user_sale_new, 
+    card_sales::card_sales, 
+    card_sales_name::{get_card_sales_by_name, get_card_sales_by_name_partials}, 
+    user_credentials::user_credentials, 
+    card_sales_latest::{card_sales_latest, card_sales_latest_default}, 
+    user_sale_edit::user_sale_edit, 
+    card_sales_paged::card_sales_paged, 
+    card_sales_num::card_sales_num, 
+    notification_telegram::notify_telegram,
+    user_subscription_new::user_subscription_new,
+    card_sales_id::get_card_sales_by_id
+};
 use dotenv::dotenv;
 use actix_web::{web::Data, App, HttpServer, http, middleware::Logger};
 use models::state::AppState;
 use oauth2::{ClientId, ClientSecret, AuthUrl, TokenUrl, basic::BasicClient, RedirectUrl};
 use services::card_cache::{setup_card_cache, ALL_CARDS};
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
-
-use crate::api::card_sales_id::get_card_sales_by_id;
 
 mod models;
 mod api;
@@ -108,6 +127,7 @@ async fn main() -> std::io::Result<()> {
             .service(user_sale_edit)
             .service(card_sales_paged)
             .service(card_sales_num)
+            .service(user_subscription_new)
     });
     if own_ssl {
         println!("[SETUP] Running server on 0.0.0.0:{} with own ssl", port);

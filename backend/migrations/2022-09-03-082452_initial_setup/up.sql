@@ -1,4 +1,13 @@
 -- Your SQL goes here-- Your SQL goes here
+create table subscriptions
+(
+    id              varchar not null primary key,
+    sale_type       varchar not null,
+    user_id         varchar not null,
+    sale_object_id  varchar not null,
+    created         varchar not null
+);
+
 create table users
 (
     id          varchar not null primary key,

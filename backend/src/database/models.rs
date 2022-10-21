@@ -1,10 +1,12 @@
 use chrono::Utc;
 use uuid::Uuid;
 
+use crate::api::user_subscription_new::SubscriptionPostData;
 use crate::{models::auth::AuthUserData, api::user_sale_new::SalePostData};
 
 use super::schema::users;
 use super::schema::sales;
+use super::schema::subscriptions;
 
 #[derive(Queryable, Debug, Identifiable, AsChangeset, Insertable)]
 #[table_name = "sales"]
@@ -60,6 +62,28 @@ impl SqliteUser {
             name: "".to_string(), 
             email: google_user_data.email, 
             phone: "".to_string()
+        }
+    }
+}
+
+#[derive(Queryable, Debug, Identifiable, AsChangeset, Insertable)]
+#[table_name = "subscriptions"]
+pub struct SqliteSubscription {
+    pub id: String,
+    pub sale_type: String,
+    pub user_id: String,
+    pub sale_object_id: String,
+    pub created: String,
+}
+
+impl SqliteSubscription {
+    pub fn from(post_data: SubscriptionPostData, uid: String) -> Self {
+        Self { 
+            id: Uuid::new_v4().to_string(), 
+            sale_type: post_data.sale_type, 
+            user_id: uid, 
+            sale_object_id: post_data.sale_object_id, 
+            created: Utc::now().naive_utc().to_string(), 
         }
     }
 }

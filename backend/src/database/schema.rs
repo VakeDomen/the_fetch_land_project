@@ -25,6 +25,16 @@ table! {
     }
 }
 
+table! {
+    subscriptions (id) {
+        id -> Text,
+        sale_type -> Text,
+        user_id -> Text,
+        sale_object_id -> Text,
+        created -> Text,
+    }
+}
+
 allow_tables_to_appear_in_same_query!(
     sales,
     users,
