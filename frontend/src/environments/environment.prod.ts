@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_url: "http://api.fl.eu",
+  api_url: "https://api.fetchland.eu",
 };
