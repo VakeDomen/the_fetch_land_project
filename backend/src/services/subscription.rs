@@ -1,7 +1,7 @@
 
 use std::error::Error;
 
-use crate::{models::{subscription::Subscription, user::User, card::Card}, api::notification_telegram};
+use crate::{models::{subscription::Subscription, user::User}};
 
 use super::{database::user_operations::get_user_by_id, card_cache::ALL_CARDS, mail::send_mail, telegram::notify_via_telegram};
 
@@ -26,7 +26,7 @@ pub async fn notify_subscription(sub: Subscription) -> Result<(), Box<dyn Error>
     let body = build_email_body( card_name, card_id);
 
     match send_mail(
-        &user.email.as_str(), 
+        user.email.as_str(), 
         subject.as_str(), 
         body
     ){
@@ -36,8 +36,8 @@ pub async fn notify_subscription(sub: Subscription) -> Result<(), Box<dyn Error>
                 format!("Error sending subscription email to {}", user.email), 
                 "[SYSTEM]".to_string()
             ).await {
-                Ok(_) => Err(e.into()),
-                Err(_) => Err(e.into()),
+                Ok(_) => Err(e),
+                Err(_) => Err(e),
             }
         },
     }

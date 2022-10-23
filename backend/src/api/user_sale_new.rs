@@ -37,7 +37,7 @@ pub async fn user_sale_new(auth: BearerAuth, body: web::Json<SalePostData>) -> H
             let sub = Subscription::from(s);
             match notify_subscription(sub).await {
                 Ok(_) => println!("[SYSTEM] Notified user ({}) about new sale", user_id),
-                Err(e) => println!("[SYSTEM] Error: Failed to notify user ({}) about new sale: {}", user_id, e.to_string()),
+                Err(e) => println!("[SYSTEM] Error: Failed to notify user ({}) about new sale: {}", user_id, e),
             };
         };
         

@@ -15,7 +15,7 @@ pub static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
     let file = match File::open(ALL_CARDS_HASH_MAP_FILE_PATH) {
         Ok(f) => f,
         Err(e) => {
-            println!("[CACHE] Error reading HashMap file: {}", e.to_string());
+            println!("[CACHE] Error reading HashMap file: {}", e);
             return Mutex::new(HashMap::new())
         },
     };
@@ -28,7 +28,7 @@ pub static ALL_CARDS: Lazy<Mutex<HashMap<String, Card>>> = Lazy::new(|| {
             Mutex::new(hm)
         },
         Err(e) => {
-            println!("[CACHE] Error loading HashMap from disk: {}", e.to_string());
+            println!("[CACHE] Error loading HashMap from disk: {}", e);
             Mutex::new(HashMap::new())
         }
     }

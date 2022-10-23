@@ -147,21 +147,15 @@ fn setup_env() -> (u16, bool, String, String, String, String, String) {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     let port = env::var("PORT").expect("$PORT is not set").parse::<u16>().unwrap();
     let own_ssl = match std::env::var("OWN_SSL") {
-        Ok(val) => match val.as_str() {
-            "true" => true,
-            _ => false,
-        },
+        Ok(val) => matches!(val.as_str(), "true"),
         _ => false,
     };
-    match std::env::var("DEBUG") {
-        Ok(val) => {
-            if val.eq("1") {
-                println!("[SETUP] Logging set to debug!");
-                std::env::set_var("RUST_LOG", "debug");
-                std::env::set_var("RUST_BACKTRACE", "1");
-            }
-        },
-        Err(_) => ()
+    if let Ok(val) = std::env::var("DEBUG") {
+        if val.eq("1") {
+            println!("[SETUP] Logging set to debug!");
+            std::env::set_var("RUST_LOG", "debug");
+            std::env::set_var("RUST_BACKTRACE", "1");
+        }
     }
     env::var("TELOXIDE_TOKEN").expect("$TELOXIDE_TOKEN is not set");
     env::var("AUTH_REDIRECT_URL").expect("$AUTH_REDIRECT_URL is not set");

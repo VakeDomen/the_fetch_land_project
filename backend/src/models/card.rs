@@ -223,34 +223,31 @@ impl CardPublic {
             eur_foil: card.prices.eur_foil.clone(), 
             tix: card.prices.tix.clone() 
          },
-        highres_image: card.highres_image.clone(),
+        highres_image: card.highres_image,
         image_status: card.image_status.clone(),
-        image_uris: if let Some(uris) = &card.image_uris { Some(CardImageUris {
+        image_uris: card.image_uris.as_ref().map(|uris| CardImageUris {
             small: uris.small.clone(),
             normal: uris.normal.clone(),
             large: uris.large.clone(),
             png: uris.png.clone(),
             art_crop: uris.art_crop.clone(),
             border_crop: uris.border_crop.clone(),
-        })} else { None },
-        card_faces:
-        if let Some(faces) = &card.card_faces { 
-         Some(faces.iter().map(|face| CardFace {
-            image_uris: if let Some(uris) = &face.image_uris { Some(CardImageUris {
+         }),
+        card_faces: card.card_faces.as_ref().map(|faces| faces.iter().map(|face| CardFace {
+            image_uris: face.image_uris.as_ref().map(|uris| CardImageUris {
                small: uris.small.clone(),
                normal: uris.normal.clone(),
                large: uris.large.clone(),
                png: uris.png.clone(),
                art_crop: uris.art_crop.clone(),
                border_crop: uris.border_crop.clone(),
-           })} else { None },
+            }),
             layout: face.layout.clone(),
             name: face.name.clone(),
             object: face.object.clone(),
             oracle_id: face.oracle_id.clone(),
             printed_name: face.printed_name.clone(),
-        }).collect() )
-      } else { None }
+         }).collect())
       }
    }
 }

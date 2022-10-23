@@ -31,12 +31,12 @@ impl TrieTree {
         }
 
         if split {
-            let chunks: Vec<&str> = word.split(" ").collect();
+            let chunks: Vec<&str> = word.split(' ').collect();
             if chunks.len() > 1 {
                 for i in 1..chunks.len() {
                     let mut to_insert = "".to_string();
-                    for j in i..chunks.len() {
-                        to_insert = format!("{} {}", to_insert, chunks[j]);
+                    for chunk in chunks.iter().skip(i) {
+                        to_insert = format!("{} {}", to_insert, chunk);
                     }
                     match &mut self.head {
                         Some(head) => head.insert(to_insert.trim().to_string(), value.clone()),

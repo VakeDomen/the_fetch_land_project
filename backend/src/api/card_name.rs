@@ -7,11 +7,7 @@ async fn get_card_by_name(params: web::Path<(String, String)>) -> impl Responder
     let (lang, name) = params.into_inner();
     let card_ids = {
         let trie = NAME_TRIE.lock().unwrap();
-        trie
-            .collect(name
-                .to_string()
-                .to_lowercase()
-            )
+        trie.collect(name.to_lowercase())
     };
     let all_cards = ALL_CARDS.lock().unwrap();
     let cards: Vec<&Card> = card_ids
