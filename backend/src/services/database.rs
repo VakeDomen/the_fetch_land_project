@@ -173,7 +173,6 @@ pub mod user_operations {
         Ok(resp.pop())
     }
 
-
     pub fn get_user_by_id(user_id: String) -> Result<Option<SqliteUser>, Error> {
         let conn = establish_connection();
         let mut resp = users
